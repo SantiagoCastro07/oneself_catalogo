@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo | OneSelf</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Catálogo OneSelf</h1>
+  <p>Decants originales · 5ml / 10ml</p>
+</header>
+
+<section class="catalog" id="catalog"></section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc" class="modal-desc"></p>
+
+    <div class="notes" id="modal-notes"></div>
+
+    <p class="select-size">Selecciona el tamaño del decant</p>
+
+
+    <div class="sizes">
+      <button data-size="5ml">5 ml</button>
+      <button data-size="10ml">10 ml</button>
+    </div>
+
+    <button class="close" id="closeModal">Cancelar</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
