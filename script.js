@@ -5,20 +5,17 @@ const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modal-title");
 const modalDesc = document.getElementById("modal-desc");
 const modalNotes = document.getElementById("modal-notes");
-const modalPrice = document.getElementById("modal-price");
 const closeModal = document.getElementById("closeModal");
+const sizeButtons = document.querySelectorAll(".sizes button");
 
 let selectedPerfume = null;
 
 const perfumes = [
   {
     name: "Hawas Ice – Rasasi",
-    img: "assets/hawas.webp",
-    desc: "Fresco, dulce y moderno. Perfecto para clima cálido y uso diario.",
-    prices: {
-      "5ml": 25000,
-      "10ml": 45000
-    },
+    img: "assets/hawasIce.png",
+    desc: "Fresco, dulce y moderno. Perfecto para clima cálido.",
+    prices: { "5ml": 22000, "10ml": 40000 },
     notes: {
       salida: "Cítricos, manzana",
       corazon: "Canela, lavanda",
@@ -27,12 +24,9 @@ const perfumes = [
   },
   {
     name: "Asad Bourbon – Lattafa",
-    img: "assets/AsadBourbon.jpg",
+    img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: {
-      "5ml": 30000,
-      "10ml": 55000
-    },
+    prices: { "5ml": 18000, "10ml": 32000 },
     notes: {
       salida: "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -41,12 +35,9 @@ const perfumes = [
   },
   {
     name: "Art Of Universe – Lattafa",
-    img: "assets/ArtOfUniverse.webp",
-    desc: "Sofisticado y versátil, con un aire artístico y moderno.",
-    prices: {
-      "5ml": 28000,
-      "10ml": 52000
-    },
+    img: "assets/ArtOfUniverse.png",
+    desc: "Sofisticado y versátil, con un aire moderno.",
+    prices: { "5ml": 21000, "10ml": 38000 },
     notes: {
       salida: "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -55,12 +46,9 @@ const perfumes = [
   },
   {
     name: "Yara Tous – Lattafa",
-    img: "assets/YaraTous.webp",
-    desc: "Dulce tropical y femenino. Muy llamativo y agradable.",
-    prices: {
-      "5ml": 27000,
-      "10ml": 50000
-    },
+    img: "assets/YaraTous.png",
+    desc: "Dulce tropical y femenino. Muy llamativo.",
+    prices: { "5ml": 17000, "10ml": 30000 },
     notes: {
       salida: "Mango, coco",
       corazon: "Flores blancas",
@@ -69,9 +57,7 @@ const perfumes = [
   }
 ];
 
-/* ==========================
-   RENDER CATÁLOGO
-========================== */
+// Crear cards
 perfumes.forEach(p => {
   const card = document.createElement("div");
   card.className = "card";
@@ -80,6 +66,9 @@ perfumes.forEach(p => {
     <img src="${p.img}" alt="${p.name}">
     <h3>${p.name}</h3>
     <span>Decant · 5ml / 10ml</span>
+    <div class="price">
+      $${p.prices["5ml"]} · $${p.prices["10ml"]}
+    </div>
   `;
 
   card.addEventListener("click", () => {
@@ -94,10 +83,10 @@ perfumes.forEach(p => {
       <span><strong>Fondo:</strong> ${p.notes.fondo}</span>
     `;
 
-    modalPrice.textContent = `
-      5ml: $${p.prices["5ml"].toLocaleString()} · 
-      10ml: $${p.prices["10ml"].toLocaleString()}
-    `;
+    sizeButtons.forEach(btn => {
+      const size = btn.dataset.size;
+      btn.textContent = `${size} · $${p.prices[size]}`;
+    });
 
     modal.classList.add("show");
   });
@@ -105,17 +94,13 @@ perfumes.forEach(p => {
   catalog.appendChild(card);
 });
 
-/* ==========================
-   BOTONES DE TAMAÑO
-========================== */
-document.querySelectorAll(".sizes button").forEach(btn => {
+// Tamaños → WhatsApp
+sizeButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const size = btn.dataset.size;
     const price = selectedPerfume.prices[size];
 
-    const message = `Hola 👋, me interesa el ${selectedPerfume.name}
-Tamaño: ${size}
-Precio: $${price.toLocaleString()}`;
+    const message = `Hola, me interesa el ${selectedPerfume.name} en ${size} por $${price}.`;
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
@@ -126,15 +111,6 @@ Precio: $${price.toLocaleString()}`;
   });
 });
 
-/* ==========================
-   CERRAR MODAL
-========================== */
-closeModal.addEventListener("click", () => {
-  modal.classList.remove("show");
-});
-
-modal.addEventListener("click", e => {
-  if (e.target === modal) {
-    modal.classList.remove("show");
-  }
-});
+// Cerrar modal
+closeModal.onclick = () => modal.classList.remove("show");
+modal.onclick = e => e.target === modal && modal.classList.remove("show");
