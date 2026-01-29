@@ -48,7 +48,7 @@ const perfumes = [
     name: "Yara Tous – Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 17000, "10ml": 30000 },
+    prices: { "5ml": 18000, "10ml": 32000 },
     notes: {
       salida: "Mango, coco",
       corazon: "Flores blancas",
