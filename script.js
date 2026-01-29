@@ -100,7 +100,7 @@ sizeButtons.forEach(btn => {
     const size = btn.dataset.size;
     const price = selectedPerfume.prices[size];
 
-    const message = `Hola, me interesa el ${selectedPerfume.name} en ${size} por $${price}.`;
+    const message = `Hola, me interesa el ${selectedPerfume.name} en ${size}, $${price}.`;
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
