@@ -37,7 +37,7 @@ const perfumes = [
     name: "Art Of Universe – Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 19900, "10ml": 36900 },
+    prices: { "5ml": 19900, "10ml": 35900 },
     notes: {
       salida: "Bergamota, cítricos",
       corazon: "Notas florales",
