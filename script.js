@@ -26,7 +26,7 @@ const perfumes = [
     name: "Asad Bourbon – Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: { "5ml": 18000, "10ml": 32000 },
+    prices: { "5ml": 17900, "10ml": 31900 },
     notes: {
       salida: "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -48,7 +48,7 @@ const perfumes = [
     name: "Yara Tous – Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 18000, "10ml": 32000 },
+    prices: { "5ml": 17900, "10ml": 31900 },
     notes: {
       salida: "Mango, coco",
       corazon: "Flores blancas",
