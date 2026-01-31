@@ -15,7 +15,7 @@ const perfumes = [
     name: "Hawas Ice – Rasasi",
     img: "assets/hawasIce.png",
     desc: "Fresco, dulce y moderno. Perfecto para clima cálido.",
-    prices: { "5ml": 22000, "10ml": 40000 },
+    prices: { "5ml": 19900, "10ml": 37900 },
     notes: {
       salida: "Cítricos, manzana",
       corazon: "Canela, lavanda",
@@ -37,7 +37,7 @@ const perfumes = [
     name: "Art Of Universe – Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 21000, "10ml": 38000 },
+    prices: { "5ml": 19900, "10ml": 36900 },
     notes: {
       salida: "Bergamota, cítricos",
       corazon: "Notas florales",
