@@ -15,7 +15,7 @@ const perfumes = [
     name: "Hawas Ice – Rasasi",
     img: "assets/hawasIce.png",
     desc: "Fresco, dulce y moderno. Perfecto para clima cálido.",
-    prices: { "5ml": 19900, "10ml": 37900 },
+    prices: { "5ml": 18900, "10ml": 36900 },
     notes: {
       salida: "Cítricos, manzana",
       corazon: "Canela, lavanda",
@@ -26,7 +26,7 @@ const perfumes = [
     name: "Asad Bourbon – Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: { "5ml": 17900, "10ml": 31900 },
+    prices: { "5ml": 17900, "10ml": 30900 },
     notes: {
       salida: "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -37,7 +37,7 @@ const perfumes = [
     name: "Art Of Universe – Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 19900, "10ml": 35900 },
+    prices: { "5ml": 18900, "10ml": 34900 },
     notes: {
       salida: "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -48,7 +48,7 @@ const perfumes = [
     name: "Yara Tous – Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 17900, "10ml": 31900 },
+    prices: { "5ml": 17900, "10ml": 30900 },
     notes: {
       salida: "Mango, coco",
       corazon: "Flores blancas",
