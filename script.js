@@ -99,7 +99,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Marino, fresco y libre. Evoca brisa de océano y cielos abiertos.",
-    prices: { "5ml": 17600, "10ml": 30000 },
+    prices: { "5ml": 17900, "10ml": 30000 },
     notes: {
       salida:  "Notas acuáticas, cítricos",
       corazon: "Menta, cachemir",
