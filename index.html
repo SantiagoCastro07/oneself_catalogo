@@ -1,39 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo | OneSelf</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decants · Perfumes de Lujo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-<header>
-  <h1>Catálogo OneSelf</h1>
-  <p>Decants originales · 5ml / 10ml</p>
-</header>
+  <!-- HERO HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="header-tag"></div>
+      <h1>OneSelf<br/><em>Decants</em></h1>
+      <p class="header-sub">Perfumes Originales · Desde 5 ml</p>
+    </div>
+    <div class="header-deco-left">FRAGRANCE</div>
+    <div class="header-deco-right">COLLECTION</div>
+  </header>
 
-<section class="catalog" id="catalog"></section>
+  <!-- FILTROS -->
+  <nav class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todo</button>
+    <span class="filter-sep">·</span>
+    <button class="filter-btn" data-filter="Rasasi">Rasasi</button>
+    <span class="filter-sep">·</span>
+    <button class="filter-btn" data-filter="Lattafa">Lattafa</button>
+    <span class="filter-sep">·</span>
+    <button class="filter-btn" data-filter="Armaf">Armaf</button>
+  </nav>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <button class="close" id="closeModal">✕</button>
+  <!-- CATÁLOGO -->
+  <main id="catalog"></main>
 
-    <h3 id="modal-title"></h3>
-    <p id="modal-desc" class="modal-desc"></p>
-
-    <div class="notes" id="modal-notes"></div>
-
-    <p class="select-size">Selecciona el tamaño</p>
-
-    <div class="sizes">
-      <button data-size="5ml"></button>
-      <button data-size="10ml"></button>
+  <!-- MODAL -->
+  <div id="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button id="closeModal" aria-label="Cerrar">✕</button>
+      <div class="modal-left">
+        <img id="modal-img" src="" alt=""/>
+      </div>
+      <div class="modal-right">
+        <p class="modal-brand" id="modal-brand"></p>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
+        <div class="modal-divider"></div>
+        <p class="modal-section-label">Pirámide olfativa</p>
+        <div id="modal-notes"></div>
+        <div class="modal-divider"></div>
+        <p class="modal-section-label">Pedir por WhatsApp</p>
+        <div class="sizes">
+          <button data-size="5ml">5 ml</button>
+          <button data-size="10ml">10 ml</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-mark">✦</span>
+    <p>Envíos a toda Colombia</p>
+    <p class="footer-copy">© 2026 Decants y Perfumes</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
