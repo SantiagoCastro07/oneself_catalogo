@@ -27,7 +27,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/hawasIce.png",
     desc: "Fresco, dulce y moderno. Perfecto para clima cálido.",
-    prices: { "5ml": 19900, "10ml": 37900 },
+    prices: { "5ml": 19900, "10ml": 38900 },
     notes: {
       salida:  "Cítricos, manzana",
       corazon: "Canela, lavanda",
@@ -35,11 +35,11 @@ const perfumes = [
     }
   },
   {
-    name: "Hawas Fire",
+    name: "Hawas Fire (agotado)",
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
-    prices: { "5ml": 21900, "10ml": 39900 },
+    prices: { "5ml": 22500, "10ml": 41400 },
     notes: {
       salida:  "Especias, pimienta",
       corazon: "Oud, incienso",
@@ -51,7 +51,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasDiva.png",
     desc: "Sofisticado, floral y con carácter. Ideal para ella.",
-    prices: { "5ml": 19900, "10ml": 37900 },
+    prices: { "5ml": 19900, "10ml": 38600 },
     notes: {
       salida:  "Frutas rojas, bergamota",
       corazon: "Rosa, jazmín",
@@ -59,11 +59,11 @@ const perfumes = [
     }
   },
   {
-    name: "Asad Bourbon",
+    name: "Asad Bourbon (agotado)",
     brand: "Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: { "5ml": 18900, "10ml": 31900 },
+    prices: { "5ml": 18900, "10ml": 36900 },
     notes: {
       salida:  "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -75,7 +75,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 19900, "10ml": 36900 },
+    prices: { "5ml": 19900, "10ml": 37900 },
     notes: {
       salida:  "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -87,7 +87,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 17900, "10ml": 30900 },
+    prices: { "5ml": 17900, "10ml": 34900 },
     notes: {
       salida:  "Mango, coco",
       corazon: "Flores blancas",
@@ -99,7 +99,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Marino, fresco y libre. Evoca brisa de océano y cielos abiertos.",
-    prices: { "5ml": 17900, "10ml": 30000 },
+    prices: { "5ml": 18900, "10ml": 36900 },
     notes: {
       salida:  "Notas acuáticas, cítricos",
       corazon: "Menta, cachemir",
@@ -111,7 +111,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSky.png",
     desc: "Cítrico vibrante con corazón cálido. Energizante y optimista.",
-    prices: { "5ml": 18600, "10ml": 30900 },
+    prices: { "5ml": 18900, "10ml": 35900 },
     notes: {
       salida:  "Mandarina, bergamota",
       corazon: "Neroli, flores blancas",
@@ -123,7 +123,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/nitroRed.png",
     desc: "Intenso, moderno y magnético. Para quien deja huella.",
-    prices: { "5ml": 17900, "10ml": 30000 },
+    prices: { "5ml": 18400, "10ml": 34900 },
     notes: {
       salida:  "Pimienta roja, manzana",
       corazon: "Geranio, lavanda",
