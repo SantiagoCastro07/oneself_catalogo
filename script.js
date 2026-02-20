@@ -87,7 +87,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 17900, "10ml": 34900 },
+    prices: { "5ml": 18400, "10ml": 34900 },
     notes: {
       salida:  "Mango, coco",
       corazon: "Flores blancas",
@@ -99,7 +99,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Marino, fresco y libre. Evoca brisa de océano y cielos abiertos.",
-    prices: { "5ml": 18900, "10ml": 36900 },
+    prices: { "5ml": 18800, "10ml": 35900 },
     notes: {
       salida:  "Notas acuáticas, cítricos",
       corazon: "Menta, cachemir",
@@ -123,7 +123,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/nitroRed.png",
     desc: "Intenso, moderno y magnético. Para quien deja huella.",
-    prices: { "5ml": 18400, "10ml": 34900 },
+    prices: { "5ml": 18200, "10ml": 34900 },
     notes: {
       salida:  "Pimienta roja, manzana",
       corazon: "Geranio, lavanda",
