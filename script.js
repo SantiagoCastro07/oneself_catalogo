@@ -78,7 +78,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/Sublime.png",
     desc: "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
-    prices: { "5ml": 17900, "10ml": 34900 },
+    prices: { "5ml": 18200, "10ml": 35900 },
     notes: {
       salida:  "Manzana, lichi",
       corazon: "Ciruela, rosa",
@@ -122,7 +122,7 @@ const perfumes = [
     }
   },
   {
-    name: "Hawas Fire (agotado)",
+    name: "Hawas Fire",
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
@@ -146,7 +146,7 @@ const perfumes = [
     }
   },
   {
-    name: "Asad Bourbon (agotado)",
+    name: "Asad Bourbon",
     brand: "Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
