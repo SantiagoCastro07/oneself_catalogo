@@ -15,13 +15,100 @@ const modalDesc   = document.getElementById("modal-desc");
 const modalNotes  = document.getElementById("modal-notes");
 const closeModal  = document.getElementById("closeModal");
 const sizeButtons = document.querySelectorAll(".sizes button");
+const searchInput = document.getElementById("searchInput");
 
 let selectedPerfume = null;
+let currentFilter = "all";
+let searchTerm = "";
 
 // ══════════════════════════════════════
 //  DATOS
 // ══════════════════════════════════════
 const perfumes = [
+  {
+    name: "Eclaire",
+    brand: "Lattafa",
+    img: "assets/EclaireLattafa.png",
+    desc: "Gourmand irresistible con notas dulces. Una delicia exquisita que enamora.",
+    prices: { "5ml": 18900, "10ml": 37400 },
+    notes: {
+      salida:  "Caramelo, leche",
+      corazon: "Miel, flores blancas",
+      fondo:   "Vainilla, praliné"
+    }
+  },
+  {
+    name: "Liquid Brun",
+    brand: "Lattafa",
+    img: "assets/LiquidBrun.png",
+    desc: "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
+    prices: { "5ml": 21900, "10ml": 41600 },
+    notes: {
+      salida:  "Cardamomo, canela",
+      corazon: "Praliné, maderas",
+      fondo:   "Vainilla, ámbar"
+    }
+  },
+  {
+    name: "Khamrah Qahwa",
+    brand: "Lattafa",
+    img: "assets/KhamrahQahwa.png",
+    desc: "El encanto dulce y especiado con un adictivo toque de café tostado.",
+    prices: { "5ml": 18600, "10ml": 36600 },
+    notes: {
+      salida:  "Canela, cardamomo",
+      corazon: "Café, praliné",
+      fondo:   "Vainilla, haba tonka"
+    }
+  },
+  {
+    name: "Club de Nuit Urban Man Elixir",
+    brand: "Armaf",
+    img: "assets/ClubDeNuitUrbanManElixir.png",
+    desc: "Masculino, especiado y fresco. Una estela poderosa, versátil y muy duradera.",
+    prices: { "5ml": 20900, "10ml": 40900 },
+    notes: {
+      salida:  "Pimienta rosa, bergamota",
+      corazon: "Lavanda, geranio",
+      fondo:   "Ambroxan, pachulí"
+    }
+  },
+  {
+    name: "Sublime",
+    brand: "Lattafa",
+    img: "assets/Sublime.png",
+    desc: "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
+    prices: { "5ml": 17900, "10ml": 34900 },
+    notes: {
+      salida:  "Manzana, lichi",
+      corazon: "Ciruela, rosa",
+      fondo:   "Vainilla, musgo"
+    }
+  },
+  {
+    name: "Mandarin Sky Elixir",
+    brand: "Armaf",
+    img: "assets/MandarinSkyElixir.png",
+    desc: "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
+    prices: { "5ml": 21900, "10ml": 41400 },
+    notes: {
+      salida:  "Mandarina, naranja dulce",
+      corazon: "Azafrán, maderas",
+      fondo:   "Ámbar, almizcle"
+    }
+  },
+  {
+    name: "Odyssey Mega",
+    brand: "Armaf",
+    img: "assets/OdysseyMega.png",
+    desc: "Cítrico, muy fresco. Una ráfaga de energía elegante.",
+    prices: { "5ml": 18600, "10ml": 36600 },
+    notes: {
+      salida:  "Naranja, jengibre",
+      corazon: "Bayas de enebro",
+      fondo:   "Haba tonka, vetiver"
+    }
+  },
   {
     name: "Hawas Ice",
     brand: "Rasasi",
@@ -95,18 +182,6 @@ const perfumes = [
     }
   },
   {
-    name: "Odyssey Aqua",
-    brand: "Armaf",
-    img: "assets/OdysseyAqua.png",
-    desc: "Marino, fresco y libre. Evoca brisa de océano y cielos abiertos.",
-    prices: { "5ml": 18800, "10ml": 35900 },
-    notes: {
-      salida:  "Notas acuáticas, cítricos",
-      corazon: "Menta, cachemir",
-      fondo:   "Almizcle blanco, ámbar"
-    }
-  },
-  {
     name: "Mandarin Sky",
     brand: "Armaf",
     img: "assets/MandarinSky.png",
@@ -135,17 +210,36 @@ const perfumes = [
 // ══════════════════════════════════════
 //  RENDER CARDS
 // ══════════════════════════════════════
-function renderCards(filter) {
+function renderCards() {
   catalog.innerHTML = "";
 
-  const list = filter === "all"
-    ? perfumes
-    : perfumes.filter(p => p.brand === filter);
+  let list = perfumes;
 
+  // 1. Filtrar por marca
+  if (currentFilter !== "all") {
+    list = list.filter(p => p.brand === currentFilter);
+  }
+
+  // 2. Filtrar por buscador
+  if (searchTerm) {
+    const lowerTerm = searchTerm.toLowerCase();
+    list = list.filter(p => 
+      p.name.toLowerCase().includes(lowerTerm) || 
+      p.brand.toLowerCase().includes(lowerTerm)
+    );
+  }
+
+  // Si no hay resultados
+  if (list.length === 0) {
+    catalog.innerHTML = `<p class="no-results">No se encontraron perfumes que coincidan con tu búsqueda.</p>`;
+    return;
+  }
+
+  // Renderizar tarjetas
   list.forEach((p, i) => {
     const card = document.createElement("article");
     card.className = "card";
-    card.style.animationDelay = `${i * 0.06}s`;
+    card.style.animationDelay = `${i * 0.05}s`;
 
     const num = String(i + 1).padStart(2, "0");
 
@@ -227,17 +321,24 @@ sizeButtons.forEach(btn => {
 });
 
 // ══════════════════════════════════════
-//  FILTROS
+//  FILTROS Y EVENTOS
 // ══════════════════════════════════════
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    renderCards(btn.dataset.filter);
+    currentFilter = btn.dataset.filter;
+    renderCards();
   });
+});
+
+// Buscador
+searchInput.addEventListener("input", (e) => {
+  searchTerm = e.target.value;
+  renderCards();
 });
 
 // ══════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════
-renderCards("all");
+renderCards();

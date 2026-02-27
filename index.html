@@ -9,10 +9,8 @@
 </head>
 <body>
 
-  <!-- HERO HEADER -->
   <header>
     <div class="header-inner">
-      <div class="header-tag"></div>
       <h1>OneSelf<br/><em>Decants</em></h1>
       <p class="header-sub">Perfumes Originales · Desde 5 ml</p>
     </div>
@@ -20,7 +18,10 @@
     <div class="header-deco-right">COLLECTION</div>
   </header>
 
-  <!-- FILTROS -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Buscar perfume o marca..." aria-label="Buscar perfume" autocomplete="off" />
+  </div>
+
   <nav class="filter-bar">
     <button class="filter-btn active" data-filter="all">Todo</button>
     <span class="filter-sep">·</span>
@@ -31,10 +32,8 @@
     <button class="filter-btn" data-filter="Armaf">Armaf</button>
   </nav>
 
-  <!-- CATÁLOGO -->
   <main id="catalog"></main>
 
-  <!-- MODAL -->
   <div id="modal" role="dialog" aria-modal="true">
     <div class="modal-box">
       <button id="closeModal" aria-label="Cerrar">✕</button>
@@ -58,7 +57,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <span class="footer-mark">✦</span>
     <p>Envíos a toda Colombia</p>
