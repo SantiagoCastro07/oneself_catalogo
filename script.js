@@ -25,12 +25,50 @@ let searchTerm = "";
 //  DATOS
 // ══════════════════════════════════════
 const perfumes = [
+  // --- NUEVOS PERFUMES ---
+  {
+    name: "Odyssey Aqua",
+    brand: "Armaf",
+    img: "assets/OdysseyAqua.png",
+    desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
+    prices: { "5ml": 19000, "10ml": 37000, "full": 195000 },
+    notes: {
+      salida:  "Naranja, Toronja",
+      corazon: "Menta, Notas acuáticas",
+      fondo:   "Ambroxan, Maderas"
+    }
+  },
+  {
+    name: "9PM",
+    brand: "Afnan",
+    img: "assets/9pm.png",
+    desc: "Dulce, nocturno y seductor. Una bomba de vainilla y manzana para salir de fiesta.",
+    prices: { "5ml": 19500, "10ml": 37500, "full": 195000 },
+    notes: {
+      salida:  "Manzana, Canela",
+      corazon: "Flor de azahar",
+      fondo:   "Vainilla, Haba tonka"
+    }
+  },
+  {
+    name: "Supremacy Collector Edition",
+    brand: "Afnan",
+    img: "assets/SupremacyCollector.png",
+    desc: "Intenso, afrutado y ahumado. Proyección bestial y lluvia de cumplidos.",
+    prices: { "5ml": 24000, "10ml": 44000, "full": 269000 },
+    notes: {
+      salida:  "Grosellas, Bergamota",
+      corazon: "Pachulí, Abedul",
+      fondo:   "Almizcle, Musgo"
+    }
+  },
+  // --- PERFUMES EXISTENTES ---
   {
     name: "Eclaire",
     brand: "Lattafa",
     img: "assets/EclaireLattafa.png",
     desc: "Gourmand irresistible con notas dulces. Una delicia exquisita que enamora.",
-    prices: { "5ml": 18900, "10ml": 37400 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 199000 },
     notes: {
       salida:  "Caramelo, leche",
       corazon: "Miel, flores blancas",
@@ -42,7 +80,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/LiquidBrun.png",
     desc: "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
-    prices: { "5ml": 21900, "10ml": 41600 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 272000 },
     notes: {
       salida:  "Cardamomo, canela",
       corazon: "Praliné, maderas",
@@ -54,7 +92,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/KhamrahQahwa.png",
     desc: "El encanto dulce y especiado con un adictivo toque de café tostado.",
-    prices: { "5ml": 18600, "10ml": 36600 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 196000 },
     notes: {
       salida:  "Canela, cardamomo",
       corazon: "Café, praliné",
@@ -66,7 +104,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/ClubDeNuitUrbanManElixir.png",
     desc: "Masculino, especiado y fresco. Una estela poderosa, versátil y muy duradera.",
-    prices: { "5ml": 20900, "10ml": 40900 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 276000 },
     notes: {
       salida:  "Pimienta rosa, bergamota",
       corazon: "Lavanda, geranio",
@@ -78,7 +116,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/Sublime.png",
     desc: "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
-    prices: { "5ml": 18200, "10ml": 35900 },
+    prices: { "5ml": 18600, "10ml": 36000, "full": 184000 },
     notes: {
       salida:  "Manzana, lichi",
       corazon: "Ciruela, rosa",
@@ -90,7 +128,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSkyElixir.png",
     desc: "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
-    prices: { "5ml": 21900, "10ml": 41400 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 255000 },
     notes: {
       salida:  "Mandarina, naranja dulce",
       corazon: "Azafrán, maderas",
@@ -102,7 +140,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyMega.png",
     desc: "Cítrico, muy fresco. Una ráfaga de energía elegante.",
-    prices: { "5ml": 18600, "10ml": 36600 },
+    prices: { "5ml": 18600, "10ml": 36500, "full": 194000 },
     notes: {
       salida:  "Naranja, jengibre",
       corazon: "Bayas de enebro",
@@ -114,7 +152,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/hawasIce.png",
     desc: "Fresco, dulce y moderno. Perfecto para clima cálido.",
-    prices: { "5ml": 19900, "10ml": 38900 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 259000 },
     notes: {
       salida:  "Cítricos, manzana",
       corazon: "Canela, lavanda",
@@ -126,7 +164,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
-    prices: { "5ml": 22500, "10ml": 41400 },
+    prices: { "5ml": 23000, "10ml": 43000, "full": 284000 },
     notes: {
       salida:  "Especias, pimienta",
       corazon: "Oud, incienso",
@@ -138,7 +176,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasDiva.png",
     desc: "Sofisticado, floral y con carácter. Ideal para ella.",
-    prices: { "5ml": 19900, "10ml": 38600 },
+    prices: { "5ml": 20000, "10ml": 39000, "full": 249000 },
     notes: {
       salida:  "Frutas rojas, bergamota",
       corazon: "Rosa, jazmín",
@@ -150,7 +188,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: { "5ml": 18900, "10ml": 36900 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 197000 },
     notes: {
       salida:  "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -162,7 +200,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 19900, "10ml": 37900 },
+    prices: { "5ml": 21000, "10ml": 39000, "full": 249000 },
     notes: {
       salida:  "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -174,7 +212,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/YaraTous.png",
     desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 18400, "10ml": 34900 },
+    prices: { "5ml": 18600, "10ml": 36000, "full": 196000 },
     notes: {
       salida:  "Mango, coco",
       corazon: "Flores blancas",
@@ -186,7 +224,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSky.png",
     desc: "Cítrico vibrante con corazón cálido. Energizante y optimista.",
-    prices: { "5ml": 18900, "10ml": 35900 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 204000 },
     notes: {
       salida:  "Mandarina, bergamota",
       corazon: "Neroli, flores blancas",
@@ -198,7 +236,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/nitroRed.png",
     desc: "Intenso, moderno y magnético. Para quien deja huella.",
-    prices: { "5ml": 18200, "10ml": 34900 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 229000 },
     notes: {
       salida:  "Pimienta roja, manzana",
       corazon: "Geranio, lavanda",
@@ -256,7 +294,7 @@ function renderCards() {
         <h3 class="card-name">${p.name}</h3>
         <p class="card-desc">${p.desc}</p>
         <div class="card-footer">
-          <span class="card-sizes-hint">5ml · 10ml</span>
+          <span class="card-sizes-hint">5ml · 10ml · Full</span>
           <span class="card-price">desde $${p.prices["5ml"].toLocaleString("es-CO")}</span>
         </div>
       </div>
@@ -285,10 +323,19 @@ function openModal(p) {
     <span><strong>Fondo</strong>${p.notes.fondo}</span>
   `;
 
-  // Actualizar precios en botones
+  // Actualizar precios en botones dinámicamente
   sizeButtons.forEach(btn => {
     const size = btn.dataset.size;
-    btn.textContent = `${size} · $${p.prices[size].toLocaleString("es-CO")}`;
+    if (p.prices[size]) {
+      btn.style.display = "block";
+      if (size === "full") {
+        btn.textContent = `Botella Completa · $${p.prices[size].toLocaleString("es-CO")}`;
+      } else {
+        btn.textContent = `${size} · $${p.prices[size].toLocaleString("es-CO")}`;
+      }
+    } else {
+      btn.style.display = "none";
+    }
   });
 
   modal.classList.add("show");
@@ -313,8 +360,11 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalFn
 sizeButtons.forEach(btn => {
   btn.addEventListener("click", e => {
     e.stopPropagation();
-    const size = btn.dataset.size;
-    const msg  = `Hola! 👋 Me interesa el *${selectedPerfume.name} – ${selectedPerfume.brand}* en ${size}. ¿Está disponible?`;
+    const sizeKey = btn.dataset.size;
+    // Si seleccionó botella completa, lo ponemos en el mensaje de forma bonita
+    const sizeText = sizeKey === "full" ? "botella completa" : sizeKey;
+    
+    const msg  = `Hola! 👋 Me interesa el *${selectedPerfume.name} – ${selectedPerfume.brand}* en formato *${sizeText}*. ¿Está disponible?`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
     closeModalFn();
   });
