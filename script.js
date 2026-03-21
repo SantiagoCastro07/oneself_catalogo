@@ -41,7 +41,7 @@ const perfumes = [
   {
     name: "9PM",
     brand: "Afnan",
-    img: "assets/9pm.png",
+    img: "assets/9Pm.png",
     desc: "Dulce, nocturno y seductor. Una bomba de vainilla y manzana para salir de fiesta.",
     prices: { "5ml": 19500, "10ml": 37500, "full": 195000 },
     notes: {
