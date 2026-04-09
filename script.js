@@ -26,6 +26,67 @@ let searchTerm = "";
 // ══════════════════════════════════════
 const perfumes = [
   // --- NUEVOS PERFUMES ---
+  // --- NUEVOS PERFUMES AGREGADOS ---
+  {
+    name: "Hawas Tropical",
+    brand: "Rasasi",
+    img: "assets/HawasTropical.png",
+    desc: "Una explosión exótica y vibrante de frutas tropicales sobre una base fresca y duradera.",
+    prices: { "5ml": 22000, "10ml": 42000, "full": 248000 },
+    notes: {
+      salida:  "Piña, Coco",
+      corazon: "Flores exóticas",
+      fondo:   "Almizcle, Maderas"
+    }
+  },
+  {
+    name: "His Confession",
+    brand: "Lattafa",
+    img: "assets/HisConfession.png",
+    desc: "Inspirado en la intensidad y la elegancia. Un aroma profundo, especiado y magnético.",
+    prices: { "5ml": 20000, "10ml": 40000, "full": 234000 },
+    notes: {
+      salida:  "Canela, Mandarina",
+      corazon: "Lavanda, Especias",
+      fondo:   "Vainilla, Pachulí"
+    }
+  },
+  {
+    name: "Le Male",
+    brand: "Jean Paul Gaultier",
+    img: "assets/LeMaleJPG.png",
+    desc: "Un clásico atemporal. Frescura de lavanda combinada con la calidez de la vainilla.",
+    prices: { "5ml": 31000, "10ml": 60000, "full": 480000 },
+    notes: {
+      salida:  "Menta, Lavanda",
+      corazon: "Flor de azahar, Canela",
+      fondo:   "Vainilla, Haba tonka"
+    }
+  },
+  {
+    name: "Amber Oud Gold Edition",
+    brand: "Al Haramain",
+    img: "assets/AmberOudGold.png",
+    desc: "Lujo puro. Una fragancia dulce, frutal y ambarada con una proyección inigualable.",
+    prices: { "5ml": 22000, "10ml": 42000, "full (120ml)": 284000 },
+    notes: {
+      salida:  "Notas verdes, Bergamota",
+      corazon: "Melón, Piña, Ámbar",
+      fondo:   "Vainilla, Almizcle"
+    }
+  },
+  {
+    name: "9PM Rebel",
+    brand: "Afnan",
+    img: "assets/9PmRebel.png",
+    desc: "Una versión más fresca y audaz del clásico 9PM. Perfecta para destacar en cualquier lugar.",
+    prices: { "5ml": 20000, "10ml": 39000, "full": 228000 },
+    notes: {
+      salida:  "Manzana verde, Cítricos",
+      corazon: "Notas amaderadas",
+      fondo:   "Musgo de roble, Ámbar"
+    }
+  },
   {
     name: "Odyssey Aqua",
     brand: "Armaf",
