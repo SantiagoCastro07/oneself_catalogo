@@ -66,7 +66,7 @@ const perfumes = [
   {
     name: "Amber Oud Gold Edition",
     brand: "Al Haramain",
-    img: "assets/AmberOudGold.png",
+    img: "assets/AmberOudGoldEdition.png",
     desc: "Lujo puro. Una fragancia dulce, frutal y ambarada con una proyección inigualable.",
     prices: { "5ml": 22000, "10ml": 42000, "full (120ml)": 284000 },
     notes: {
