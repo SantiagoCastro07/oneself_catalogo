@@ -32,7 +32,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasTropical.png",
     desc: "Una explosión exótica y vibrante de frutas tropicales sobre una base fresca y duradera.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 248000 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 258000 },
     notes: {
       salida:  "Piña, Coco",
       corazon: "Flores exóticas",
@@ -44,7 +44,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/HisConfession.png",
     desc: "Inspirado en la intensidad y la elegancia. Un aroma profundo, especiado y magnético.",
-    prices: { "5ml": 20000, "10ml": 40000, "full": 234000 },
+    prices: { "5ml": 20000, "10ml": 40000, "full": 245000 },
     notes: {
       salida:  "Canela, Mandarina",
       corazon: "Lavanda, Especias",
@@ -56,7 +56,7 @@ const perfumes = [
     brand: "Jean Paul Gaultier",
     img: "assets/LeMaleJPG.png",
     desc: "Un clásico atemporal. Frescura de lavanda combinada con la calidez de la vainilla.",
-    prices: { "5ml": 31000, "10ml": 60000, "full": 480000 },
+    prices: { "5ml": 31000, "10ml": 60000, "full": 620000 },
     notes: {
       salida:  "Menta, Lavanda",
       corazon: "Flor de azahar, Canela",
@@ -68,7 +68,7 @@ const perfumes = [
     brand: "Al Haramain",
     img: "assets/AmberOudGoldEdition.png",
     desc: "Lujo puro. Una fragancia dulce, frutal y ambarada con una proyección inigualable.",
-    prices: { "5ml": 22000, "10ml": 42000, "full (120ml)": 284000 },
+    prices: { "5ml": 22000, "10ml": 42000, "full (120ml)": 290000 },
     notes: {
       salida:  "Notas verdes, Bergamota",
       corazon: "Melón, Piña, Ámbar",
@@ -80,7 +80,7 @@ const perfumes = [
     brand: "Afnan",
     img: "assets/9PmRebel.png",
     desc: "Una versión más fresca y audaz del clásico 9PM. Perfecta para destacar en cualquier lugar.",
-    prices: { "5ml": 20000, "10ml": 39000, "full": 228000 },
+    prices: { "5ml": 20000, "10ml": 39000, "full": 230000 },
     notes: {
       salida:  "Manzana verde, Cítricos",
       corazon: "Notas amaderadas",
@@ -92,7 +92,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
-    prices: { "5ml": 19000, "10ml": 37000, "full": 195000 },
+    prices: { "5ml": 19000, "10ml": 37000, "full": 210000 },
     notes: {
       salida:  "Naranja, Toronja",
       corazon: "Menta, Notas acuáticas",
