@@ -80,7 +80,7 @@ const perfumes = [
     brand: "Afnan",
     img: "assets/9PmRebel.png",
     desc: "Una versión más fresca y audaz del clásico 9PM. Perfecta para destacar en cualquier lugar.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 230000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 226000 },
     notes: {
       salida:  "Manzana verde, Cítricos",
       corazon: "Notas amaderadas",
@@ -92,7 +92,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
-    prices: { "5ml": 20000, "10ml": 39000, "full": 210000 },
+    prices: { "5ml": 21000, "10ml": 39000, "full": 210000 },
     notes: {
       salida:  "Naranja, Toronja",
       corazon: "Menta, Notas acuáticas",
@@ -104,7 +104,7 @@ const perfumes = [
     brand: "Afnan",
     img: "assets/9Pm.png",
     desc: "Dulce, nocturno y seductor. Una bomba de vainilla y manzana para salir de fiesta.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 195000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 210000 },
     notes: {
       salida:  "Manzana, Canela",
       corazon: "Flor de azahar",
@@ -165,7 +165,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/ClubDeNuitUrbanManElixir.png",
     desc: "Masculino, especiado y fresco. Una estela poderosa, versátil y muy duradera.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 274000 },
+    prices: { "5ml": 23000, "10ml": 42000, "full": 274000 },
     notes: {
       salida:  "Pimienta rosa, bergamota",
       corazon: "Lavanda, geranio",
@@ -225,7 +225,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
-    prices: { "5ml": 23000, "10ml": 43000, "full": 282000 },
+    prices: { "5ml": 24000, "10ml": 43000, "full": 282000 },
     notes: {
       salida:  "Especias, pimienta",
       corazon: "Oud, incienso",
@@ -249,7 +249,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/AsadBourbon.png",
     desc: "Dulce, especiado y elegante. Ideal para la noche.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 198000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 206000 },
     notes: {
       salida:  "Pimienta negra, piña",
       corazon: "Vainilla, café",
@@ -261,7 +261,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 21000, "10ml": 40000, "full": 254000 },
+    prices: { "5ml": 22000, "10ml": 40000, "full": 256000 },
     notes: {
       salida:  "Bergamota, cítricos",
       corazon: "Notas florales",
