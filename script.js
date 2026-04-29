@@ -212,7 +212,7 @@ const perfumes = [
     name: "Odyssey HOMME White",
     brand: "Armaf",
     img: "assets/odysseywhite.png",
-    desc: "Un perfume infravalorado que sorprende desde el primer spray. Abre fresco y jugoso con cítricos y manzana, luego evoluciona a un corazón elegante con canela y lavanda que le da un toque cálido y masculino. En el fondo, el ámbar y el almizcle crean una estela suave, ligeramente dulce y muy adictiva. Versátil, moderno y perfecto para clima cálido, uso diario o citas.",
+    desc: "Un perfume infravalorado que sorprende desde el primer spray. Abre fresco y jugoso con cítricos y Pimienta rosa, luego evoluciona a un corazón elegante con hojas de violeta y notas marinas que le da un toque cálido y masculino. En el fondo, el ámbar y el amberwood crean una estela suave, ligeramente dulce y muy adictiva. Versátil, moderno y perfecto para clima cálido, uso diario o citas.",
     prices: { "5ml": 22000, "10ml": 42000, "full": 224000 },
     notes: {
       salida:  "Pimienta Rosa, Toronja",
