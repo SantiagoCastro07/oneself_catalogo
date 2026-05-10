@@ -27,6 +27,43 @@ let searchTerm = "";
 const perfumes = [
   // --- NUEVOS PERFUMES ---
   // --- NUEVOS PERFUMES AGREGADOS ---
+  // --- NUEVOS PERFUMES AÑADIDOS ---
+  {
+    name: "Precieux",
+    brand: "Lattafa",
+    img: "assets/Precieux.png",
+    desc: "Elegancia pura y sofisticación. Una fragancia amaderada y ambarada que proyecta lujo en cada spray.",
+    prices: { "5ml": 32000, "10ml": 59000, "full": 310000 },
+    notes: {
+      salida:  "Azafrán, Bergamota",
+      corazon: "Rosa, Jazmín, Madera de Cedro",
+      fondo:   "Ámbar, Almizcle, Vainilla"
+    }
+  },
+  {
+    name: "9PM Night Out",
+    brand: "Afnan",
+    img: "assets/9pmNightOut.png",
+    desc: "La evolución del 9PM original. Más intenso, nocturno y perfecto para eventos especiales.",
+    prices: { "5ml": 25000, "10ml": 45000, "full": 280000 },
+    notes: {
+      salida:  "Manzana, Canela, Bergamota",
+      corazon: "Flor de Azahar, Lirio de los Valles",
+      fondo:   "Vainilla, Haba Tonka, Ámbar"
+    }
+  },
+  {
+    name: "Hawas for Him",
+    brand: "Rasasi",
+    img: "assets/HawasForHim.png",
+    desc: "El rey de la seducción acuática. Frescura marina combinada con notas frutales y un fondo amaderado irresistible.",
+    prices: { "5ml": 22000, "10ml": 42000, "full": 242000 },
+    notes: {
+      salida:  "Manzana, Bergamota, Canela",
+      corazon: "Notas Marinas, Ciruela, Cardamomo",
+      fondo:   "Ámbar Gris, Almizcle, Madera a la deriva"
+    }
+  },
   {
     name: "Hawas Tropical",
     brand: "Rasasi",
@@ -92,7 +129,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
-    prices: { "5ml": 21000, "10ml": 39000, "full": 210000 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 210000 },
     notes: {
       salida:  "Naranja, Toronja",
       corazon: "Menta, Notas acuáticas",
@@ -158,18 +195,6 @@ const perfumes = [
       salida:  "Canela, cardamomo",
       corazon: "Café, praliné",
       fondo:   "Vainilla, haba tonka"
-    }
-  },
-  {
-    name: "Club de Nuit Urban Man Elixir",
-    brand: "Armaf",
-    img: "assets/ClubDeNuitUrbanManElixir.png",
-    desc: "Masculino, especiado y fresco. Una estela poderosa, versátil y muy duradera.",
-    prices: { "5ml": 23000, "10ml": 42000, "full": 274000 },
-    notes: {
-      salida:  "Pimienta rosa, bergamota",
-      corazon: "Lavanda, geranio",
-      fondo:   "Ambroxan, pachulí"
     }
   },
   {
