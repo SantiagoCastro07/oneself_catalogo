@@ -81,7 +81,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/HisConfession.png",
     desc: "Inspirado en la intensidad y la elegancia. Un aroma profundo, especiado y magnético.",
-    prices: { "5ml": 20000, "10ml": 40000, "full": 245000 },
+    prices: { "5ml": 21000, "10ml": 40000, "full": 245000 },
     notes: {
       salida:  "Canela, Mandarina",
       corazon: "Lavanda, Especias",
@@ -93,7 +93,7 @@ const perfumes = [
     brand: "Jean Paul Gaultier",
     img: "assets/LeMaleJPG.png",
     desc: "Un clásico atemporal. Frescura de lavanda combinada con la calidez de la vainilla.",
-    prices: { "5ml": 30000, "10ml": 60000, "full": 620000 },
+    prices: { "5ml": 32000, "10ml": 60000, "full": 620000 },
     notes: {
       salida:  "Menta, Lavanda",
       corazon: "Flor de azahar, Canela",
@@ -105,7 +105,7 @@ const perfumes = [
     brand: "Al Haramain",
     img: "assets/AmberOudGoldEdition.png",
     desc: "Lujo puro. Una fragancia dulce, frutal y ambarada con una proyección inigualable.",
-    prices: { "5ml": 22000, "10ml": 42000, "full (120ml)": 290000 },
+    prices: { "5ml": 23000, "10ml": 43000, "full (120ml)": 290000 },
     notes: {
       salida:  "Notas verdes, Bergamota",
       corazon: "Melón, Piña, Ámbar",
@@ -129,7 +129,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 210000 },
+    prices: { "5ml": 23000, "10ml": 42000, "full": 210000 },
     notes: {
       salida:  "Naranja, Toronja",
       corazon: "Menta, Notas acuáticas",
@@ -190,7 +190,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/KhamrahQahwa.png",
     desc: "El encanto dulce y especiado con un adictivo toque de café tostado.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 196000 },
+    prices: { "5ml": 21000, "10ml": 39000, "full": 210000 },
     notes: {
       salida:  "Canela, cardamomo",
       corazon: "Café, praliné",
@@ -202,7 +202,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/Sublime.png",
     desc: "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
-    prices: { "5ml": 19000, "10ml": 38000, "full": 188000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 190000 },
     notes: {
       salida:  "Manzana, lichi",
       corazon: "Ciruela, rosa",
@@ -214,7 +214,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSkyElixir.png",
     desc: "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 256000 },
+    prices: { "5ml": 23000, "10ml": 42000, "full": 256000 },
     notes: {
       salida:  "Mandarina, naranja dulce",
       corazon: "Azafrán, maderas",
@@ -250,7 +250,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
-    prices: { "5ml": 24000, "10ml": 43000, "full": 282000 },
+    prices: { "5ml": 25000, "10ml": 43000, "full": 282000 },
     notes: {
       salida:  "Especias, pimienta",
       corazon: "Oud, incienso",
@@ -286,7 +286,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 22000, "10ml": 40000, "full": 256000 },
+    prices: { "5ml": 23000, "10ml": 40000, "full": 256000 },
     notes: {
       salida:  "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -310,7 +310,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSky.png",
     desc: "Cítrico vibrante con corazón cálido. Energizante y optimista.",
-    prices: { "5ml": 19000, "10ml": 38000, "full": 204000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 204000 },
     notes: {
       salida:  "Mandarina, bergamota",
       corazon: "Neroli, flores blancas",
@@ -322,7 +322,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/nitroRed.png",
     desc: "Intenso, moderno y magnético. Para quien deja huella.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 226000 },
+    prices: { "5ml": 21000, "10ml": 38000, "full": 226000 },
     notes: {
       salida:  "Pimienta roja, manzana",
       corazon: "Geranio, lavanda",
