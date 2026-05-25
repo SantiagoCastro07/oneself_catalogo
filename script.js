@@ -43,7 +43,7 @@ const perfumes = [
   {
     name: "Eros EDP",
     brand: "Versace",
-    img: "assets/versaceErosEdp.png",
+    img: "assets/erosedp.png",
     desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
     prices: { "5ml": 26000, "10ml": 46000, "full": 280000 },
     notes: {
