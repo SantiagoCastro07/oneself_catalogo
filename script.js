@@ -111,7 +111,7 @@ const perfumes = [
       corazon: "Vainilla, Incienso",
       fondo:   "Ámbar, Maderas, Benjuí"
     }
-  }
+  },
   {
     name: "Precieux",
     brand: "Lattafa",
