@@ -43,7 +43,7 @@ const perfumes = [
   {
     name: "Eros EDP",
     brand: "Versace",
-    img: "assets/versaceeros.png",
+    img: "assets/versaceErosEdp.png",
     desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
     prices: { "5ml": 26000, "10ml": 46000, "full": 280000 },
     notes: {
@@ -79,7 +79,7 @@ const perfumes = [
   {
     name: "Hawas Kobra",
     brand: "Rasasi",
-    img: "assets/hawaskobra.png",
+    img: "assets/hawasKobra.png",
     desc: "Más oscuro y atrevido. Una versión intensa con un toque dulce y misterioso ideal para destacar.",
     prices: { "5ml": 24000, "10ml": 44000, "full": 265000 },
     notes: {
