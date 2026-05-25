@@ -28,12 +28,96 @@ const perfumes = [
   // --- NUEVOS PERFUMES ---
   // --- NUEVOS PERFUMES AGREGADOS ---
   // --- NUEVOS PERFUMES AÑADIDOS ---
+    {
+    name: "Stallion 53",
+    brand: "Emper",
+    img: "assets/stallion53.png",
+    desc: "Potente, masculino y elegante. Una fragancia intensa con carácter fuerte que impone presencia desde el primer momento.",
+    prices: { "5ml": 21000, "10ml": 41000, "full": 230000 },
+    notes: {
+      salida:  "Bergamota, Pimienta",
+      corazon: "Lavanda, Geranio",
+      fondo:   "Ámbar, Madera, Almizcle"
+    }
+  },
+  {
+    name: "Eros EDP",
+    brand: "Versace",
+    img: "assets/erosEDP.png",
+    desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
+    prices: { "5ml": 26000, "10ml": 46000, "full": 280000 },
+    notes: {
+      salida:  "Menta, Manzana, Limón",
+      corazon: "Haba Tonka, Ambroxan, Geranio",
+      fondo:   "Vainilla, Cedro, Vetiver"
+    }
+  },
+  {
+    name: "Bois Imperial",
+    brand: "Essential Parfums",
+    img: "assets/boisImperial.png",
+    desc: "Nicho, elegante y moderno. Un aroma amaderado fresco con un aire limpio y sofisticado que no pasa desapercibido.",
+    prices: { "5ml": 40000, "10ml": 75000, "full": 570000 },
+    notes: {
+      salida:  "Albahaca, Pimienta",
+      corazon: "Vetiver, Akigalawood",
+      fondo:   "Maderas, Pachulí"
+    }
+  },
+  {
+    name: "Vulcan Feu",
+    brand: "French Avenue",
+    img: "assets/vulcanFeu.png",
+    desc: "Caliente, especiado y explosivo. Una fragancia intensa con vibra ardiente perfecta para la noche.",
+    prices: { "5ml": 24000, "10ml": 44000, "full": 280000 },
+    notes: {
+      salida:  "Canela, Pimienta",
+      corazon: "Tabaco, Incienso",
+      fondo:   "Ámbar, Vainilla, Maderas"
+    }
+  },
+  {
+    name: "Hawas Kobra",
+    brand: "Rasasi",
+    img: "assets/hawasCobra.png",
+    desc: "Más oscuro y atrevido. Una versión intensa con un toque dulce y misterioso ideal para destacar.",
+    prices: { "5ml": 24000, "10ml": 44000, "full": 265000 },
+    notes: {
+      salida:  "Frutas, Cítricos",
+      corazon: "Especias, Lavanda",
+      fondo:   "Ámbar, Maderas, Almizcle"
+    }
+  },
+  {
+    name: "Hawas Ice",
+    brand: "Rasasi",
+    img: "assets/hawasIce.png",
+    desc: "Ultra fresco y vibrante. Una fragancia limpia, acuática y moderna perfecta para clima caliente.",
+    prices: { "5ml": 24000, "10ml": 44000, "full": 280000 },
+    notes: {
+      salida:  "Cítricos, Manzana",
+      corazon: "Notas acuáticas, Lavanda",
+      fondo:   "Almizcle, Maderas"
+    }
+  },
+  {
+    name: "Asad Elixir",
+    brand: "Lattafa",
+    img: "assets/asadElixir.png",
+    desc: "Intenso, dulce y especiado. Una fragancia envolvente con mucha personalidad y excelente duración.",
+    prices: { "5ml": 23000, "10ml": 43000, "full": 230000 },
+    notes: {
+      salida:  "Pimienta, Canela",
+      corazon: "Vainilla, Incienso",
+      fondo:   "Ámbar, Maderas, Benjuí"
+    }
+  }
   {
     name: "Precieux",
     brand: "Lattafa",
     img: "assets/Precieux.png",
     desc: "Elegancia pura y sofisticación. Una fragancia amaderada y ambarada que proyecta lujo en cada spray.",
-    prices: { "5ml": 32000, "10ml": 59000, "full": 310000 },
+    prices: { "5ml": 32000, "10ml": 59000, "full": 320000 },
     notes: {
       salida:  "Azafrán, Bergamota",
       corazon: "Rosa, Jazmín, Madera de Cedro",
@@ -178,7 +262,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/LiquidBrun.png",
     desc: "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
-    prices: { "5ml": 22000, "10ml": 41000, "full": 272000 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 270000 },
     notes: {
       salida:  "Cardamomo, canela",
       corazon: "Praliné, maderas",
