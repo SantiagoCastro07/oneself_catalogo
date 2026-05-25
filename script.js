@@ -43,7 +43,7 @@ const perfumes = [
   {
     name: "Eros EDP",
     brand: "Versace",
-    img: "assets/erosEDP.png",
+    img: "assets/versaceeros.png",
     desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
     prices: { "5ml": 26000, "10ml": 46000, "full": 280000 },
     notes: {
@@ -55,7 +55,7 @@ const perfumes = [
   {
     name: "Bois Imperial",
     brand: "Essential Parfums",
-    img: "assets/boisImperial.png",
+    img: "assets/boisimperial.png",
     desc: "Nicho, elegante y moderno. Un aroma amaderado fresco con un aire limpio y sofisticado que no pasa desapercibido.",
     prices: { "5ml": 40000, "10ml": 75000, "full": 570000 },
     notes: {
@@ -67,7 +67,7 @@ const perfumes = [
   {
     name: "Vulcan Feu",
     brand: "French Avenue",
-    img: "assets/vulcanFeu.png",
+    img: "assets/vulcanfeu.png",
     desc: "Caliente, especiado y explosivo. Una fragancia intensa con vibra ardiente perfecta para la noche.",
     prices: { "5ml": 24000, "10ml": 44000, "full": 280000 },
     notes: {
@@ -79,7 +79,7 @@ const perfumes = [
   {
     name: "Hawas Kobra",
     brand: "Rasasi",
-    img: "assets/hawasCobra.png",
+    img: "assets/hawaskobra.png",
     desc: "Más oscuro y atrevido. Una versión intensa con un toque dulce y misterioso ideal para destacar.",
     prices: { "5ml": 24000, "10ml": 44000, "full": 265000 },
     notes: {
@@ -103,7 +103,7 @@ const perfumes = [
   {
     name: "Asad Elixir",
     brand: "Lattafa",
-    img: "assets/asadElixir.png",
+    img: "assets/asadelixir.png",
     desc: "Intenso, dulce y especiado. Una fragancia envolvente con mucha personalidad y excelente duración.",
     prices: { "5ml": 23000, "10ml": 43000, "full": 230000 },
     notes: {
@@ -303,18 +303,6 @@ const perfumes = [
       salida:  "Mandarina, naranja dulce",
       corazon: "Azafrán, maderas",
       fondo:   "Ámbar, almizcle"
-    }
-  },
-  {
-    name: "Odyssey Mega",
-    brand: "Armaf",
-    img: "assets/OdysseyMega.png",
-    desc: "Cítrico, muy fresco. Una ráfaga de energía elegante.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 198000 },
-    notes: {
-      salida:  "Naranja, jengibre",
-      corazon: "Bayas de enebro",
-      fondo:   "Haba tonka, vetiver"
     }
   },
   {
