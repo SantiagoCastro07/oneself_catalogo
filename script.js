@@ -45,7 +45,7 @@ const perfumes = [
   brand: "Lattafa",
   img: "assets/Amethyst.png",
   desc: "Elegante, floral y oscuro. Una rosa intensa con un toque de oud que transmite lujo y sofisticación.",
-  prices: { "5ml": 20000, "10ml": 38000, "full": 200000 },
+  prices: { "5ml": 20000, "10ml": 35000, "full": 200000 },
   notes: {
     salida:  "Rosa, Pimienta Rosa",
     corazon: "Jazmín, Rosa Búlgara",
@@ -57,7 +57,7 @@ const perfumes = [
   brand: "Lattafa",
   img: "assets/Dynasty.png",
   desc: "Moderno, elegante y versátil. Un aroma fresco con un fondo amaderado que funciona en cualquier ocasión.",
-  prices: { "5ml": 22000, "10ml": 42000, "full": 240000 },
+  prices: { "5ml": 23000, "10ml": 42000, "full": 250000 },
   notes: {
     salida:  "Bergamota, Mandarina",
     corazon: "Lavanda, Geranio",
@@ -69,7 +69,7 @@ const perfumes = [
   brand: "Rasasi",
   img: "assets/HawasVerde.png",
   desc: "Fresco, verde y extremadamente limpio. Perfecto para clima cálido y uso diario.",
-  prices: { "5ml": 24000, "10ml": 44000, "full": 285000 },
+  prices: { "5ml": 30000, "10ml": 55000, "full": 320000 },
   notes: {
     salida:  "Bergamota, Toronja",
     corazon: "Jengibre, Cedro",
@@ -81,7 +81,7 @@ const perfumes = [
   brand: "Lattafa",
   img: "assets/YaraPink.png",
   desc: "Dulce, cremoso y femenino. Una fragancia irresistible con vainilla y frutas tropicales.",
-  prices: { "5ml": 19000, "10ml": 37000, "full": 196000 },
+  prices: { "5ml": 20000, "10ml": 35000, "full": 210000 },
   notes: {
     salida:  "Heliotropo, Orquídea, Mandarina",
     corazon: "Frutas Tropicales",
@@ -93,7 +93,7 @@ const perfumes = [
   brand: "Afnan",
   img: "assets/9AMPourFemme.png",
   desc: "Luminoso, floral y elegante. Una fragancia femenina fresca con excelente duración.",
-  prices: { "5ml": 22000, "10ml": 42000, "full": 235000 },
+  prices: { "5ml": 22000, "10ml": 42000, "full": 225000 },
   notes: {
     salida:  "Mandarina, Bergamota, Toronja",
     corazon: "Rosa, Jazmín, Grosella Negra",
@@ -105,7 +105,7 @@ const perfumes = [
   brand: "Versace",
   img: "assets/BrightCrystal.png",
   desc: "Fresco, floral y delicado. Un clásico femenino elegante y muy fácil de llevar.",
-  prices: { "5ml": 25000, "10ml": 46000, "full": 290000 },
+  prices: { "5ml": 30000, "10ml": 55000, "full": 340000 },
   notes: {
     salida:  "Yuzu, Granada",
     corazon: "Peonía, Magnolia, Flor de Loto",
@@ -117,7 +117,7 @@ const perfumes = [
   brand: "Montale",
   img: "assets/ArabiansTonka.png",
   desc: "Potente, dulce y lujoso. Una mezcla intensa de oud, rosa y haba tonka con una duración espectacular.",
-  prices: { "5ml": 45000, "10ml": 85000, "full": 780000 },
+  prices: { "5ml": 35000, "10ml": 65000, "full": 520000 },
   notes: {
     salida:  "Azafrán, Bergamota",
     corazon: "Rosa de Bulgaria, Oud",
@@ -129,7 +129,7 @@ const perfumes = [
     brand: "Versace",
     img: "assets/erosedp.png",
     desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
-    prices: { "5ml": 26000, "10ml": 46000, "full": 280000 },
+    prices: { "5ml": 26000, "10ml": 46000, "full": 290000 },
     notes: {
       salida:  "Menta, Manzana, Limón",
       corazon: "Haba Tonka, Ambroxan, Geranio",
@@ -141,7 +141,7 @@ const perfumes = [
     brand: "Essential Parfums",
     img: "assets/boisimperial.png",
     desc: "Nicho, elegante y moderno. Un aroma amaderado fresco con un aire limpio y sofisticado que no pasa desapercibido.",
-    prices: { "5ml": 40000, "10ml": 75000, "full": 570000 },
+    prices: { "5ml": 40000, "10ml": 75000, "full": 560000 },
     notes: {
       salida:  "Albahaca, Pimienta",
       corazon: "Vetiver, Akigalawood",
@@ -233,18 +233,6 @@ const perfumes = [
     }
   },
   {
-    name: "Hawas Tropical",
-    brand: "Rasasi",
-    img: "assets/HawasTropical.png",
-    desc: "Una explosión exótica y vibrante de frutas tropicales sobre una base fresca y duradera.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 258000 },
-    notes: {
-      salida:  "Piña, Coco",
-      corazon: "Flores exóticas",
-      fondo:   "Almizcle, Maderas"
-    }
-  },
-  {
     name: "His Confession",
     brand: "Lattafa",
     img: "assets/HisConfession.png",
@@ -297,7 +285,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/OdysseyAqua.png",
     desc: "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
-    prices: { "5ml": 23000, "10ml": 42000, "full": 210000 },
+    prices: { "5ml": 23000, "10ml": 42000, "full": 235000 },
     notes: {
       salida:  "Naranja, Toronja",
       corazon: "Menta, Notas acuáticas",
@@ -321,7 +309,7 @@ const perfumes = [
     brand: "Afnan",
     img: "assets/SupremacyCollector.png",
     desc: "Intenso, afrutado y ahumado. Proyección bestial y lluvia de cumplidos.",
-    prices: { "5ml": 24000, "10ml": 44000, "full": 269000 },
+    prices: { "5ml": 25000, "10ml": 45000, "full": 269000 },
     notes: {
       salida:  "Grosellas, Bergamota",
       corazon: "Pachulí, Abedul",
@@ -334,7 +322,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/EclaireLattafa.png",
     desc: "Gourmand irresistible con notas dulces. Una delicia exquisita que enamora.",
-    prices: { "5ml": 19000, "10ml": 38000, "full": 199000 },
+    prices: { "5ml": 20000, "10ml": 38000, "full": 210000 },
     notes: {
       salida:  "Caramelo, leche",
       corazon: "Miel, flores blancas",
@@ -346,7 +334,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/LiquidBrun.png",
     desc: "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 270000 },
+    prices: { "5ml": 24000, "10ml": 44000, "full": 275000 },
     notes: {
       salida:  "Cardamomo, canela",
       corazon: "Praliné, maderas",
@@ -382,7 +370,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSkyElixir.png",
     desc: "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
-    prices: { "5ml": 23000, "10ml": 42000, "full": 256000 },
+    prices: { "5ml": 23000, "10ml": 42000, "full": 265000 },
     notes: {
       salida:  "Mandarina, naranja dulce",
       corazon: "Azafrán, maderas",
@@ -394,7 +382,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/odysseywhite.png",
     desc: "Un perfume infravalorado que sorprende desde el primer spray. Abre fresco y jugoso con cítricos y Pimienta rosa, luego evoluciona a un corazón elegante con hojas de violeta y notas marinas que le da un toque cálido y masculino. En el fondo, el ámbar y el amberwood crean una estela suave, ligeramente dulce y muy adictiva. Versátil, moderno y perfecto para clima cálido, uso diario o citas.",
-    prices: { "5ml": 22000, "10ml": 42000, "full": 224000 },
+    prices: { "5ml": 22000, "10ml": 42000, "full": 220000 },
     notes: {
       salida:  "Pimienta Rosa, Toronja",
       corazon: "Hojas de violeta, notas marinas",
@@ -406,7 +394,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasFire.png",
     desc: "Intenso, especiado y audaz. Una versión ardiente del clásico.",
-    prices: { "5ml": 25000, "10ml": 43000, "full": 282000 },
+    prices: { "5ml": 25000, "10ml": 43000, "full": 270000 },
     notes: {
       salida:  "Especias, pimienta",
       corazon: "Oud, incienso",
@@ -471,18 +459,6 @@ const perfumes = [
       salida:  "Mandarina, bergamota",
       corazon: "Neroli, flores blancas",
       fondo:   "Cedro, almizcle suave"
-    }
-  },
-  {
-    name: "Nitro Red",
-    brand: "Armaf",
-    img: "assets/nitroRed.png",
-    desc: "Intenso, moderno y magnético. Para quien deja huella.",
-    prices: { "5ml": 21000, "10ml": 38000, "full": 226000 },
-    notes: {
-      salida:  "Pimienta roja, manzana",
-      corazon: "Geranio, lavanda",
-      fondo:   "Ámbar, patchouli"
     }
   }
 ];
