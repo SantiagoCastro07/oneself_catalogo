@@ -41,6 +41,18 @@ const perfumes = [
     }
   },
   {
+  name: "TAG Uomo Rosso",
+  brand: "Armaf",
+  img: "assets/TagUomoRosso.png",
+  desc: "Elegante, seductor y versátil. Un aroma cálido con un toque dulce y especiado que destaca especialmente en la noche.",
+  prices: { "5ml": 22000, "10ml": 42000, "full": 230000 },
+  notes: {
+    salida:  "Bergamota, Limón, Pimienta Rosa",
+    corazon: "Lavanda, Geranio, Canela",
+    fondo:   "Ámbar, Vainilla, Cedro, Pachulí"
+  }
+},
+  {
   name: "Amethyst",
   brand: "Lattafa",
   img: "assets/Amethyst.png",
