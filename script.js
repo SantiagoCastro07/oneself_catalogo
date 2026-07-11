@@ -450,18 +450,6 @@ const perfumes = [
     }
   },
   {
-    name: "Yara Tous",
-    brand: "Lattafa",
-    img: "assets/YaraTous.png",
-    desc: "Dulce tropical y femenino. Muy llamativo.",
-    prices: { "5ml": 19000, "10ml": 37000, "full": 196000 },
-    notes: {
-      salida:  "Mango, coco",
-      corazon: "Flores blancas",
-      fondo:   "Vainilla, almizcle"
-    }
-  },
-  {
     name: "Mandarin Sky",
     brand: "Armaf",
     img: "assets/MandarinSky.png",
