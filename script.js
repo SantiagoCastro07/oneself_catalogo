@@ -41,6 +41,90 @@ const perfumes = [
     }
   },
   {
+  name: "Amethyst",
+  brand: "Lattafa",
+  img: "assets/Amethyst.png",
+  desc: "Elegante, floral y oscuro. Una rosa intensa con un toque de oud que transmite lujo y sofisticación.",
+  prices: { "5ml": 20000, "10ml": 38000, "full": 200000 },
+  notes: {
+    salida:  "Rosa, Pimienta Rosa",
+    corazon: "Jazmín, Rosa Búlgara",
+    fondo:   "Oud, Ámbar, Vainilla"
+  }
+},
+{
+  name: "Dynasty",
+  brand: "Lattafa",
+  img: "assets/Dynasty.png",
+  desc: "Moderno, elegante y versátil. Un aroma fresco con un fondo amaderado que funciona en cualquier ocasión.",
+  prices: { "5ml": 22000, "10ml": 42000, "full": 240000 },
+  notes: {
+    salida:  "Bergamota, Mandarina",
+    corazon: "Lavanda, Geranio",
+    fondo:   "Vetiver, Cedro, Ámbar"
+  }
+},
+{
+  name: "Hawas Verde",
+  brand: "Rasasi",
+  img: "assets/HawasVerde.png",
+  desc: "Fresco, verde y extremadamente limpio. Perfecto para clima cálido y uso diario.",
+  prices: { "5ml": 24000, "10ml": 44000, "full": 285000 },
+  notes: {
+    salida:  "Bergamota, Toronja",
+    corazon: "Jengibre, Cedro",
+    fondo:   "Sándalo, Almizcle, Ámbar"
+  }
+},
+{
+  name: "Yara",
+  brand: "Lattafa",
+  img: "assets/YaraPink.png",
+  desc: "Dulce, cremoso y femenino. Una fragancia irresistible con vainilla y frutas tropicales.",
+  prices: { "5ml": 19000, "10ml": 37000, "full": 196000 },
+  notes: {
+    salida:  "Heliotropo, Orquídea, Mandarina",
+    corazon: "Frutas Tropicales",
+    fondo:   "Vainilla, Sándalo, Almizcle"
+  }
+},
+{
+  name: "9AM Pour Femme EDP",
+  brand: "Afnan",
+  img: "assets/9AMPourFemme.png",
+  desc: "Luminoso, floral y elegante. Una fragancia femenina fresca con excelente duración.",
+  prices: { "5ml": 22000, "10ml": 42000, "full": 235000 },
+  notes: {
+    salida:  "Mandarina, Bergamota, Toronja",
+    corazon: "Rosa, Jazmín, Grosella Negra",
+    fondo:   "Almizcle, Vainilla, Cedro"
+  }
+},
+{
+  name: "Bright Crystal",
+  brand: "Versace",
+  img: "assets/BrightCrystal.png",
+  desc: "Fresco, floral y delicado. Un clásico femenino elegante y muy fácil de llevar.",
+  prices: { "5ml": 25000, "10ml": 46000, "full": 290000 },
+  notes: {
+    salida:  "Yuzu, Granada",
+    corazon: "Peonía, Magnolia, Flor de Loto",
+    fondo:   "Almizcle, Caoba, Ámbar"
+  }
+},
+{
+  name: "Arabians Tonka",
+  brand: "Montale",
+  img: "assets/ArabiansTonka.png",
+  desc: "Potente, dulce y lujoso. Una mezcla intensa de oud, rosa y haba tonka con una duración espectacular.",
+  prices: { "5ml": 45000, "10ml": 85000, "full": 780000 },
+  notes: {
+    salida:  "Azafrán, Bergamota",
+    corazon: "Rosa de Bulgaria, Oud",
+    fondo:   "Haba Tonka, Ámbar, Almizcle, Azúcar de Caña"
+  }
+},
+  {
     name: "Eros EDP",
     brand: "Versace",
     img: "assets/erosedp.png",
