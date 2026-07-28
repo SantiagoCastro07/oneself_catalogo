@@ -28,18 +28,7 @@ const perfumes = [
   // --- NUEVOS PERFUMES ---
   // --- NUEVOS PERFUMES AGREGADOS ---
   // --- NUEVOS PERFUMES AÑADIDOS ---
-    {
-    name: "Stallion 53",
-    brand: "Emper",
-    img: "assets/stallion53.png",
-    desc: "Potente, masculino y elegante. Una fragancia intensa con carácter fuerte que impone presencia desde el primer momento.",
-    prices: { "5ml": 21000, "10ml": 41000, "full": 230000 },
-    notes: {
-      salida:  "Bergamota, Pimienta",
-      corazon: "Lavanda, Geranio",
-      fondo:   "Ámbar, Madera, Almizcle"
-    }
-  },
+    
   {
   name: "Valentino Uomo Born In Roma Intense",
   brand: "Valentino",
@@ -314,6 +303,18 @@ const perfumes = [
       salida:  "Menta, Lavanda",
       corazon: "Flor de azahar, Canela",
       fondo:   "Vainilla, Haba tonka"
+    }
+  },
+  {
+    name: "Stallion 53",
+    brand: "Emper",
+    img: "assets/stallion53.png",
+    desc: "Potente, masculino y elegante. Una fragancia intensa con carácter fuerte que impone presencia desde el primer momento.",
+    prices: { "5ml": 21000, "10ml": 41000, "full": 230000 },
+    notes: {
+      salida:  "Bergamota, Pimienta",
+      corazon: "Lavanda, Geranio",
+      fondo:   "Ámbar, Madera, Almizcle"
     }
   },
   {
