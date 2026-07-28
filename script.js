@@ -46,7 +46,7 @@ const perfumes = [
   brand: "Issey Miyake",
   img: "assets/isseymiyake.png",
   desc: "Fresco, cítrico y atemporal. Un clásico masculino perfecto para el día y el clima cálido.",
-  prices: { "5ml": 25000, "10ml": 45000, "full": 310000 },
+  prices: { "5ml": 26000, "10ml": 45000, "full": 310000 },
   notes: {
     salida:  "Yuzu, Limón, Bergamota",
     corazon: "Nuez Moscada, Canela, Lirio de los Valles",
@@ -178,7 +178,7 @@ const perfumes = [
     brand: "Versace",
     img: "assets/erosedp.png",
     desc: "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
-    prices: { "5ml": 26000, "10ml": 46000, "full": 290000 },
+    prices: { "5ml": 26000, "10ml": 45000, "full": 290000 },
     notes: {
       salida:  "Menta, Manzana, Limón",
       corazon: "Haba Tonka, Ambroxan, Geranio",
@@ -358,7 +358,7 @@ const perfumes = [
     brand: "Afnan",
     img: "assets/9Pm.png",
     desc: "Dulce, nocturno y seductor. Una bomba de vainilla y manzana para salir de fiesta.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 210000 },
+    prices: { "5ml": 20000, "10ml": 36000, "full": 210000 },
     notes: {
       salida:  "Manzana, Canela",
       corazon: "Flor de azahar",
@@ -395,7 +395,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/LiquidBrun.png",
     desc: "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
-    prices: { "5ml": 24000, "10ml": 44000, "full": 275000 },
+    prices: { "5ml": 25000, "10ml": 44000, "full": 275000 },
     notes: {
       salida:  "Cardamomo, canela",
       corazon: "Praliné, maderas",
@@ -407,7 +407,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/KhamrahQahwa.png",
     desc: "El encanto dulce y especiado con un adictivo toque de café tostado.",
-    prices: { "5ml": 21000, "10ml": 39000, "full": 210000 },
+    prices: { "5ml": 21000, "10ml": 36000, "full": 210000 },
     notes: {
       salida:  "Canela, cardamomo",
       corazon: "Café, praliné",
@@ -419,7 +419,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/Sublime.png",
     desc: "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 190000 },
+    prices: { "5ml": 20000, "10ml": 36000, "full": 190000 },
     notes: {
       salida:  "Manzana, lichi",
       corazon: "Ciruela, rosa",
@@ -431,7 +431,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSkyElixir.png",
     desc: "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
-    prices: { "5ml": 23000, "10ml": 42000, "full": 265000 },
+    prices: { "5ml": 25000, "10ml": 43000, "full": 265000 },
     notes: {
       salida:  "Mandarina, naranja dulce",
       corazon: "Azafrán, maderas",
@@ -467,7 +467,7 @@ const perfumes = [
     brand: "Rasasi",
     img: "assets/HawasDiva.png",
     desc: "Sofisticado, floral y con carácter. Ideal para ella.",
-    prices: { "5ml": 20000, "10ml": 39000, "full": 248000 },
+    prices: { "5ml": 22000, "10ml": 39000, "full": 248000 },
     notes: {
       salida:  "Frutas rojas, bergamota",
       corazon: "Rosa, jazmín",
@@ -491,7 +491,7 @@ const perfumes = [
     brand: "Lattafa",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    prices: { "5ml": 23000, "10ml": 40000, "full": 256000 },
+    prices: { "5ml": 25000, "10ml": 42000, "full": 256000 },
     notes: {
       salida:  "Bergamota, cítricos",
       corazon: "Notas florales",
@@ -503,7 +503,7 @@ const perfumes = [
     brand: "Armaf",
     img: "assets/MandarinSky.png",
     desc: "Cítrico vibrante con corazón cálido. Energizante y optimista.",
-    prices: { "5ml": 20000, "10ml": 38000, "full": 204000 },
+    prices: { "5ml": 20000, "10ml": 36000, "full": 204000 },
     notes: {
       salida:  "Mandarina, bergamota",
       corazon: "Neroli, flores blancas",
