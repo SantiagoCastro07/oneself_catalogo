@@ -41,6 +41,54 @@ const perfumes = [
     }
   },
   {
+  name: "Valentino Uomo Born In Roma Intense",
+  brand: "Valentino",
+  img: "assets/birintense.png",
+  desc: "Sensual, elegante y adictivo. Una mezcla intensa de vainilla y lavanda que deja una estela inolvidable.",
+  prices: { "5ml": 40000, "10ml": 75000, "full": 620000 },
+  notes: {
+    salida:  "Vainilla",
+    corazon: "Lavanda",
+    fondo:   "Vetiver"
+  }
+},
+{
+  name: "L'Eau d'Issey Pour Homme",
+  brand: "Issey Miyake",
+  img: "assets/isseymiyake.png",
+  desc: "Fresco, cítrico y atemporal. Un clásico masculino perfecto para el día y el clima cálido.",
+  prices: { "5ml": 25000, "10ml": 45000, "full": 310000 },
+  notes: {
+    salida:  "Yuzu, Limón, Bergamota",
+    corazon: "Nuez Moscada, Canela, Lirio de los Valles",
+    fondo:   "Vetiver, Cedro, Almizcle, Tabaco"
+  }
+},
+{
+  name: "Khamrah Waha",
+  brand: "Lattafa",
+  img: "assets/waha.png",
+  desc: "Dulce, cálido y envolvente. Una interpretación exótica con vainilla, especias y un toque gourmand irresistible.",
+  prices: { "5ml": 25000, "10ml": 42000, "full": 250000 },
+  notes: {
+    salida:  "Canela, Bergamota",
+    corazon: "Praliné, Dátiles, Nardos",
+    fondo:   "Vainilla, Haba Tonka, Benjuí, Ámbar"
+  }
+},
+{
+  name: "212 VIP Black",
+  brand: "Carolina Herrera",
+  img: "assets/212vipblack.png",
+  desc: "Seductor, moderno y nocturno. Un perfume dulce y aromático diseñado para destacar en cualquier salida.",
+  prices: { "5ml": 30000, "10ml": 55000, "full": 420000 },
+  notes: {
+    salida:  "Absenta, Anís, Hinojo",
+    corazon: "Lavanda",
+    fondo:   "Vainilla Negra, Almizcle"
+  }
+},
+  {
   name: "TAG Uomo Rosso",
   brand: "Armaf",
   img: "assets/TagUomoRosso.png",
