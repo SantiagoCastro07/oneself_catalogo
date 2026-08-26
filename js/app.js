@@ -226,7 +226,7 @@ sizeButtons.forEach(btn => {
 buyNowBtn.addEventListener("click", () => {
   if (!selectedPerfume) return;
   const size = document.querySelector('.sizes button[data-size]:not([disabled])')?.dataset.size || "5ml";
-  window.open(Cart.buildSingleItemUrl(selectedPerfume, size), "_blank");
+  window.location.href = Cart.buildSingleItemUrl(selectedPerfume, size);
 });
 
 function flashAddedToCart(btn) {
@@ -333,7 +333,7 @@ cartOverlay.addEventListener("click", closeCartDrawer);
 
 cartCheckout.addEventListener("click", () => {
   if (Cart.items.length === 0) return;
-  window.open(Cart.checkoutUrl(), "_blank");
+  window.location.href = Cart.checkoutUrl();
 });
 
 cartClear.addEventListener("click", () => {
