@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneSelf · Perfumes Originales en Decants</title>
+  <meta name="description" content="Perfumes originales en decants desde 5 ml. Rasasi, Lattafa, Armaf, Afnan, Versace y más. Envíos a toda Colombia, pedidos por WhatsApp." />
+  <meta name="theme-color" content="#080b12" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OneSelf · Tu aroma, tu identidad" />
+  <meta property="og:description" content="Perfumes originales en decants desde 5 ml. Envíos a toda Colombia." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ HERO / LANDING ═══════════════ -->
+  <header class="hero" id="inicio">
+    <div class="hero-inner">
+      <img src="assets/logo.png" class="hero-logo" alt="OneSelf" width="90" height="90" />
+      <h1 class="hero-title">OneSelf</h1>
+      <p class="hero-tagline">Tu aroma, tu identidad.</p>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-story">
+        OneSelf nace de la idea de que cada fragancia es una forma de expresarte.
+        Vendemos perfumes originales en decants para que descubras tu esencia antes de elegirla. (También tenemos botellas completas para los que ya saben lo que quieren 😉)
+      </p>
+
+      <div class="hero-links">
+        <a href="#catalogo" class="primary">✦ Explorar Catálogo 📘</a>
+        <a href="https://wa.me/573227747150" target="_blank" rel="noopener">WhatsApp OneSelf ✅</a>
+        <a href="https://www.tiktok.com/@oneself.decants.y?_r=1&_t=ZS-93M93pAtPzY" target="_blank" rel="noopener">TikTok OneSelf 😎</a>
+        <a href="https://instagram.com/oneself.parfums" target="_blank" rel="noopener">Instagram OneSelf 📷</a>
+      </div>
+    </div>
+    <button class="scroll-cue" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})" aria-label="Ir al catálogo">↓</button>
+  </header>
+
+  <!-- ═══════════════ CATÁLOGO ═══════════════ -->
+  <div id="catalogo">
+    <section class="catalog-intro">
+      <h2>OneSelf<br /><em>Perfumes</em></h2>
+      <p class="catalog-sub">Perfumes Originales · Envíos a toda Colombia</p>
+    </section>
+
+    <section id="newSection" class="shelf">
+      <div class="shelf-head">
+        <h3>Lo Nuevo <span>de esta semana</span></h3>
+      </div>
+      <div id="newCarousel" class="shelf-carousel"></div>
+    </section>
+
+    <div class="toolbar">
+      <div class="search-container">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Buscar perfume..." aria-label="Buscar perfume" autocomplete="off" />
+        </div>
+      </div>
+      <p id="resultsCount" class="results-count"></p>
+    </div>
+
+    <nav class="gender-tabs" id="genderBar"></nav>
+    <nav class="gender-tabs category-tabs" id="categoryBar"></nav>
+
+    <main id="catalog"></main>
+  </div>
+
+  <!-- ═══════════════ MODAL DE DETALLE ═══════════════ -->
+  <div id="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button id="closeModal" aria-label="Cerrar">✕</button>
+      <div class="modal-left">
+        <img id="modal-img" src="" alt="" />
+      </div>
+      <div class="modal-right">
+        <div class="modal-scroll">
+          <p class="modal-brand" id="modal-brand"></p>
+          <h2 id="modal-title"></h2>
+          <p id="modal-stock" class="modal-stock-badge">Agotado por ahora</p>
+          <p id="modal-desc"></p>
+          <div class="modal-divider"></div>
+          <p class="modal-section-label">Pirámide olfativa</p>
+          <div id="modal-notes"></div>
+        </div>
+        <div class="modal-actions">
+          <div class="modal-divider"></div>
+          <p class="modal-section-label">Elige tamaño y agrega al carrito</p>
+          <div class="sizes">
+            <button data-size="5ml">5 ml</button>
+            <button data-size="10ml">10 ml</button>
+            <button data-size="full" class="full-bottle">Botella Completa</button>
+          </div>
+          <button id="buyNowBtn" class="buy-now">Comprar ya por WhatsApp →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CARRITO ═══════════════ -->
+  <div id="cartOverlay" class="cart-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <div>
+        <h3>Tu pedido</h3>
+        <p id="cartSubtitle" class="cart-subtitle"></p>
+      </div>
+      <button id="closeCart" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total estimado</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button id="cartCheckout" class="cart-checkout-btn">Pedir por WhatsApp →</button>
+      <button id="cartClear" class="cart-clear-btn">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <button id="cartToggle" class="cart-fab" aria-label="Abrir carrito">
+    <svg class="cart-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+      <circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+      <path d="M2.5 4h2.6l2 12.2a1.6 1.6 0 0 0 1.6 1.3h8.9a1.6 1.6 0 0 0 1.6-1.3L21 8H6.4"/>
+    </svg>
+    <span id="cartCount" class="cart-count">0</span>
+  </button>
+
+  <div id="toast" class="toast"></div>
+
+  <footer>
+    <span class="footer-mark">✦</span>
+    <p>Envíos a toda Colombia</p>
+    <p class="footer-copy">© 2026 OneSelf Parfums</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
