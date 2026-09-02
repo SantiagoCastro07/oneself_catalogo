@@ -332,18 +332,6 @@ const PERFUMES = [
     notes: { salida: "Notas verdes, Bergamota", corazon: "Melón, Piña, Ámbar", fondo: "Vainilla, Almizcle" }
   },
   {
-    id: "9pm-rebel",
-    name: "9PM Rebel",
-    brand: "Afnan",
-    category: "arabe",
-    gender: "hombre",
-    img: "assets/9PmRebel.png",
-    desc: "Una versión más fresca y audaz del clásico 9PM. Perfecta para destacar en cualquier lugar.",
-    stock: true,
-    prices: { "5ml": 20000, "10ml": 38000, "full": 230000 },
-    notes: { salida: "Manzana verde, Cítricos", corazon: "Notas amaderadas", fondo: "Musgo de roble, Ámbar" }
-  },
-  {
     id: "odyssey-aqua",
     name: "Odyssey Aqua",
     brand: "Armaf",
