@@ -290,7 +290,6 @@ const PERFUMES = [
     img: "assets/LeBeauLeParfum.png",
     desc: "Cálido, amaderado y magnético. Una versión más intensa y sensual del icónico Le Beau, con un fondo dulce y envolvente.",
     stock: true,
-    isNew: true,
     prices: { "5ml": 35000, "10ml": 65000, "full": 610000 },
     notes: { salida: "Cardamomo, Toronja", corazon: "Madera de Coco, Salvia", fondo: "Haba Tonka, Amberwood" }
   },
@@ -303,7 +302,6 @@ const PERFUMES = [
     img: "assets/LeMaleElixir.png",
     desc: "La versión más oscura y concentrada de Le Male. Intenso, ambarado y con una estela que dura todo el día.",
     stock: true,
-    isNew: true,
     prices: { "5ml": 35000, "10ml": 65000, "full": 610000 },
     notes: { salida: "Lavanda", corazon: "Vainilla Absoluta", fondo: "Haba Tonka, Cedro, Madera de Gaiac" }
   },
