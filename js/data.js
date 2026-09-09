@@ -73,7 +73,7 @@ const PERFUMES = [
     gender: "mujer",
     img: "assets/Amethyst.png",
     desc: "Elegante, floral y oscuro. Una rosa intensa con un toque de oud que transmite lujo y sofisticación.",
-    stock: false,
+    stock: true,
     prices: { "5ml": 20000, "10ml": 35000, "full": 200000 },
     notes: { salida: "Rosa, Pimienta Rosa", corazon: "Jazmín, Rosa Búlgara", fondo: "Oud, Ámbar, Vainilla" }
   },
@@ -193,7 +193,7 @@ const PERFUMES = [
     gender: "hombre",
     img: "assets/hawaskobra.png",
     desc: "Más oscuro y atrevido. Una versión intensa con un toque dulce y misterioso ideal para destacar.",
-    stock: false,
+    stock: true,
     prices: { "5ml": 24000, "10ml": 44000, "full": 265000 },
     notes: { salida: "Frutas, Cítricos", corazon: "Especias, Lavanda", fondo: "Ámbar, Maderas, Almizcle" }
   },
@@ -483,7 +483,7 @@ const PERFUMES = [
     gender: "unisex",
     img: "assets/ArtOfUniverse.png",
     desc: "Sofisticado y versátil, con un aire moderno.",
-    stock: false,
+    stock: true,
     prices: { "5ml": 25000, "10ml": 42000, "full": 260000 },
     notes: { salida: "Bergamota, cítricos", corazon: "Notas florales", fondo: "Maderas, almizcle" }
   },
@@ -498,5 +498,31 @@ const PERFUMES = [
     stock: true,
     prices: { "5ml": 20000, "10ml": 36000, "full": 204000 },
     notes: { salida: "Mandarina, bergamota", corazon: "Neroli, flores blancas", fondo: "Cedro, almizcle suave" }
+  },
+  {
+    id: "cdn-urban-man-elixir",
+    name: "Club De Nuit Urban Man Elixir",
+    brand: "Armaf",
+    category: "arabe",
+    gender: "hombre",
+    img: "assets/cdnUrbanManElixir.png",
+    desc: "Fragancia masculina ambarina especiada lanzada en 2022. Salida fresca y especiada que evoluciona a un fondo cálido y amaderado.",
+    stock: true,
+    isNew: true,
+    prices: { "5ml": 25000, "10ml": 42000, "full": 249000 },
+    notes: { salida: "Bergamota, Pimienta Rosa, Jazmín, Flor de Azahar del Naranjo", corazon: "Lavanda, Elemí, Geranio, Vetiver, Azafrán, Cempasúchil", fondo: "Ambroxan, Ámbar, Cedro, Pachulí, Ládano" }
+  },
+  {
+    id: "hawas-malibu",
+    name: "Hawas Malibú",
+    brand: "Rasasi",
+    category: "arabe",
+    gender: "hombre",
+    img: "assets/HawasMalibu.png",
+    desc: "Frescura brillante tropical con un toque dulce menos pesado que otros perfumes del estilo. Alta duración, de 8 a 12 horas.",
+    stock: true,
+    isNew: true,
+    prices: { "5ml": 25000, "10ml": 43000, "full": 269000 },
+    notes: { salida: "Piña, Naranja, Toronja", corazon: "Ámbar, Raíz de Lirio, Lavanda", fondo: "Haba Tonka, Almizcle, Pachulí, Cachemira" }
   }
 ];
