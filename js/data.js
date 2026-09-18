@@ -265,7 +265,7 @@ const PERFUMES = [
     gender: "hombre",
     img: "assets/HisConfession.png",
     desc: "Inspirado en la intensidad y la elegancia. Un aroma profundo, especiado y magnético.",
-    stock: true,
+    stock: false,
     prices: { "5ml": 21000, "10ml": 40000, "full": 245000 },
     notes: { salida: "Canela, Mandarina", corazon: "Lavanda, Especias", fondo: "Vainilla, Pachulí" }
   },
@@ -522,5 +522,31 @@ const PERFUMES = [
     isNew: true,
     prices: { "5ml": 25000, "10ml": 43000, "full": 269000 },
     notes: { salida: "Piña, Naranja, Toronja", corazon: "Ámbar, Raíz de Lirio, Lavanda", fondo: "Haba Tonka, Almizcle, Pachulí, Cachemira" }
+  },
+  {
+    id: "odyssey-mega",
+    name: "Odyssey Mega",
+    brand: "Armaf",
+    category: "arabe",
+    gender: "hombre",
+    img: "assets/OdysseyMega.png",
+    desc: "Amaderado aromático vibrante. Una salida cítrica y especiada que evoluciona hacia un fondo cálido de maderas y almizcle.",
+    stock: true,
+    isNew: true,
+    prices: { "5ml": 20000, "10ml": 35000, "full": 200000 },
+    notes: { salida: "Limón, Naranja, Bergamota, Jengibre, Menta", corazon: "Piña, Salvia, Enebro, Geranio", fondo: "Almizcle, Cedro, Haba Tonka, Vetiver" }
+  },
+  {
+    id: "amber-oud-aqua-dubai",
+    name: "Amber Oud Aqua Dubai",
+    brand: "Al Haramain",
+    category: "arabe",
+    gender: "unisex",
+    img: "assets/AquaDubai.png",
+    desc: "Fresco, cítrico y afrutado con un fondo amaderado envolvente. Una fragancia versátil, ideal para el día a día.",
+    stock: true,
+    isNew: true,
+    prices: { "5ml": 25000, "10ml": 42000, "full": 295000 },
+    notes: { salida: "Notas verdes, Bergamota, Mandarina", corazon: "Melón, Ámbar, Grosella Negra, Piña", fondo: "Almizcle, Petitgrain, Gálbano, Vainilla" }
   }
 ];
