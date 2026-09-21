@@ -398,7 +398,7 @@ const PERFUMES = [
     img: "assets/KhamrahQahwa.png",
     desc: "El encanto dulce y especiado con un adictivo toque de café tostado.",
     stock: true,
-    prices: { "5ml": 21000, "10ml": 36000, "full": 210000 },
+    prices: { "5ml": 22000, "10ml": 38000, "full": 210000 },
     notes: { salida: "Canela, cardamomo", corazon: "Café, praliné", fondo: "Vainilla, haba tonka" }
   },
   {
