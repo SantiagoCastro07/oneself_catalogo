@@ -1,0 +1,372 @@
+---
+import Base from '../../layouts/Base.astro';
+import Tarjeta from '../../components/Tarjeta.astro';
+import Icono from '../../components/Icono.astro';
+import { Image, getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { url } from '../../lib/url';
+import { perfumesActivos, mapaMarcas, ordenarVariantes, agotado, precioDesde, type Perfume } from '../../lib/catalogo';
+import { FAMILIA_ETIQUETA, TIPO_ETIQUETA, GENERO_ETIQUETA } from '../../lib/categorias';
+import { TAMANO_TEXTO, pesos, mensajePedido, mensajeAviso, enlaceWhatsapp } from '../../lib/whatsapp';
+import tienda from '../../data/tienda.json';
+
+export async function getStaticPaths() {
+  const todos = await getCollection('perfumes', (p) => p.data.activo);
+  return todos.map((p) => ({ params: { slug: p.id }, props: { p } }));
+}
+const { p } = Astro.props as { p: Perfume };
+const d = p.data;
+const marcas = await mapaMarcas();
+const marca = marcas[d.marca.id];
+const variantes = ordenarVariantes(d.variantes);
+const sinStock = agotado(p);
+const pedibles = variantes.filter((v) => v.estado !== 'agotado');
+// Tamaño inicial: ?tam= en la URL (se aplica en el navegador) o 5 ml, el decant protagonista.
+const inicial = pedibles.find((v) => v.tamano === '5ml') || pedibles[0] || variantes[0];
+const rendimiento = tienda.rendimiento as Record<string, number | string>;
+
+const miniatura = await getImage({ src: d.imagenes[0], width: 128, height: 128, format: 'webp' });
+const og = await getImage({ src: d.imagenes[0], width: 800, height: 800, format: 'png' });
+
+// "Si te gusta este": comparte familia; se prioriza mismo género y disponibles
+const todos = await perfumesActivos();
+const relacionados = todos
+  .filter((o) => o.id !== p.id && !agotado(o))
+  .map((o) => ({ o, s: o.data.familias.filter((f) => d.familias.includes(f)).length * 2 + (o.data.genero === d.genero || o.data.genero === 'unisex' ? 1 : 0) + (o.data.marca.id === d.marca.id ? 0.5 : 0) }))
+  .filter((x) => x.s >= 2)
+  .sort((a, b) => b.s - a.s || a.o.data.nombre.localeCompare(b.o.data.nombre, 'es'))
+  .slice(0, 4)
+  .map((x) => x.o);
+
+const ESTADO_TEXTO: Record<string, string> = {
+  disponible: 'Disponible',
+  ultimas: 'Últimas unidades',
+  bajo_pedido: 'Bajo pedido: te confirmamos el tiempo de entrega por WhatsApp',
+  agotado: 'Agotado en este tamaño',
+};
+const familias = d.familias.map((f) => FAMILIA_ETIQUETA[f]);
+const titulo = `${d.nombre} de ${marca}`;
+const tamanosTexto = pedibles.filter((v) => v.tamano !== 'frasco').map((v) => TAMANO_TEXTO[v.tamano]).join(', ');
+const descripcionMeta = `${d.nombre} de ${marca} original en decant${tamanosTexto ? ` de ${tamanosTexto}` : ''}. ${familias.join(' y ')}. Desde ${pesos(precioDesde(p))}. Envíos a toda Colombia.`.slice(0, 158);
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: d.nombre,
+  brand: { '@type': 'Brand', name: marca },
+  description: d.descripcion,
+  image: new URL(og.src, Astro.site).href,
+  category: `Perfumes ${TIPO_ETIQUETA[d.tipo].toLowerCase()}s`,
+  offers: variantes.map((v) => ({
+    '@type': 'Offer',
+    name: TAMANO_TEXTO[v.tamano],
+    price: v.precio,
+    priceCurrency: 'COP',
+    availability: v.estado === 'agotado' ? 'https://schema.org/OutOfStock' : v.estado === 'bajo_pedido' ? 'https://schema.org/PreOrder' : v.estado === 'ultimas' ? 'https://schema.org/LimitedAvailability' : 'https://schema.org/InStock',
+    url: new URL(url(`perfume/${p.id}`), Astro.site).href + `?tam=${v.tamano}`,
+  })),
+};
+const migasLd = {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL(url(), Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: marca, item: new URL(url(`marcas/${d.marca.id}`), Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: d.nombre },
+  ],
+};
+const datosCliente = {
+  slug: p.id, nombre: d.nombre, marca, img: miniatura.src, numero: tienda.whatsapp,
+  variantes: Object.fromEntries(variantes.map((v) => [v.tamano, { precio: v.precio, estado: v.estado }])),
+  rendimiento, estados: ESTADO_TEXTO,
+};
+---
+<Base titulo={`${titulo} · Decant`} descripcion={descripcionMeta} imagenOg={og.src}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(migasLd)} />
+
+  <article class="wrap ficha" data-ficha data-inicial={inicial.tamano}>
+    <nav class="migas" aria-label="Ruta">
+      <a href={url()}>Inicio</a><span aria-hidden="true">/</span>
+      <a href={url(`marcas/${d.marca.id}`)}>{marca}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{d.nombre}</span>
+    </nav>
+
+    <div class="ficha__grid">
+      <div class="galeria">
+        <div class="galeria__pista" data-galeria>
+          {d.imagenes.map((img, i) => (
+            <div class="galeria__foto">
+              <Image src={img} alt={i === 0 ? titulo : `${titulo}, foto ${i + 1}`} widths={[400, 600, 800, 1000]} sizes="(min-width: 1024px) 560px, 100vw" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+            </div>
+          ))}
+        </div>
+        {d.imagenes.length > 1 && <div class="galeria__puntos" data-puntos>{d.imagenes.map((_, i) => <span class:list={{ 'is-on': i === 0 }} />)}</div>}
+        {sinStock && <span class="sello-ficha">Agotado</span>}
+      </div>
+
+      <div class="info">
+        <a class="info__marca" href={url(`marcas/${d.marca.id}`)}>{marca}</a>
+        <h1 class="display info__nombre">{d.nombre}</h1>
+        <p class="info__meta">{TIPO_ETIQUETA[d.tipo]} · {GENERO_ETIQUETA[d.genero]}{familias.length > 0 && <> · {familias.join(', ')}</>}</p>
+
+        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <span class="info__precio-tam muted" data-precio-tam>{TAMANO_TEXTO[inicial.tamano]}</span></p>
+
+        <fieldset class="tamanos">
+          <legend>Elige tu tamaño</legend>
+          <div class="tamanos__grid" style={`--n:${variantes.length}`}>
+            {variantes.map((v) => (
+              <label class:list={['tamano', { 'is-agotado': v.estado === 'agotado' }]}>
+                <input type="radio" name="tamano" value={v.tamano} checked={v.tamano === inicial.tamano} disabled={v.estado === 'agotado'} />
+                <span class="tamano__ml">{v.tamano === 'frasco' ? (v.ml ? `Frasco ${v.ml} ml` : 'Frasco') : TAMANO_TEXTO[v.tamano]}</span>
+                <span class="tamano__precio">{pesos(v.precio)}</span>
+                {v.estado === 'ultimas' && <span class="tamano__nota">Últimas</span>}
+                {v.estado === 'bajo_pedido' && <span class="tamano__nota">Bajo pedido</span>}
+                {v.estado === 'agotado' && <span class="tamano__nota">Agotado</span>}
+              </label>
+            ))}
+          </div>
+          <p class="tamanos__ayuda muted" data-rinde></p>
+        </fieldset>
+
+        <p class="estado" data-estado><span class="estado__punto"></span><span data-estado-texto>{ESTADO_TEXTO[inicial.estado]}</span></p>
+
+        {!sinStock ? (
+          <div class="comprar" data-comprar>
+            <div class="comprar__fila">
+              <div class="paso paso--grande" aria-label="Cantidad">
+                <button type="button" data-menos aria-label="Quitar uno" disabled>−</button>
+                <output data-cantidad aria-live="polite">1</output>
+                <button type="button" data-mas aria-label="Agregar uno">+</button>
+              </div>
+              <a class="btn comprar__wa" data-pedir target="_blank" rel="noopener"
+                 href={enlaceWhatsapp(tienda.whatsapp, mensajePedido([{ nombre: d.nombre, marca, tamano: inicial.tamano, precio: inicial.precio, cantidad: 1 }]))}>
+                <Icono nombre="whatsapp" /> Pedir por WhatsApp
+              </a>
+            </div>
+            <button type="button" class="btn btn--sec btn--block" data-agregar>Agregar a la bolsa</button>
+          </div>
+        ) : (
+          <a class="btn btn--block" target="_blank" rel="noopener" href={enlaceWhatsapp(tienda.whatsapp, mensajeAviso(d.nombre, marca))}>
+            <Icono nombre="whatsapp" /> Avisarme cuando llegue
+          </a>
+        )}
+        <a class="btn btn--sec btn--block" data-aviso-tam hidden target="_blank" rel="noopener" href="#"><Icono nombre="whatsapp" /> Avisarme cuando llegue este tamaño</a>
+
+        <ul class="confianza">
+          <li>Perfume original</li>
+          <li>Envíos a toda Colombia</li>
+          <li>Pago y envío se confirman por WhatsApp</li>
+        </ul>
+
+        <section class="bloque">
+          <h2 class="bloque__tit">Descripción</h2>
+          <p>{d.descripcion}</p>
+        </section>
+
+        {(d.notas.salida.length + d.notas.corazon.length + d.notas.fondo.length) > 0 && (
+          <section class="bloque">
+            <h2 class="bloque__tit">Notas olfativas</h2>
+            <dl class="notas">
+              {d.notas.salida.length > 0 && <><dt>Salida</dt><dd>{d.notas.salida.join(', ')}</dd></>}
+              {d.notas.corazon.length > 0 && <><dt>Corazón</dt><dd>{d.notas.corazon.join(', ')}</dd></>}
+              {d.notas.fondo.length > 0 && <><dt>Fondo</dt><dd>{d.notas.fondo.join(', ')}</dd></>}
+            </dl>
+          </section>
+        )}
+
+        <section class="bloque">
+          <h2 class="bloque__tit">¿Qué es un decant?</h2>
+          <p>{tienda.textoDecant}</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  {relacionados.length > 0 && (
+    <section class="wrap relacionados">
+      <h2 class="display relacionados__tit">Si te gusta este, prueba</h2>
+      <div class="relacionados__rejilla">
+        {relacionados.map((o) => <Tarjeta p={o} marca={marcas[o.data.marca.id]} />)}
+      </div>
+    </section>
+  )}
+
+  {!sinStock && (
+    <div class="barra" data-barra hidden>
+      <div class="barra__txt"><span class="barra__nombre">{d.nombre}</span><span class="muted" data-barra-resumen>{TAMANO_TEXTO[inicial.tamano]} · {pesos(inicial.precio)}</span></div>
+      <a class="btn btn--sm" data-pedir target="_blank" rel="noopener" href="#"><Icono nombre="whatsapp" /> Pedir</a>
+    </div>
+  )}
+
+  <script is:inline type="application/json" id="datos-ficha" set:html={JSON.stringify(datosCliente)} />
+</Base>
+
+<style>
+  .ficha { padding-top: var(--s4); }
+  .migas { display: flex; flex-wrap: wrap; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s4); }
+  .migas a:hover { color: var(--ink); text-decoration: underline; }
+  .migas [aria-current] { color: var(--ink); }
+  .ficha__grid { display: grid; gap: var(--s5); }
+
+  .galeria { position: relative; margin: 0 calc(var(--gutter) * -1); }
+  .galeria__pista { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; background: var(--bg-photo); }
+  .galeria__pista::-webkit-scrollbar { display: none; }
+  .galeria__foto { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 1; }
+  .galeria__foto img { width: 100%; height: 100%; object-fit: contain; padding: 8%; }
+  .galeria__puntos { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+  .galeria__puntos span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
+  .galeria__puntos span.is-on { background: var(--ink); }
+  .sello-ficha { position: absolute; top: 12px; left: calc(var(--gutter) + 0px); background: var(--ink); color: var(--on-ink); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 4px 8px; }
+
+  .info__marca { font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .info__marca:hover { color: var(--ink); text-decoration: underline; }
+  .info__nombre { font-size: 32px; line-height: 1.08; margin-top: var(--s2); }
+  .info__meta { margin-top: var(--s2); font-size: 14px; color: var(--ink-2); }
+  .info__precio { margin-top: var(--s4); font-size: 26px; font-weight: 500; }
+  .info__precio-tam { font-size: 15px; font-weight: 400; }
+
+  .tamanos { border: 0; margin: var(--s5) 0 0; padding: 0; }
+  .tamanos legend { font-size: 14px; font-weight: 500; margin-bottom: var(--s3); padding: 0; }
+  .tamanos__grid { display: grid; grid-template-columns: repeat(min(var(--n), 3), 1fr); gap: var(--s2); }
+  @media (min-width: 420px) { .tamanos__grid { grid-template-columns: repeat(var(--n), 1fr); } }
+  .tamano { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 68px; padding: var(--s2) var(--s1); border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; text-align: center; transition: border-color var(--t), background var(--t); }
+  .tamano:hover { border-color: var(--ink); }
+  .tamano input { position: absolute; opacity: 0; pointer-events: none; }
+  .tamano__ml { font-size: 16px; font-weight: 500; }
+  .tamano__precio { font-size: 13px; color: var(--ink-2); }
+  .tamano__nota { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); }
+  .tamano:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+  .tamano:has(input:checked) .tamano__precio, .tamano:has(input:checked) .tamano__nota { color: #C9CED6; }
+  .tamano:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .tamano.is-agotado { cursor: not-allowed; color: var(--ink-3); background: repeating-linear-gradient(135deg, transparent 0 8px, rgba(11,18,32,.04) 8px 9px); }
+  .tamano.is-agotado .tamano__ml { text-decoration: line-through; }
+  .tamano.is-agotado:hover { border-color: var(--line); }
+  .tamanos__ayuda { margin-top: var(--s2); font-size: 13px; min-height: 1.2em; }
+
+  .estado { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s4); font-size: 14px; }
+  .estado__punto { width: 8px; height: 8px; border-radius: 50%; background: #3E7C59; flex: none; }
+  .estado[data-e="ultimas"] .estado__punto { background: #B07A1E; }
+  .estado[data-e="bajo_pedido"] .estado__punto { background: var(--accent); }
+  .estado[data-e="agotado"] .estado__punto { background: var(--danger); }
+
+  .comprar { display: grid; gap: var(--s3); margin-top: var(--s4); }
+  .comprar__fila { display: grid; grid-template-columns: auto 1fr; gap: var(--s3); }
+  .paso--grande { height: 48px; }
+  .paso--grande button { height: 46px; width: 42px; }
+  .info > .btn { margin-top: var(--s4); }
+  [data-aviso-tam] { margin-top: var(--s3); }
+
+  .confianza { margin-top: var(--s5); display: grid; gap: var(--s2); font-size: 14px; color: var(--ink-2); }
+  .confianza li { padding-left: 20px; position: relative; }
+  .confianza li::before { content: ''; position: absolute; left: 2px; top: 7px; width: 8px; height: 5px; border-left: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(-45deg); }
+
+  .bloque { margin-top: var(--s5); padding-top: var(--s5); border-top: 1px solid var(--line); }
+  .bloque__tit { font-size: 14px; font-weight: 500; margin-bottom: var(--s2); }
+  .notas { display: grid; grid-template-columns: 80px 1fr; gap: var(--s2) var(--s3); margin: 0; }
+  .notas dt { color: var(--ink-2); font-size: 14px; }
+  .notas dd { margin: 0; }
+
+  .relacionados { margin-top: var(--s8); }
+  .relacionados__tit { font-size: 24px; margin-bottom: var(--s5); }
+  .relacionados__rejilla { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s6) var(--s3); }
+  @media (min-width: 768px) { .relacionados__rejilla { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s6) var(--s5); } }
+
+  .barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; display: flex; align-items: center; gap: var(--s3); padding: var(--s2) var(--gutter) calc(var(--s2) + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); }
+  .barra__txt { flex: 1; min-width: 0; display: grid; font-size: 13px; line-height: 1.3; }
+  .barra__nombre { font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  @media (min-width: 1024px) {
+    .ficha__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s7); align-items: start; }
+    .galeria { margin: 0; position: sticky; top: calc(var(--header-h) + var(--s4)); }
+    .sello-ficha { left: 12px; }
+    .info__nombre { font-size: 44px; }
+    .barra { display: none; }
+  }
+</style>
+
+<script>
+  import { mensajePedido, mensajeAviso, enlaceWhatsapp, pesos, TAMANO_TEXTO } from '../../lib/whatsapp';
+  const datos = JSON.parse(document.getElementById('datos-ficha')!.textContent!);
+  const ficha = document.querySelector<HTMLElement>('[data-ficha]')!;
+  const radios = [...ficha.querySelectorAll<HTMLInputElement>('input[name="tamano"]')];
+  const precio = ficha.querySelector<HTMLElement>('[data-precio]')!;
+  const precioTam = ficha.querySelector<HTMLElement>('[data-precio-tam]')!;
+  const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
+  const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
+  const rinde = ficha.querySelector<HTMLElement>('[data-rinde]')!;
+  const cantEl = ficha.querySelector<HTMLOutputElement>('[data-cantidad]');
+  const menos = ficha.querySelector<HTMLButtonElement>('[data-menos]');
+  const mas = ficha.querySelector<HTMLButtonElement>('[data-mas]');
+  const pedir = [...document.querySelectorAll<HTMLAnchorElement>('[data-pedir]')];
+  const agregar = ficha.querySelector<HTMLButtonElement>('[data-agregar]');
+  const avisoTam = ficha.querySelector<HTMLAnchorElement>('[data-aviso-tam]')!;
+  const barra = document.querySelector<HTMLElement>('[data-barra]');
+  const resumen = document.querySelector<HTMLElement>('[data-barra-resumen]');
+  let cantidad = 1;
+
+  const actual = () => radios.find((r) => r.checked)?.value || ficha.dataset.inicial!;
+
+  function pintar() {
+    const tam = actual();
+    const v = datos.variantes[tam];
+    precio.textContent = pesos(v.precio * cantidad);
+    precioTam.textContent = cantidad > 1 ? `${cantidad} × ${TAMANO_TEXTO[tam]}` : TAMANO_TEXTO[tam];
+    estado.dataset.e = v.estado;
+    estadoTxt.textContent = datos.estados[v.estado];
+    const r = datos.rendimiento[tam];
+    rinde.textContent = typeof r === 'number' ? `${TAMANO_TEXTO[tam]} rinde aprox. ${r} atomizaciones.` : tam === 'frasco' ? 'Frasco completo, sellado de fábrica.' : '';
+    if (cantEl) cantEl.textContent = String(cantidad);
+    if (menos) menos.disabled = cantidad <= 1;
+    if (mas) mas.disabled = cantidad >= 20;
+    const href = enlaceWhatsapp(datos.numero, mensajePedido([{ nombre: datos.nombre, marca: datos.marca, tamano: tam, precio: v.precio, cantidad, bajoPedido: v.estado === 'bajo_pedido' }]));
+    pedir.forEach((a) => (a.href = href));
+    if (resumen) resumen.textContent = `${cantidad > 1 ? cantidad + ' × ' : ''}${TAMANO_TEXTO[tam]} · ${pesos(v.precio * cantidad)}`;
+    const u = new URL(location.href); u.searchParams.set('tam', tam); history.replaceState(null, '', u);
+  }
+
+  // ?tam= desde enlaces de Instagram o del catálogo
+  const pedido = new URLSearchParams(location.search).get('tam');
+  const r0 = radios.find((r) => r.value === pedido && !r.disabled);
+  if (r0) r0.checked = true;
+
+  // Tamaños agotados: permitir pedir aviso
+  const agotados = radios.filter((r) => r.disabled).map((r) => r.value);
+  if (agotados.length && agregar) {
+    avisoTam.hidden = false;
+    avisoTam.textContent = '';
+    avisoTam.append(`Avisarme cuando llegue ${agotados.map((t) => TAMANO_TEXTO[t]).join(' / ')}`);
+    avisoTam.href = enlaceWhatsapp(datos.numero, mensajeAviso(datos.nombre, datos.marca, agotados[0]));
+    avisoTam.classList.add('btn--sm');
+  }
+
+  radios.forEach((r) => r.addEventListener('change', () => { reiniciarAgregar(); pintar(); }));
+  menos?.addEventListener('click', () => { cantidad = Math.max(1, cantidad - 1); reiniciarAgregar(); pintar(); });
+  mas?.addEventListener('click', () => { cantidad = Math.min(20, cantidad + 1); reiniciarAgregar(); pintar(); });
+  // Tras agregar, el mismo botón abre la bolsa; si cambia tamaño o cantidad, vuelve a "Agregar".
+  const reiniciarAgregar = () => { if (agregar) { delete agregar.dataset.hecho; agregar.textContent = 'Agregar a la bolsa'; } };
+  agregar?.addEventListener('click', () => {
+    if (agregar.dataset.hecho) { document.dispatchEvent(new CustomEvent('bolsa:abrir')); return; }
+    const tam = actual(); const v = datos.variantes[tam];
+    document.dispatchEvent(new CustomEvent('bolsa:agregar', { detail: { slug: datos.slug, nombre: datos.nombre, marca: datos.marca, tamano: tam, precio: v.precio, cantidad, img: datos.img, estado: v.estado } }));
+    agregar.dataset.hecho = '1';
+    agregar.textContent = 'Agregado · Ver bolsa';
+  });
+
+  // Galería: puntos
+  const pista = document.querySelector<HTMLElement>('[data-galeria]');
+  const puntos = document.querySelectorAll('[data-puntos] span');
+  pista?.addEventListener('scroll', () => {
+    const i = Math.round(pista.scrollLeft / pista.clientWidth);
+    puntos.forEach((p, k) => p.classList.toggle('is-on', k === i));
+  }, { passive: true });
+
+  // Barra fija en móvil cuando el botón principal sale de la pantalla
+  const comprar = ficha.querySelector('[data-comprar]');
+  if (barra && comprar) {
+    let pendiente = false;
+    const revisar = () => { pendiente = false; barra.hidden = comprar.getBoundingClientRect().bottom > 0; };
+    addEventListener('scroll', () => { if (!pendiente) { pendiente = true; requestAnimationFrame(revisar); } }, { passive: true });
+    revisar();
+  }
+  pintar();
+</script>

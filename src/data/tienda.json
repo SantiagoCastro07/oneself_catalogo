@@ -7,5 +7,12 @@
   "instagramUsuario": "@oneself.parfums",
   "tiktok": "https://www.tiktok.com/@oneself.decants.y",
   "tiktokUsuario": "@oneself.decants.y",
-  "anuncio": "Envíos a toda Colombia · Pedidos por WhatsApp"
+  "anuncio": "Envíos a toda Colombia · Pedidos por WhatsApp",
+  "rendimiento": {
+    "_nota": "Atomizaciones aproximadas por tamaño. Confirmar con OneSelf.",
+    "3ml": 40,
+    "5ml": 70,
+    "10ml": 140
+  },
+  "textoDecant": "Un decant es una porción del perfume original en un atomizador pequeño, para que lo pruebes antes de comprar el frasco."
 }

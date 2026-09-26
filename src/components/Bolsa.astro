@@ -1,0 +1,183 @@
+---
+// Bolsa de pedido: vive en el navegador (localStorage), sin cuentas.
+// Al enviar, arma UN solo mensaje de WhatsApp con todos los perfumes.
+import Icono from './Icono.astro';
+import tienda from '../data/tienda.json';
+import { url } from '../lib/url';
+---
+<aside id="bolsa" class="bolsa" aria-label="Tu bolsa" hidden data-numero={tienda.whatsapp} data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
+  <div class="bolsa__cab">
+    <p class="bolsa__tit">Tu bolsa <span class="muted" data-bolsa-n></span></p>
+    <button class="icon-btn" type="button" aria-label="Cerrar bolsa" data-bolsa-cerrar><Icono nombre="cerrar" /></button>
+  </div>
+  <div class="bolsa__cuerpo">
+    <ul class="bolsa__lista" data-bolsa-lista></ul>
+    <div class="bolsa__vacia" data-bolsa-vacia>
+      <p>Tu bolsa está vacía.</p>
+      <p class="muted">Agrega varios decants y pídelos todos en un solo mensaje.</p>
+      <a class="btn btn--sec btn--sm" href={url('catalogo')}>Ver catálogo</a>
+    </div>
+    <p class="bolsa__aviso" data-bolsa-aviso hidden></p>
+  </div>
+  <div class="bolsa__pie" data-bolsa-pie hidden>
+    <label class="bolsa__ciudad">
+      <span>Ciudad de envío <span class="muted">(opcional)</span></span>
+      <input type="text" data-bolsa-ciudad autocomplete="address-level2" placeholder="Ej. Medellín" />
+    </label>
+    <div class="bolsa__total"><span>Subtotal</span><strong data-bolsa-total></strong></div>
+    <p class="bolsa__nota muted">El envío y el pago se confirman por WhatsApp.</p>
+    <a class="btn btn--block" data-bolsa-enviar href="#" target="_blank" rel="noopener"><Icono nombre="whatsapp" /> Enviar pedido por WhatsApp</a>
+  </div>
+</aside>
+
+<style is:global>
+  .bolsa { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(92vw, 400px); background: var(--bg); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--line); }
+  .bolsa__cab { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); padding: 0 var(--s2) 0 var(--gutter); border-bottom: 1px solid var(--line); }
+  .bolsa__tit { font-size: 17px; font-weight: 500; }
+  .bolsa__cuerpo { flex: 1; overflow-y: auto; padding: 0 var(--gutter); }
+  .bolsa__item { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s3); padding: var(--s4) 0; border-bottom: 1px solid var(--line); }
+  .bolsa__item img { width: 64px; height: 64px; object-fit: contain; background: var(--bg-photo); padding: 4px; }
+  .bolsa__marca { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
+  .bolsa__nombre { font-weight: 500; line-height: 1.3; }
+  .bolsa__tam { font-size: 13px; color: var(--ink-2); }
+  .bolsa__fila { display: flex; align-items: center; gap: var(--s3); margin-top: var(--s2); }
+  .bolsa__precio { font-weight: 500; white-space: nowrap; }
+  .bolsa__quitar { border: 0; background: none; font-size: 13px; color: var(--ink-2); text-decoration: underline; padding: 4px 0; }
+  .bolsa__alerta { grid-column: 2 / -1; font-size: 13px; color: var(--danger); }
+  .bolsa__vacia { padding: var(--s7) 0; display: grid; gap: var(--s3); justify-items: center; text-align: center; }
+  .bolsa__aviso { margin: var(--s4) 0; padding: var(--s3); background: var(--bg-photo); font-size: 14px; border-radius: var(--radius); }
+  .bolsa__pie { border-top: 1px solid var(--line); padding: var(--s4) var(--gutter) calc(var(--s4) + env(safe-area-inset-bottom)); display: grid; gap: var(--s3); }
+  .bolsa__ciudad { display: grid; gap: var(--s1); font-size: 14px; }
+  .bolsa__ciudad input { height: 44px; border: 1px solid var(--line); border-radius: var(--radius); padding: 0 var(--s3); background: var(--bg-raised); font-size: 16px; }
+  .bolsa__total { display: flex; justify-content: space-between; font-size: 17px; }
+  .bolsa__nota { font-size: 13px; }
+
+  .paso { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: var(--radius); height: 36px; }
+  .paso button { width: 36px; height: 34px; border: 0; background: none; font-size: 18px; line-height: 1; }
+  .paso button:disabled { color: var(--ink-3); cursor: default; }
+  .paso output, .paso span { min-width: 28px; text-align: center; font-size: 15px; }
+
+  .contador { position: absolute; top: 5px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 11px; display: grid; place-items: center; }
+  .toast { position: fixed; left: 50%; top: calc(var(--header-h) + 44px); transform: translate(-50%, -12px); opacity: 0; z-index: 60; background: var(--ink); color: var(--on-ink); padding: 12px 16px; border-radius: var(--radius); font-size: 14px; transition: opacity 180ms, transform 180ms; pointer-events: none; max-width: calc(100vw - 32px); }
+  .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+</style>
+
+<script>
+  import { mensajePedido, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido } from '../lib/whatsapp';
+
+  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
+  const CLAVE = 'oneself_bolsa_v2';
+  const panel = document.getElementById('bolsa')!;
+  const lista = panel.querySelector<HTMLElement>('[data-bolsa-lista]')!;
+  const vacia = panel.querySelector<HTMLElement>('[data-bolsa-vacia]')!;
+  const pie = panel.querySelector<HTMLElement>('[data-bolsa-pie]')!;
+  const aviso = panel.querySelector<HTMLElement>('[data-bolsa-aviso]')!;
+  const totalEl = panel.querySelector<HTMLElement>('[data-bolsa-total]')!;
+  const nEl = panel.querySelector<HTMLElement>('[data-bolsa-n]')!;
+  const enviar = panel.querySelector<HTMLAnchorElement>('[data-bolsa-enviar]')!;
+  const ciudad = panel.querySelector<HTMLInputElement>('[data-bolsa-ciudad]')!;
+  const numero = panel.dataset.numero!;
+  const catalogo = panel.dataset.catalogo!;
+
+  const leer = (): Item[] => { try { return JSON.parse(localStorage.getItem(CLAVE) || '[]'); } catch { return []; } };
+  const guardar = (x: Item[]) => { try { localStorage.setItem(CLAVE, JSON.stringify(x)); } catch {} };
+  let items = leer();
+  try { ciudad.value = localStorage.getItem(CLAVE + '_ciudad') || ''; } catch {}
+
+  const pedibles = () => items.filter((i) => i.estado !== 'agotado' && i.estado !== 'retirado');
+
+  function pintar() {
+    const n = items.reduce((s, i) => s + i.cantidad, 0);
+    document.querySelectorAll<HTMLElement>('[data-bolsa-contador]').forEach((c) => { c.hidden = n === 0; c.textContent = String(n); });
+    nEl.textContent = n ? `(${n})` : '';
+    vacia.hidden = items.length > 0;
+    pie.hidden = pedibles().length === 0;
+    lista.innerHTML = '';
+    for (const [idx, i] of items.entries()) {
+      const li = document.createElement('li');
+      li.className = 'bolsa__item';
+      const problema = i.estado === 'agotado' ? 'Este tamaño se agotó. No se incluirá en el pedido.' : i.estado === 'retirado' ? 'Este perfume ya no está en el catálogo.' : '';
+      li.innerHTML = `
+        <img src="${i.img}" alt="" width="64" height="64" loading="lazy" />
+        <div>
+          <p class="bolsa__marca"></p><a class="bolsa__nombre" href="${catalogo.replace(/catalogo\/$/, '')}perfume/${i.slug}/"></a>
+          <p class="bolsa__tam">${TAMANO_TEXTO[i.tamano] || i.tamano}${i.estado === 'bajo_pedido' ? ' · bajo pedido' : ''}</p>
+          <div class="bolsa__fila">
+            <div class="paso"><button type="button" data-a="menos" aria-label="Quitar uno">−</button><span>${i.cantidad}</span><button type="button" data-a="mas" aria-label="Agregar uno" ${i.cantidad >= 20 ? 'disabled' : ''}>+</button></div>
+            <button type="button" class="bolsa__quitar" data-a="quitar">Quitar</button>
+          </div>
+        </div>
+        <p class="bolsa__precio">${pesos(i.precio * i.cantidad)}</p>
+        ${problema ? `<p class="bolsa__alerta">${problema}</p>` : ''}`;
+      li.querySelector('.bolsa__marca')!.textContent = i.marca;
+      li.querySelector('.bolsa__nombre')!.textContent = i.nombre;
+      li.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLElement>('[data-a]')?.dataset.a;
+        if (!a) return;
+        if (a === 'mas') i.cantidad = Math.min(20, i.cantidad + 1);
+        if (a === 'menos') i.cantidad -= 1;
+        if (a === 'quitar' || i.cantidad < 1) items.splice(idx, 1);
+        guardar(items); pintar();
+      });
+      lista.appendChild(li);
+    }
+    const lineas: LineaPedido[] = pedibles().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido' }));
+    totalEl.textContent = pesos(lineas.reduce((s, l) => s + l.precio * l.cantidad, 0));
+    enviar.href = enlaceWhatsapp(numero, mensajePedido(lineas, ciudad.value));
+  }
+
+  // Actualiza precios y estados con el catálogo publicado
+  async function sincronizar() {
+    if (!items.length) return;
+    try {
+      const datos = await fetch(panel.dataset.datos!).then((r) => r.json());
+      const cambios: string[] = [];
+      for (const i of items) {
+        const p = datos[i.slug]; const v = p?.v?.[i.tamano];
+        if (!v) { i.estado = 'retirado'; continue; }
+        if (v[0] !== i.precio) { cambios.push(i.nombre); i.precio = v[0]; }
+        i.estado = v[1]; i.nombre = p.n; i.marca = p.m;
+      }
+      aviso.hidden = cambios.length === 0;
+      aviso.textContent = cambios.length ? `Actualizamos el precio de ${cambios.join(', ')}.` : '';
+      guardar(items); pintar();
+    } catch {}
+  }
+
+  ciudad.addEventListener('input', () => { try { localStorage.setItem(CLAVE + '_ciudad', ciudad.value); } catch {} pintar(); });
+
+  // Abrir / cerrar
+  let origen: HTMLElement | null = null;
+  const velo = document.querySelector<HTMLElement>('[data-velo]')!;
+  function abrir(boton?: HTMLElement) {
+    origen = boton || null;
+    panel.hidden = false; velo.hidden = false; document.body.style.overflow = 'hidden';
+    panel.querySelector<HTMLElement>('[data-bolsa-cerrar]')!.focus();
+    sincronizar();
+  }
+  function cerrar() {
+    if (panel.hidden) return;
+    panel.hidden = true; velo.hidden = true; document.body.style.overflow = ''; origen?.focus();
+  }
+  document.querySelectorAll<HTMLElement>('[data-abrir-bolsa]').forEach((b) => b.addEventListener('click', () => abrir(b)));
+  panel.querySelector('[data-bolsa-cerrar]')!.addEventListener('click', cerrar);
+  velo.addEventListener('click', cerrar);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
+
+  // Agregar desde la ficha
+  const toast = Object.assign(document.createElement('div'), { className: 'toast', role: 'status' });
+  document.body.appendChild(toast);
+  let t: number | undefined;
+  document.addEventListener('bolsa:agregar', ((e: CustomEvent<Item>) => {
+    const nuevo = e.detail;
+    const existente = items.find((i) => i.slug === nuevo.slug && i.tamano === nuevo.tamano);
+    if (existente) { existente.cantidad = Math.min(20, existente.cantidad + nuevo.cantidad); existente.precio = nuevo.precio; existente.estado = nuevo.estado; }
+    else items.push(nuevo);
+    guardar(items); pintar();
+    toast.textContent = `${nuevo.nombre} · ${TAMANO_TEXTO[nuevo.tamano]} agregado a tu bolsa`;
+    toast.classList.add('is-on'); clearTimeout(t); t = window.setTimeout(() => toast.classList.remove('is-on'), 2400);
+  }) as EventListener);
+  document.addEventListener('bolsa:abrir', () => abrir());
+
+  pintar();
+</script>
