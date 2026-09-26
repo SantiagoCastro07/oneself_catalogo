@@ -94,11 +94,8 @@ const pagos: string[] = tienda.metodosPago || [];
 
             <section class="form__sec">
               <h2>Método de envío</h2>
-              <div class="envio" data-envio-opciones>
-                <p class="aviso">Completa departamento y ciudad para ver el método de envío.</p>
-              </div>
+              <div class="envio" role="radiogroup" aria-label="Método de envío" data-envio-opciones></div>
               <p class="campo__error" data-error="envio"></p>
-              <p class="envio__reglas muted">{tienda.envioTexto}</p>
             </section>
 
             <section class="form__sec">
@@ -187,7 +184,6 @@ const pagos: string[] = tienda.metodosPago || [];
   .campo.is-error input, .campo.is-error select { border-color: var(--danger); box-shadow: 0 0 0 1px var(--danger); }
   .campo__error { font-size: 13px; color: var(--danger); min-height: 0; }
   .campo__error:empty { display: none; }
-  .envio__reglas { font-size: 13px; margin-top: var(--s3); }
   .aviso { padding: var(--s3) var(--s4); background: var(--bg-photo); border-radius: var(--radius); font-size: 14px; }
   .opciones { display: grid; border: 1px solid var(--line); border-radius: var(--radius); }
   .opcion { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); cursor: pointer; }
@@ -224,12 +220,17 @@ const pagos: string[] = tienda.metodosPago || [];
 
 <style is:global>
   /* Líneas del resumen y opción de envío: se crean con JS, por eso van como estilos globales */
-  .envio__op { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3); align-items: center; padding: var(--s4); border: 1px solid var(--ink); border-radius: var(--radius); background: var(--bg-raised); }
+  .envio { display: grid; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); overflow: hidden; }
+  .envio__op { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3); align-items: center; padding: var(--s4); border-bottom: 1px solid var(--line); cursor: pointer; transition: background var(--t); }
+  .envio__op:last-child { border-bottom: 0; }
+  .envio__op.is-on { background: #F1F0EC; box-shadow: inset 0 0 0 1px var(--ink); }
+  .envio__op.is-off { cursor: not-allowed; opacity: .5; }
   .envio__op input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
-  .envio__nombre { font-weight: 500; }
-  .envio__sub { font-size: 13px; color: var(--ink-2); }
+  .envio__nombre { display: block; font-weight: 500; }
+  .envio__sub { display: block; font-size: 13px; color: var(--ink-2); }
   .envio__precio { text-align: right; white-space: nowrap; }
   .envio__precio s { display: block; font-size: 13px; color: var(--ink-3); }
+  .envio__precio s:empty { display: none; }
   .resumen__lista { display: grid; gap: var(--s4); padding: var(--s4) 0; }
   .linea { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s3); align-items: center; }
   .linea__foto { position: relative; width: 64px; height: 64px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; }
@@ -244,7 +245,7 @@ const pagos: string[] = tienda.metodosPago || [];
 
 <script>
   import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
-  import { calcularEnvio, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
+  import { opcionesEnvio, ciudadLocal, precioPendiente, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
   const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
@@ -293,43 +294,60 @@ const pagos: string[] = tienda.metodosPago || [];
     const n = val.reduce((s, i) => s + i.cantidad, 0);
     const envio = actualizarEnvio();
     resumen.querySelector('[data-subtotal]')!.textContent = pesos(total);
-    resumen.querySelector('[data-total]')!.textContent = pesos(total + (envio?.precio || 0));
+    const costoEnvio = envio && !precioPendiente(envio) ? envio.precio : 0;
+    resumen.querySelector('[data-total]')!.textContent = pesos(total + costoEnvio);
     resumen.querySelector('[data-n-articulos]')!.textContent = `Subtotal · ${n} ${n === 1 ? 'artículo' : 'artículos'}`;
-    raiz.querySelector('[data-total-corto]')!.textContent = pesos(total + (envio?.precio || 0));
+    raiz.querySelector('[data-total-corto]')!.textContent = pesos(total + costoEnvio);
     const vacio = val.length === 0;
     raiz.querySelector<HTMLElement>('[data-vacio]')!.hidden = !vacio;
     form.hidden = vacio;
     resumen.querySelector<HTMLElement>('[data-editar]')!.hidden = !modoBolsa || vacio;
   }
 
-  // Envío: se recalcula con departamento, ciudad y contenido del pedido
+  // Envío: las opciones se ven siempre y se recalculan al escribir (como un checkout).
   const cajaEnvio = form.querySelector<HTMLElement>('[data-envio-opciones]')!;
   const datalist = form.querySelector<HTMLDataListElement>('[data-datalist]')!;
   let envioActual: OpcionEnvio | null = null;
+  let elegido: OpcionEnvio['id'] | null = null;   // elección manual del cliente
+  let ultimoSugerido: OpcionEnvio['id'] | null = null;
+  cajaEnvio.innerHTML = ['local', 'nacional'].map((id) => `
+    <label class="envio__op" data-op="${id}">
+      <input type="radio" name="envio" value="${id}" />
+      <span><span class="envio__nombre"></span><span class="envio__sub"></span></span>
+      <span class="envio__precio"><s></s><strong></strong></span>
+    </label>`).join('');
+  cajaEnvio.addEventListener('change', (e) => { elegido = (e.target as HTMLInputElement).value as OpcionEnvio['id']; pintar(); });
+
   function actualizarEnvio(): OpcionEnvio | null {
     const dep = (form.elements.namedItem('departamento') as HTMLSelectElement).value;
     const ciu = (form.elements.namedItem('ciudad') as HTMLInputElement).value;
-    datalist.innerHTML = dep === reglas.local.departamento ? Object.keys(reglas.local.ciudades).map((c) => `<option value="${c}"></option>`).join('') : '';
-    const o = calcularEnvio(reglas, dep, ciu, lineasValidas());
+    datalist.innerHTML = !dep || dep === reglas.local.departamento ? Object.keys(reglas.local.ciudades).map((c) => `<option value="${c}"></option>`).join('') : '';
+    const { opciones, sugerido } = opcionesEnvio(reglas, dep, ciu, lineasValidas());
+    // Si cambia la ubicación, se vuelve a la sugerencia; si no, se respeta lo que eligió el cliente
+    if (sugerido !== ultimoSugerido) { elegido = null; ultimoSugerido = sugerido; }
+    let id = elegido || sugerido;
+    if (!opciones.find((o) => o.id === id)!.disponible) id = sugerido;
+    for (const o of opciones) {
+      const el = cajaEnvio.querySelector<HTMLElement>(`[data-op="${o.id}"]`)!;
+      el.classList.toggle('is-off', !o.disponible);
+      el.classList.toggle('is-on', o.id === id);
+      const input = el.querySelector('input')!;
+      input.checked = o.id === id; input.disabled = !o.disponible;
+      el.querySelector('.envio__nombre')!.textContent = o.nombre;
+      el.querySelector('.envio__sub')!.textContent = !o.disponible
+        ? (o.id === 'local' ? 'Solo para Cúcuta, Los Patios y Villa del Rosario' : 'Tu ciudad tiene entrega local')
+        : (o.motivo || o.detalle);
+      el.querySelector('s')!.textContent = o.precio === 0 ? pesos(o.precioBase) : '';
+      el.querySelector('strong')!.textContent = o.precio === 0 ? 'Gratis' : (precioPendiente(o) ? `Desde ${pesos(Math.min(...Object.values(reglas.local.ciudades)))}` : pesos(o.precio));
+    }
+    const o = opciones.find((x) => x.id === id)!;
     envioActual = o;
+    error('envio', '');
     const nombreEl = resumen.querySelector<HTMLElement>('[data-envio-nombre]')!;
     const precioEl = resumen.querySelector<HTMLElement>('[data-envio-precio]')!;
     const falta = resumen.querySelector<HTMLElement>('[data-faltante]')!;
-    if (!o) {
-      cajaEnvio.innerHTML = '<p class="aviso">Completa departamento y ciudad para ver el método de envío.</p>';
-      nombreEl.textContent = 'Envío'; precioEl.textContent = 'Ingresa tu ciudad'; precioEl.className = 'muted';
-      falta.hidden = true;
-      return null;
-    }
-    const precioTxt = o.precio ? pesos(o.precio) : 'Gratis';
-    const sub = o.motivo || (o.id === 'local' ? 'Entrega en tu dirección' : 'Transportadora a todo el país');
-    cajaEnvio.innerHTML = `<label class="envio__op"><input type="radio" name="envio" value="${o.id}" checked />
-      <span><span class="envio__nombre"></span><br /><span class="envio__sub"></span></span>
-      <span class="envio__precio">${o.precio ? '' : `<s>${pesos(o.precioBase)}</s>`}<strong>${precioTxt}</strong></span></label>`;
-    cajaEnvio.querySelector('.envio__nombre')!.textContent = o.nombre;
-    cajaEnvio.querySelector('.envio__sub')!.textContent = sub;
-    error('envio', '');
-    nombreEl.textContent = o.nombre; precioEl.textContent = precioTxt; precioEl.className = '';
+    nombreEl.textContent = o.nombre;
+    precioEl.textContent = precioPendiente(o) ? 'Según tu ciudad' : o.precio ? pesos(o.precio) : 'Gratis'; precioEl.className = precioPendiente(o) ? 'muted' : '';
     falta.hidden = !o.faltante;
     if (o.faltante) falta.textContent = `Agrega ${pesos(o.faltante)} en decants y el envío es gratis.`;
     return o;
@@ -389,7 +407,9 @@ const pagos: string[] = tienda.metodosPago || [];
       error(k, m);
       if (m && !primero) primero = k;
     }
-    if (!primero && !envioActual) { error('envio', 'Completa departamento y ciudad para calcular el envío'); primero = 'ciudad'; }
+    if (envioActual?.id === 'local' && !ciudadLocal(reglas, String(fd.get('departamento') || ''), String(fd.get('ciudad') || ''))) {
+      error('envio', 'La entrega local es solo para Cúcuta, Los Patios y Villa del Rosario'); if (!primero) primero = 'ciudad';
+    }
     const correo = String(fd.get('correo') || '').trim();
     const mc = correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) ? 'Revisa el correo' : '';
     error('correo', mc);
