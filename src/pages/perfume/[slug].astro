@@ -315,7 +315,7 @@ const datosCliente = {
     estado.dataset.e = v.estado;
     estadoTxt.textContent = datos.estados[v.estado];
     const r = datos.rendimiento[tam];
-    rinde.textContent = typeof r === 'number' ? `${TAMANO_TEXTO[tam]} rinde aprox. ${r} atomizaciones.` : tam === 'frasco' ? 'Frasco completo, sellado de fábrica.' : '';
+    rinde.textContent = typeof r === 'number' ? `${TAMANO_TEXTO[tam]} rinde aprox. ${r} atomizaciones.` : tam === 'frasco' ? 'Frasco completo. El envío va incluido.' : '';
     if (cantEl) cantEl.textContent = String(cantidad);
     if (menos) menos.disabled = cantidad <= 1;
     if (mas) mas.disabled = cantidad >= 20;

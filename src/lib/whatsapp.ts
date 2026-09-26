@@ -36,6 +36,7 @@ export interface DatosEnvio {
   nombre: string; apellidos: string; cedula?: string; telefono: string; correo?: string;
   departamento: string; ciudad: string; direccion: string; detalle?: string; barrio?: string;
   pago?: string; notas?: string;
+  envio?: { nombre: string; precio: number; motivo?: string };
 }
 
 /** Pedido completo con datos de envío, listo para despachar sin volver a preguntar. */
@@ -49,7 +50,10 @@ export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
     '*PEDIDO*',
     ...lineas.map((l) => `• ${l.nombre} (${l.marca}) · ${TAMANO_TEXTO[l.tamano] || l.tamano} × ${l.cantidad} · ${pesos(l.precio * l.cantidad)}${l.bajoPedido ? ' (bajo pedido)' : ''}`),
     `Subtotal (${n} ${n === 1 ? 'artículo' : 'artículos'}): ${pesos(total)}`,
-    'Envío: por confirmar',
+    ...(d.envio
+      ? [`${d.envio.nombre}: ${d.envio.precio ? pesos(d.envio.precio) : `gratis${d.envio.motivo ? ` (${d.envio.motivo.charAt(0).toLowerCase() + d.envio.motivo.slice(1)})` : ''}`}`,
+         `*Total: ${pesos(total + d.envio.precio)}*`]
+      : ['Envío: por confirmar']),
     '',
     '*DATOS DE ENVÍO*',
     `Nombre: ${d.nombre.trim()} ${d.apellidos.trim()}`,

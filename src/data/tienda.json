@@ -17,5 +17,24 @@
   "textoDecant": "Un decant es una porción del perfume original en un atomizador pequeño, para que lo pruebes antes de comprar el frasco.",
   "metodosPago": [],
   "_notaMetodosPago": "Lista de medios de pago que se muestran en el pedido (ej. \"Nequi\", \"Bancolombia\"). Vacía = el pago se acuerda por WhatsApp.",
-  "envioTexto": "El costo de envío depende de tu ciudad y te lo confirmamos por WhatsApp."
+  "envioTexto": "Envío nacional $18.500, gratis en pedidos de decants desde $220.000. Entrega local en Cúcuta, Los Patios y Villa del Rosario, gratis desde $75.000. Los frascos completos incluyen el envío.",
+  "envios": {
+    "_nota": "Reglas de envío del pedido. Precios en pesos. 'gratisDesde' se compara con el subtotal de decants (sin frascos).",
+    "local": {
+      "nombre": "Entrega local",
+      "departamento": "Norte de Santander",
+      "ciudades": {
+        "Cúcuta": 10000,
+        "Los Patios": 7000,
+        "Villa del Rosario": 10000
+      },
+      "gratisDesde": 75000
+    },
+    "nacional": {
+      "nombre": "Envío nacional",
+      "precio": 18500,
+      "gratisDesde": 220000
+    },
+    "frascoIncluyeEnvio": true
+  }
 }

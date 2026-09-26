@@ -9,6 +9,7 @@ import { url } from '../lib/url';
 const pagos: string[] = tienda.metodosPago || [];
 ---
 <Base titulo="Finalizar pedido" noindex simple>
+  <script is:inline type="application/json" id="reglas-envio" set:html={JSON.stringify(tienda.envios)} />
   <div class="pedido" data-pedido data-numero={tienda.whatsapp} data-datos={url('catalogo.json').replace(/\/$/, '')} data-base={url()}>
     <details class="resumen-movil" data-resumen-movil>
       <summary class="wrap">
@@ -69,7 +70,8 @@ const pagos: string[] = tienda.metodosPago || [];
                 </div>
                 <div class="campo">
                   <label for="ciudad">Ciudad o municipio</label>
-                  <input id="ciudad" name="ciudad" autocomplete="address-level2" required />
+                  <input id="ciudad" name="ciudad" autocomplete="address-level2" required list="ciudades-locales" />
+                  <datalist id="ciudades-locales" data-datalist></datalist>
                   <p class="campo__error" data-error="ciudad"></p>
                 </div>
               </div>
@@ -91,13 +93,22 @@ const pagos: string[] = tienda.metodosPago || [];
             </section>
 
             <section class="form__sec">
+              <h2>Método de envío</h2>
+              <div class="envio" data-envio-opciones>
+                <p class="aviso">Completa departamento y ciudad para ver el método de envío.</p>
+              </div>
+              <p class="campo__error" data-error="envio"></p>
+              <p class="envio__reglas muted">{tienda.envioTexto}</p>
+            </section>
+
+            <section class="form__sec">
               <h2>Pago</h2>
               {pagos.length > 0 ? (
                 <div class="opciones">
                   {pagos.map((p, i) => <label class="opcion"><input type="radio" name="pago" value={p} checked={i === 0} /> {p}</label>)}
                 </div>
               ) : (
-                <p class="aviso">No cobramos en la página. Al recibir tu pedido te confirmamos el total con envío y los medios de pago por WhatsApp.</p>
+                <p class="aviso">No cobramos en la página. Al recibir tu pedido te enviamos por WhatsApp los medios de pago.</p>
               )}
             </section>
 
@@ -134,9 +145,9 @@ const pagos: string[] = tienda.metodosPago || [];
             <ul class="resumen__lista" data-lineas></ul>
             <p class="resumen__aviso" data-aviso hidden></p>
             <div class="resumen__fila"><span data-n-articulos>Subtotal</span><span data-subtotal></span></div>
-            <div class="resumen__fila"><span>Envío</span><span class="muted">Por confirmar</span></div>
-            <div class="resumen__fila resumen__total"><span>Total</span><span><span data-total></span> <small class="muted">+ envío</small></span></div>
-            <p class="resumen__envio muted">{tienda.envioTexto}</p>
+            <div class="resumen__fila"><span data-envio-nombre>Envío</span><span data-envio-precio class="muted">Ingresa tu ciudad</span></div>
+            <p class="resumen__faltante" data-faltante hidden></p>
+            <div class="resumen__fila resumen__total"><span>Total</span><span><small class="muted">COP</small> <span data-total></span></span></div>
             <button type="button" class="resumen__editar" data-editar hidden>Editar bolsa</button>
           </div>
         </div>
@@ -176,6 +187,7 @@ const pagos: string[] = tienda.metodosPago || [];
   .campo.is-error input, .campo.is-error select { border-color: var(--danger); box-shadow: 0 0 0 1px var(--danger); }
   .campo__error { font-size: 13px; color: var(--danger); min-height: 0; }
   .campo__error:empty { display: none; }
+  .envio__reglas { font-size: 13px; margin-top: var(--s3); }
   .aviso { padding: var(--s3) var(--s4); background: var(--bg-photo); border-radius: var(--radius); font-size: 14px; }
   .opciones { display: grid; border: 1px solid var(--line); border-radius: var(--radius); }
   .opcion { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); cursor: pointer; }
@@ -191,6 +203,7 @@ const pagos: string[] = tienda.metodosPago || [];
   .vacio-pedido { justify-items: start; }
 
   .pedido__resumen-col { display: none; }
+  .resumen__faltante { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin: var(--s1) 0; }
   .resumen__aviso { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin-bottom: var(--s3); }
   .resumen__fila { display: flex; justify-content: space-between; gap: var(--s3); padding: 4px 0; font-size: 15px; }
   .resumen__total { font-size: 19px; font-weight: 500; padding-top: var(--s3); }
@@ -210,7 +223,13 @@ const pagos: string[] = tienda.metodosPago || [];
 </style>
 
 <style is:global>
-  /* Líneas del resumen: se crean con JS, por eso van como estilos globales */
+  /* Líneas del resumen y opción de envío: se crean con JS, por eso van como estilos globales */
+  .envio__op { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3); align-items: center; padding: var(--s4); border: 1px solid var(--ink); border-radius: var(--radius); background: var(--bg-raised); }
+  .envio__op input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
+  .envio__nombre { font-weight: 500; }
+  .envio__sub { font-size: 13px; color: var(--ink-2); }
+  .envio__precio { text-align: right; white-space: nowrap; }
+  .envio__precio s { display: block; font-size: 13px; color: var(--ink-3); }
   .resumen__lista { display: grid; gap: var(--s4); padding: var(--s4) 0; }
   .linea { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s3); align-items: center; }
   .linea__foto { position: relative; width: 64px; height: 64px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; }
@@ -225,6 +244,8 @@ const pagos: string[] = tienda.metodosPago || [];
 
 <script>
   import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
+  import { calcularEnvio, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
+  const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
   const CLAVE = 'oneself_bolsa_v2';
@@ -270,15 +291,51 @@ const pagos: string[] = tienda.metodosPago || [];
     const val = lineasValidas();
     const total = val.reduce((s, i) => s + i.precio * i.cantidad, 0);
     const n = val.reduce((s, i) => s + i.cantidad, 0);
+    const envio = actualizarEnvio();
     resumen.querySelector('[data-subtotal]')!.textContent = pesos(total);
-    resumen.querySelector('[data-total]')!.textContent = pesos(total);
+    resumen.querySelector('[data-total]')!.textContent = pesos(total + (envio?.precio || 0));
     resumen.querySelector('[data-n-articulos]')!.textContent = `Subtotal · ${n} ${n === 1 ? 'artículo' : 'artículos'}`;
-    raiz.querySelector('[data-total-corto]')!.textContent = pesos(total);
+    raiz.querySelector('[data-total-corto]')!.textContent = pesos(total + (envio?.precio || 0));
     const vacio = val.length === 0;
     raiz.querySelector<HTMLElement>('[data-vacio]')!.hidden = !vacio;
     form.hidden = vacio;
     resumen.querySelector<HTMLElement>('[data-editar]')!.hidden = !modoBolsa || vacio;
   }
+
+  // Envío: se recalcula con departamento, ciudad y contenido del pedido
+  const cajaEnvio = form.querySelector<HTMLElement>('[data-envio-opciones]')!;
+  const datalist = form.querySelector<HTMLDataListElement>('[data-datalist]')!;
+  let envioActual: OpcionEnvio | null = null;
+  function actualizarEnvio(): OpcionEnvio | null {
+    const dep = (form.elements.namedItem('departamento') as HTMLSelectElement).value;
+    const ciu = (form.elements.namedItem('ciudad') as HTMLInputElement).value;
+    datalist.innerHTML = dep === reglas.local.departamento ? Object.keys(reglas.local.ciudades).map((c) => `<option value="${c}"></option>`).join('') : '';
+    const o = calcularEnvio(reglas, dep, ciu, lineasValidas());
+    envioActual = o;
+    const nombreEl = resumen.querySelector<HTMLElement>('[data-envio-nombre]')!;
+    const precioEl = resumen.querySelector<HTMLElement>('[data-envio-precio]')!;
+    const falta = resumen.querySelector<HTMLElement>('[data-faltante]')!;
+    if (!o) {
+      cajaEnvio.innerHTML = '<p class="aviso">Completa departamento y ciudad para ver el método de envío.</p>';
+      nombreEl.textContent = 'Envío'; precioEl.textContent = 'Ingresa tu ciudad'; precioEl.className = 'muted';
+      falta.hidden = true;
+      return null;
+    }
+    const precioTxt = o.precio ? pesos(o.precio) : 'Gratis';
+    const sub = o.motivo || (o.id === 'local' ? 'Entrega en tu dirección' : 'Transportadora a todo el país');
+    cajaEnvio.innerHTML = `<label class="envio__op"><input type="radio" name="envio" value="${o.id}" checked />
+      <span><span class="envio__nombre"></span><br /><span class="envio__sub"></span></span>
+      <span class="envio__precio">${o.precio ? '' : `<s>${pesos(o.precioBase)}</s>`}<strong>${precioTxt}</strong></span></label>`;
+    cajaEnvio.querySelector('.envio__nombre')!.textContent = o.nombre;
+    cajaEnvio.querySelector('.envio__sub')!.textContent = sub;
+    error('envio', '');
+    nombreEl.textContent = o.nombre; precioEl.textContent = precioTxt; precioEl.className = '';
+    falta.hidden = !o.faltante;
+    if (o.faltante) falta.textContent = `Agrega ${pesos(o.faltante)} en decants y el envío es gratis.`;
+    return o;
+  }
+  ['departamento', 'ciudad'].forEach((k) => form.elements.namedItem(k)!.addEventListener('input', () => pintar()));
+  form.elements.namedItem('departamento')!.addEventListener('change', () => pintar());
 
   async function sincronizar() {
     try {
@@ -332,6 +389,7 @@ const pagos: string[] = tienda.metodosPago || [];
       error(k, m);
       if (m && !primero) primero = k;
     }
+    if (!primero && !envioActual) { error('envio', 'Completa departamento y ciudad para calcular el envío'); primero = 'ciudad'; }
     const correo = String(fd.get('correo') || '').trim();
     const mc = correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) ? 'Revisa el correo' : '';
     error('correo', mc);
@@ -354,10 +412,11 @@ const pagos: string[] = tienda.metodosPago || [];
       nombre: g('nombre'), apellidos: g('apellidos'), cedula: g('cedula'), telefono: limpiarTel(g('telefono')).replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3'),
       correo: g('correo'), departamento: g('departamento'), ciudad: g('ciudad'), direccion: g('direccion'),
       detalle: g('detalle'), barrio: g('barrio'), pago: g('pago'), notas: g('notas'),
+      envio: envioActual ? { nombre: envioActual.nombre, precio: envioActual.precio, motivo: envioActual.motivo } : undefined,
     };
     try {
       if (fd.has('recordar')) {
-        const { notas, pago, ...resto } = datos;
+        const { notas, pago, envio, ...resto } = datos;
         localStorage.setItem(CLAVE_DATOS, JSON.stringify({ ...resto, telefono: g('telefono') }));
       } else localStorage.removeItem(CLAVE_DATOS);
     } catch {}
