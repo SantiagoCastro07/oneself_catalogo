@@ -1,0 +1,51 @@
+{
+  "nombre": "Hawas Ice",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "acuatico",
+    "citrico"
+  ],
+  "descripcion": "Ultra fresco y vibrante. Una fragancia limpia, acuática y moderna perfecta para clima caliente.",
+  "notas": {
+    "salida": [
+      "Cítricos",
+      "Manzana"
+    ],
+    "corazon": [
+      "Notas acuáticas",
+      "Lavanda"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Maderas"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-ice.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 24000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 44000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 275000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-ice",
+    "img": "assets/hawasIce.png"
+  }
+}

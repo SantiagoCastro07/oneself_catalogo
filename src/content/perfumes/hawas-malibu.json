@@ -1,0 +1,57 @@
+{
+  "nombre": "Hawas Malibú",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "ambarado"
+  ],
+  "descripcion": "Frescura brillante tropical con un toque dulce menos pesado que otros perfumes del estilo. Alta duración, de 8 a 12 horas.",
+  "notas": {
+    "salida": [
+      "Piña",
+      "Naranja",
+      "Toronja"
+    ],
+    "corazon": [
+      "Ámbar",
+      "Raíz de Lirio",
+      "Lavanda"
+    ],
+    "fondo": [
+      "Haba Tonka",
+      "Almizcle",
+      "Pachulí",
+      "Cachemira"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-malibu.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 269000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true,
+  "legado": {
+    "id": "hawas-malibu",
+    "img": "assets/HawasMalibu.png"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "nombre": "Supremacy Collector Edition",
+  "marca": "afnan",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "amaderado"
+  ],
+  "descripcion": "Intenso, afrutado y ahumado. Proyección bestial y lluvia de cumplidos.",
+  "notas": {
+    "salida": [
+      "Grosellas",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Pachulí",
+      "Abedul"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Musgo"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/supremacy-collector.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 270000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "supremacy-collector",
+    "img": "assets/SupremacyCollector.png"
+  }
+}

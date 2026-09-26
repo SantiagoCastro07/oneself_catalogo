@@ -1,0 +1,52 @@
+{
+  "nombre": "Dynasty",
+  "marca": "lattafa",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "aromatico",
+    "amaderado"
+  ],
+  "descripcion": "Moderno, elegante y versátil. Un aroma fresco con un fondo amaderado que funciona en cualquier ocasión.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Mandarina"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Geranio"
+    ],
+    "fondo": [
+      "Vetiver",
+      "Cedro",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/dynasty.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 23000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 230000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "dynasty",
+    "img": "assets/Dynasty.png"
+  }
+}

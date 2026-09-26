@@ -1,0 +1,50 @@
+{
+  "nombre": "Eclaire",
+  "marca": "lattafa",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand"
+  ],
+  "descripcion": "Gourmand irresistible con notas dulces. Una delicia exquisita que enamora.",
+  "notas": {
+    "salida": [
+      "Caramelo",
+      "Leche"
+    ],
+    "corazon": [
+      "Miel",
+      "Flores blancas"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Praliné"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/eclaire.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 38000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "eclaire",
+    "img": "assets/EclaireLattafa.png"
+  }
+}

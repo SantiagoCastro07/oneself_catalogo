@@ -1,0 +1,54 @@
+{
+  "nombre": "9AM Pour Femme EDP",
+  "marca": "afnan",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "floral",
+    "citrico"
+  ],
+  "descripcion": "Luminoso, floral y elegante. Una fragancia femenina fresca con excelente duración.",
+  "notas": {
+    "salida": [
+      "Mandarina",
+      "Bergamota",
+      "Toronja"
+    ],
+    "corazon": [
+      "Rosa",
+      "Jazmín",
+      "Grosella Negra"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Vainilla",
+      "Cedro"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/9am-pour-femme.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 225000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "9am-pour-femme",
+    "img": "assets/9AMPourFemme.png"
+  }
+}

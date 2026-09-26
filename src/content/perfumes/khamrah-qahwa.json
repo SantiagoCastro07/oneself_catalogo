@@ -1,0 +1,51 @@
+{
+  "nombre": "Khamrah Qahwa",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "especiado"
+  ],
+  "descripcion": "El encanto dulce y especiado con un adictivo toque de café tostado.",
+  "notas": {
+    "salida": [
+      "Canela",
+      "Cardamomo"
+    ],
+    "corazon": [
+      "Café",
+      "Praliné"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba tonka"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/khamrah-qahwa.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 38000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "khamrah-qahwa",
+    "img": "assets/KhamrahQahwa.png"
+  }
+}

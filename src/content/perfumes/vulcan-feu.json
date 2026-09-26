@@ -1,0 +1,52 @@
+{
+  "nombre": "Vulcan Feu",
+  "marca": "french-avenue",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "ambarado"
+  ],
+  "descripcion": "Caliente, especiado y explosivo. Una fragancia intensa con vibra ardiente perfecta para la noche.",
+  "notas": {
+    "salida": [
+      "Canela",
+      "Pimienta"
+    ],
+    "corazon": [
+      "Tabaco",
+      "Incienso"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Vainilla",
+      "Maderas"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/vulcan-feu.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 24000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 44000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 280000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "vulcan-feu",
+    "img": "assets/vulcanfeu.png"
+  }
+}

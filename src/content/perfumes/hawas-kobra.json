@@ -1,0 +1,52 @@
+{
+  "nombre": "Hawas Kobra",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "ambarado",
+    "especiado"
+  ],
+  "descripcion": "Más oscuro y atrevido. Una versión intensa con un toque dulce y misterioso ideal para destacar.",
+  "notas": {
+    "salida": [
+      "Frutas",
+      "Cítricos"
+    ],
+    "corazon": [
+      "Especias",
+      "Lavanda"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Maderas",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-kobra.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 24000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 44000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 265000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-kobra",
+    "img": "assets/hawaskobra.png"
+  }
+}

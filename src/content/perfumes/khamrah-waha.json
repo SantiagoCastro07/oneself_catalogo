@@ -1,0 +1,54 @@
+{
+  "nombre": "Khamrah Waha",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "especiado"
+  ],
+  "descripcion": "Dulce, cálido y envolvente. Una interpretación exótica con vainilla, especias y un toque gourmand irresistible.",
+  "notas": {
+    "salida": [
+      "Canela",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Praliné",
+      "Dátiles",
+      "Nardos"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba Tonka",
+      "Benjuí",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/khamrah-waha.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 250000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "khamrah-waha",
+    "img": "assets/waha.png"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "nombre": "Odyssey HOMME White",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "citrico",
+    "acuatico"
+  ],
+  "descripcion": "Un perfume infravalorado que sorprende desde el primer spray. Abre fresco y jugoso con cítricos y pimienta rosa, luego evoluciona a un corazón elegante con hojas de violeta y notas marinas. En el fondo, el ámbar y el amberwood crean una estela suave, ligeramente dulce y muy adictiva.",
+  "notas": {
+    "salida": [
+      "Pimienta Rosa",
+      "Toronja"
+    ],
+    "corazon": [
+      "Hojas de violeta",
+      "Notas marinas"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Amberwood"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/odyssey-homme-white.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 220000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "odyssey-homme-white",
+    "img": "assets/odysseywhite.png"
+  }
+}

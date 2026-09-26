@@ -1,0 +1,51 @@
+{
+  "nombre": "Odyssey Aqua",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "acuatico",
+    "citrico"
+  ],
+  "descripcion": "Acuático, fresco y afrutado. Perfecto para el día a día y climas cálidos.",
+  "notas": {
+    "salida": [
+      "Naranja",
+      "Toronja"
+    ],
+    "corazon": [
+      "Menta",
+      "Notas acuáticas"
+    ],
+    "fondo": [
+      "Ambroxan",
+      "Maderas"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/odyssey-aqua.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 23000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 230000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "odyssey-aqua",
+    "img": "assets/OdysseyAqua.png"
+  }
+}

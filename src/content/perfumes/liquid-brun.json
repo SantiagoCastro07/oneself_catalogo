@@ -1,0 +1,51 @@
+{
+  "nombre": "Liquid Brun",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "especiado"
+  ],
+  "descripcion": "Cálido, especiado y sumamente reconfortante. Pura elegancia embotellada.",
+  "notas": {
+    "salida": [
+      "Cardamomo",
+      "Canela"
+    ],
+    "corazon": [
+      "Praliné",
+      "Maderas"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/liquid-brun.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 44000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 270000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "liquid-brun",
+    "img": "assets/LiquidBrun.png"
+  }
+}

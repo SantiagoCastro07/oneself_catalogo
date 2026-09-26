@@ -1,0 +1,55 @@
+{
+  "nombre": "TAG Uomo Rosso",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "ambarado",
+    "especiado"
+  ],
+  "descripcion": "Elegante, seductor y versátil. Un aroma cálido con un toque dulce y especiado que destaca especialmente en la noche.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Limón",
+      "Pimienta Rosa"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Geranio",
+      "Canela"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Vainilla",
+      "Cedro",
+      "Pachulí"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/tag-uomo-rosso.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 215000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "tag-uomo-rosso",
+    "img": "assets/TagUomoRosso.png"
+  }
+}

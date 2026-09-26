@@ -1,0 +1,52 @@
+{
+  "nombre": "Amber Oud Gold Edition",
+  "marca": "al-haramain",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "ambarado"
+  ],
+  "descripcion": "Lujo puro. Una fragancia dulce, frutal y ambarada con una proyección inigualable.",
+  "notas": {
+    "salida": [
+      "Notas verdes",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Melón",
+      "Piña",
+      "Ámbar"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/amber-oud-gold-edition.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 23000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 295000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "amber-oud-gold-edition",
+    "img": "assets/AmberOudGoldEdition.png"
+  }
+}

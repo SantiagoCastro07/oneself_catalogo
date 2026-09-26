@@ -1,0 +1,59 @@
+{
+  "nombre": "Bright Crystal",
+  "marca": "versace",
+  "genero": "mujer",
+  "tipo": "disenador",
+  "familias": [
+    "floral",
+    "frutal"
+  ],
+  "descripcion": "Fresco, floral y delicado. Un clásico femenino elegante y muy fácil de llevar.",
+  "notas": {
+    "salida": [
+      "Yuzu",
+      "Granada"
+    ],
+    "corazon": [
+      "Peonía",
+      "Magnolia",
+      "Flor de Loto"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Caoba",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/bright-crystal.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 18000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 30000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 55000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 340000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "bright-crystal",
+    "img": "assets/BrightCrystal.png"
+  }
+}

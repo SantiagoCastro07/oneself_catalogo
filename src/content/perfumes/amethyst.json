@@ -1,0 +1,52 @@
+{
+  "nombre": "Amethyst",
+  "marca": "lattafa",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "floral",
+    "amaderado"
+  ],
+  "descripcion": "Elegante, floral y oscuro. Una rosa intensa con un toque de oud que transmite lujo y sofisticación.",
+  "notas": {
+    "salida": [
+      "Rosa",
+      "Pimienta Rosa"
+    ],
+    "corazon": [
+      "Jazmín",
+      "Rosa Búlgara"
+    ],
+    "fondo": [
+      "Oud",
+      "Ámbar",
+      "Vainilla"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/amethyst.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 200000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "amethyst",
+    "img": "assets/Amethyst.png"
+  }
+}

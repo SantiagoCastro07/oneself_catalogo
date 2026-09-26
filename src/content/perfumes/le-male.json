@@ -1,0 +1,57 @@
+{
+  "nombre": "Le Male",
+  "marca": "jean-paul-gaultier",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "aromatico",
+    "gourmand"
+  ],
+  "descripcion": "Un clásico atemporal. Frescura de lavanda combinada con la calidez de la vainilla.",
+  "notas": {
+    "salida": [
+      "Menta",
+      "Lavanda"
+    ],
+    "corazon": [
+      "Flor de azahar",
+      "Canela"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba tonka"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/le-male.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 21000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 65000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 610000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "le-male",
+    "img": "assets/LeMaleJPG.png"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "nombre": "212 VIP Black",
+  "marca": "carolina-herrera",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "aromatico",
+    "gourmand"
+  ],
+  "descripcion": "Seductor, moderno y nocturno. Un perfume dulce y aromático diseñado para destacar en cualquier salida.",
+  "notas": {
+    "salida": [
+      "Absenta",
+      "Anís",
+      "Hinojo"
+    ],
+    "corazon": [
+      "Lavanda"
+    ],
+    "fondo": [
+      "Vainilla Negra",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/212-vip-black.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 18000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 30000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 55000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 420000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "212-vip-black",
+    "img": "assets/212vipblack.png"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "nombre": "Stallion 53",
+  "marca": "emper",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "aromatico",
+    "amaderado"
+  ],
+  "descripcion": "Potente, masculino y elegante. Una fragancia intensa con carácter fuerte que impone presencia desde el primer momento.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Pimienta"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Geranio"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Madera",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/stallion-53.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 21000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 41000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "stallion-53",
+    "img": "assets/stallion53.png"
+  }
+}

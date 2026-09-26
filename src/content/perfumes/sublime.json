@@ -1,0 +1,51 @@
+{
+  "nombre": "Sublime",
+  "marca": "lattafa",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "floral"
+  ],
+  "descripcion": "Dulce, frutal y juguetón. Una explosión de manzana roja y flores.",
+  "notas": {
+    "salida": [
+      "Manzana",
+      "Lichi"
+    ],
+    "corazon": [
+      "Ciruela",
+      "Rosa"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Musgo"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/sublime.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 36000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 200000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "sublime",
+    "img": "assets/Sublime.png"
+  }
+}

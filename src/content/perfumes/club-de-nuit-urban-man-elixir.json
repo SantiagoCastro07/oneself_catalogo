@@ -1,0 +1,62 @@
+{
+  "nombre": "Club De Nuit Urban Man Elixir",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "ambarado"
+  ],
+  "descripcion": "Fragancia masculina ambarina especiada lanzada en 2022. Salida fresca y especiada que evoluciona a un fondo cálido y amaderado.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Pimienta Rosa",
+      "Jazmín",
+      "Flor de Azahar del Naranjo"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Elemí",
+      "Geranio",
+      "Vetiver",
+      "Azafrán",
+      "Cempasúchil"
+    ],
+    "fondo": [
+      "Ambroxan",
+      "Ámbar",
+      "Cedro",
+      "Pachulí",
+      "Ládano"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/club-de-nuit-urban-man-elixir.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 249000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true,
+  "legado": {
+    "id": "cdn-urban-man-elixir",
+    "img": "assets/cdnUrbanManElixir.png"
+  }
+}

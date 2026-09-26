@@ -1,0 +1,51 @@
+{
+  "nombre": "Mandarin Sky Elixir",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "citrico",
+    "ambarado"
+  ],
+  "descripcion": "Versión más intensa y profunda del clásico Mandarin Sky. Brillante y ambarado.",
+  "notas": {
+    "salida": [
+      "Mandarina",
+      "Naranja dulce"
+    ],
+    "corazon": [
+      "Azafrán",
+      "Maderas"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/mandarin-sky-elixir.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 265000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "mandarin-sky-elixir",
+    "img": "assets/MandarinSkyElixir.png"
+  }
+}

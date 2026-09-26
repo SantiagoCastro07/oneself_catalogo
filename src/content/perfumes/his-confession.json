@@ -1,0 +1,51 @@
+{
+  "nombre": "His Confession",
+  "marca": "lattafa",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "gourmand"
+  ],
+  "descripcion": "Inspirado en la intensidad y la elegancia. Un aroma profundo, especiado y magnético.",
+  "notas": {
+    "salida": [
+      "Canela",
+      "Mandarina"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Especias"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Pachulí"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/his-confession.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 21000,
+      "estado": "agotado"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 40000,
+      "estado": "agotado"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 245000,
+      "estado": "agotado"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "his-confession",
+    "img": "assets/HisConfession.png"
+  }
+}

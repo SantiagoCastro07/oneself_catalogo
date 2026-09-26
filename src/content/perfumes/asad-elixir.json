@@ -1,0 +1,52 @@
+{
+  "nombre": "Asad Elixir",
+  "marca": "lattafa",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "ambarado"
+  ],
+  "descripcion": "Intenso, dulce y especiado. Una fragancia envolvente con mucha personalidad y excelente duración.",
+  "notas": {
+    "salida": [
+      "Pimienta",
+      "Canela"
+    ],
+    "corazon": [
+      "Vainilla",
+      "Incienso"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Maderas",
+      "Benjuí"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/asad-elixir.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 23000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 230000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "asad-elixir",
+    "img": "assets/asadelixir.png"
+  }
+}

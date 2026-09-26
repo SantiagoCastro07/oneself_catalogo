@@ -1,0 +1,57 @@
+{
+  "nombre": "Bois Imperial",
+  "marca": "essential-parfums",
+  "genero": "unisex",
+  "tipo": "nicho",
+  "familias": [
+    "amaderado",
+    "aromatico"
+  ],
+  "descripcion": "Nicho, elegante y moderno. Un aroma amaderado fresco con un aire limpio y sofisticado que no pasa desapercibido.",
+  "notas": {
+    "salida": [
+      "Albahaca",
+      "Pimienta"
+    ],
+    "corazon": [
+      "Vetiver",
+      "Akigalawood"
+    ],
+    "fondo": [
+      "Maderas",
+      "Pachulí"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/bois-imperial.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 24000,
+      "estado": "agotado",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 40000,
+      "estado": "agotado"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 75000,
+      "estado": "agotado"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 560000,
+      "estado": "agotado"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "bois-imperial",
+    "img": "assets/boisimperial.png"
+  }
+}

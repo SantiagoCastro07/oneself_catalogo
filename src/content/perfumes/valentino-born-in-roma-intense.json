@@ -1,0 +1,54 @@
+{
+  "nombre": "Valentino Uomo Born In Roma Intense",
+  "marca": "valentino",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "gourmand",
+    "aromatico"
+  ],
+  "descripcion": "Sensual, elegante y adictivo. Una mezcla intensa de vainilla y lavanda que deja una estela inolvidable.",
+  "notas": {
+    "salida": [
+      "Vainilla"
+    ],
+    "corazon": [
+      "Lavanda"
+    ],
+    "fondo": [
+      "Vetiver"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/valentino-born-in-roma-intense.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 24000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 40000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 75000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 620000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "valentino-born-in-roma-intense",
+    "img": "assets/birintense.png"
+  }
+}

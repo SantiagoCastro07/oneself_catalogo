@@ -1,0 +1,53 @@
+{
+  "nombre": "Precieux",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "ambarado",
+    "amaderado"
+  ],
+  "descripcion": "Elegancia pura y sofisticación. Una fragancia amaderada y ambarada que proyecta lujo en cada spray.",
+  "notas": {
+    "salida": [
+      "Azafrán",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Rosa",
+      "Jazmín",
+      "Madera de Cedro"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Almizcle",
+      "Vainilla"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/precieux.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 32000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 59000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 320000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "precieux",
+    "img": "assets/Precieux.png"
+  }
+}

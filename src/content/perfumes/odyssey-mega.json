@@ -1,0 +1,60 @@
+{
+  "nombre": "Odyssey Mega",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "aromatico",
+    "citrico"
+  ],
+  "descripcion": "Amaderado aromático vibrante. Una salida cítrica y especiada que evoluciona hacia un fondo cálido de maderas y almizcle.",
+  "notas": {
+    "salida": [
+      "Limón",
+      "Naranja",
+      "Bergamota",
+      "Jengibre",
+      "Menta"
+    ],
+    "corazon": [
+      "Piña",
+      "Salvia",
+      "Enebro",
+      "Geranio"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Cedro",
+      "Haba Tonka",
+      "Vetiver"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/odyssey-mega.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 200000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true,
+  "legado": {
+    "id": "odyssey-mega",
+    "img": "assets/OdysseyMega.png"
+  }
+}

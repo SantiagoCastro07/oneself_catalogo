@@ -1,0 +1,52 @@
+{
+  "nombre": "Yara",
+  "marca": "lattafa",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "frutal"
+  ],
+  "descripcion": "Dulce, cremoso y femenino. Una fragancia irresistible con vainilla y frutas tropicales.",
+  "notas": {
+    "salida": [
+      "Heliotropo",
+      "Orquídea",
+      "Mandarina"
+    ],
+    "corazon": [
+      "Frutas Tropicales"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Sándalo",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/yara.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "yara",
+    "img": "assets/YaraPink.png"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "nombre": "Le Male Elixir",
+  "marca": "jean-paul-gaultier",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "ambarado",
+    "gourmand"
+  ],
+  "descripcion": "La versión más oscura y concentrada de Le Male. Intenso, ambarado y con una estela que dura todo el día.",
+  "notas": {
+    "salida": [
+      "Lavanda"
+    ],
+    "corazon": [
+      "Vainilla Absoluta"
+    ],
+    "fondo": [
+      "Haba Tonka",
+      "Cedro",
+      "Madera de Gaiac"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/le-male-elixir.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 21000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 65000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 610000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "le-male-elixir",
+    "img": "assets/LeMaleElixir.png"
+  }
+}

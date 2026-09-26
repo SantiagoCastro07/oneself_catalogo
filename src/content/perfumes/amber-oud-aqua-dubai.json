@@ -1,0 +1,58 @@
+{
+  "nombre": "Amber Oud Aqua Dubai",
+  "marca": "al-haramain",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "citrico"
+  ],
+  "descripcion": "Fresco, cítrico y afrutado con un fondo amaderado envolvente. Una fragancia versátil, ideal para el día a día.",
+  "notas": {
+    "salida": [
+      "Notas verdes",
+      "Bergamota",
+      "Mandarina"
+    ],
+    "corazon": [
+      "Melón",
+      "Ámbar",
+      "Grosella Negra",
+      "Piña"
+    ],
+    "fondo": [
+      "Almizcle",
+      "Petitgrain",
+      "Gálbano",
+      "Vainilla"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/amber-oud-aqua-dubai.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 295000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true,
+  "legado": {
+    "id": "amber-oud-aqua-dubai",
+    "img": "assets/AquaDubai.png"
+  }
+}

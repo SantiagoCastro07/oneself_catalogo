@@ -1,0 +1,54 @@
+{
+  "nombre": "Hawas for Him",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "acuatico",
+    "frutal"
+  ],
+  "descripcion": "El rey de la seducción acuática. Frescura marina combinada con notas frutales y un fondo amaderado irresistible.",
+  "notas": {
+    "salida": [
+      "Manzana",
+      "Bergamota",
+      "Canela"
+    ],
+    "corazon": [
+      "Notas Marinas",
+      "Ciruela",
+      "Cardamomo"
+    ],
+    "fondo": [
+      "Ámbar Gris",
+      "Almizcle",
+      "Madera a la deriva"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-for-him.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 240000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-for-him",
+    "img": "assets/HawasForHim.png"
+  }
+}

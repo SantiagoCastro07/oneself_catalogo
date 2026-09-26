@@ -1,0 +1,59 @@
+{
+  "nombre": "Arabians Tonka",
+  "marca": "montale",
+  "genero": "hombre",
+  "tipo": "nicho",
+  "familias": [
+    "ambarado",
+    "gourmand"
+  ],
+  "descripcion": "Potente, dulce y lujoso. Una mezcla intensa de oud, rosa y haba tonka con una duración espectacular.",
+  "notas": {
+    "salida": [
+      "Azafrán",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Rosa de Bulgaria",
+      "Oud"
+    ],
+    "fondo": [
+      "Haba Tonka",
+      "Ámbar",
+      "Almizcle",
+      "Azúcar de Caña"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/arabians-tonka.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 22000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 37000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 65000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 520000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "arabians-tonka",
+    "img": "assets/ArabiansTonka.png"
+  }
+}

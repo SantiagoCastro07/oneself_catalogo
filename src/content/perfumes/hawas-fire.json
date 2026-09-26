@@ -1,0 +1,51 @@
+{
+  "nombre": "Hawas Fire",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "amaderado"
+  ],
+  "descripcion": "Intenso, especiado y audaz. Una versión ardiente del clásico.",
+  "notas": {
+    "salida": [
+      "Especias",
+      "Pimienta"
+    ],
+    "corazon": [
+      "Oud",
+      "Incienso"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Vetiver"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-fire.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 270000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-fire",
+    "img": "assets/HawasFire.png"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "nombre": "Le Beau Le Parfum",
+  "marca": "jean-paul-gaultier",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "amaderado",
+    "ambarado"
+  ],
+  "descripcion": "Cálido, amaderado y magnético. Una versión más intensa y sensual del icónico Le Beau, con un fondo dulce y envolvente.",
+  "notas": {
+    "salida": [
+      "Cardamomo",
+      "Toronja"
+    ],
+    "corazon": [
+      "Madera de Coco",
+      "Salvia"
+    ],
+    "fondo": [
+      "Haba Tonka",
+      "Amberwood"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/le-beau-le-parfum.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 21000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 35000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 65000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 610000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "le-beau-le-parfum",
+    "img": "assets/LeBeauLeParfum.png"
+  }
+}

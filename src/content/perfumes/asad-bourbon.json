@@ -1,0 +1,51 @@
+{
+  "nombre": "Asad Bourbon",
+  "marca": "lattafa",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "especiado",
+    "gourmand"
+  ],
+  "descripcion": "Dulce, especiado y elegante. Ideal para la noche.",
+  "notas": {
+    "salida": [
+      "Pimienta negra",
+      "Piña"
+    ],
+    "corazon": [
+      "Vainilla",
+      "Café"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Maderas"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/asad-bourbon.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 38000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "asad-bourbon",
+    "img": "assets/AsadBourbon.png"
+  }
+}

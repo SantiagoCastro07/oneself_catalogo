@@ -1,0 +1,51 @@
+{
+  "nombre": "Hawas Diva",
+  "marca": "rasasi",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "floral",
+    "frutal"
+  ],
+  "descripcion": "Sofisticado, floral y con carácter. Ideal para ella.",
+  "notas": {
+    "salida": [
+      "Frutas rojas",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Rosa",
+      "Jazmín"
+    ],
+    "fondo": [
+      "Sándalo",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-diva.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 22000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 39000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 248000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-diva",
+    "img": "assets/HawasDiva.png"
+  }
+}

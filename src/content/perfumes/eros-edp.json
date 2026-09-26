@@ -1,0 +1,60 @@
+{
+  "nombre": "Eros EDP",
+  "marca": "versace",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "aromatico",
+    "gourmand"
+  ],
+  "descripcion": "Seductor, intenso y adictivo. Una fragancia dulce y potente que deja huella en cualquier ambiente.",
+  "notas": {
+    "salida": [
+      "Menta",
+      "Manzana",
+      "Limón"
+    ],
+    "corazon": [
+      "Haba Tonka",
+      "Ambroxan",
+      "Geranio"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Cedro",
+      "Vetiver"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/eros-edp.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 16000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 26000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 290000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "eros-edp",
+    "img": "assets/erosedp.png"
+  }
+}

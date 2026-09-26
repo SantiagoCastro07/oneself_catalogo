@@ -1,0 +1,61 @@
+{
+  "nombre": "L'Eau d'Issey Pour Homme",
+  "marca": "issey-miyake",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "citrico",
+    "amaderado"
+  ],
+  "descripcion": "Fresco, cítrico y atemporal. Un clásico masculino perfecto para el día y el clima cálido.",
+  "notas": {
+    "salida": [
+      "Yuzu",
+      "Limón",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Nuez Moscada",
+      "Canela",
+      "Lirio de los Valles"
+    ],
+    "fondo": [
+      "Vetiver",
+      "Cedro",
+      "Almizcle",
+      "Tabaco"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/l-eau-d-issey-pour-homme.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 16000,
+      "estado": "disponible",
+      "provisional": true
+    },
+    {
+      "tamano": "5ml",
+      "precio": 26000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 290000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "eau-issey-pour-homme",
+    "img": "assets/isseymiyake.png"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "nombre": "Art Of Universe",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "amaderado",
+    "floral"
+  ],
+  "descripcion": "Sofisticado y versátil, con un aire moderno.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Cítricos"
+    ],
+    "corazon": [
+      "Notas florales"
+    ],
+    "fondo": [
+      "Maderas",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/art-of-universe.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 260000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "art-of-universe",
+    "img": "assets/ArtOfUniverse.png"
+  }
+}

@@ -1,17 +1,51 @@
 ---
+// Página provisional de la fase 1: comprueba que el catálogo y las imágenes cargan.
+// Se reemplaza por la home real en la fase 4.
 import '../styles/global.css';
+import { Image } from 'astro:assets';
+import { perfumesActivos, precioDesde, formatoPrecio, agotado, ordenarVariantes, ETIQUETA_TAMANO } from '../lib/catalogo';
+import { getEntry } from 'astro:content';
+const perfumes = await perfumesActivos();
+const marcas = Object.fromEntries(
+  await Promise.all(perfumes.map(async (p) => [p.data.marca.id, (await getEntry(p.data.marca))?.data.nombre])),
+);
 ---
 <html lang="es-CO">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>OneSelf · En construcción</title>
+    <title>OneSelf · Revisión del catálogo</title>
+    <style>
+      main { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+      h1 { font: 700 32px/1.1 var(--font-display); margin: 0 0 4px; }
+      .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 12px; margin-top: 24px; }
+      @media (min-width: 900px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+      .foto { background: var(--bg-photo); aspect-ratio: 1; }
+      .foto img { width: 100%; height: 100%; object-fit: contain; display: block; }
+      .marca { font-size: 12px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; margin: 8px 0 2px; }
+      .nombre { margin: 0; font-weight: 500; }
+      .precio, .tam { margin: 2px 0 0; font-size: 13px; color: var(--ink-2); }
+      .precio { color: var(--ink); font-weight: 500; font-size: 15px; }
+    </style>
   </head>
   <body>
-    <main style="min-height:100svh;display:grid;place-content:center;text-align:center;padding:16px">
-      <h1 style="font:700 48px/1 var(--font-display);margin:0 0 12px">OneSelf</h1>
-      <p style="margin:0;color:var(--ink-2)">Rediseño en construcción · fase 0</p>
+    <main>
+      <h1>OneSelf</h1>
+      <p style="margin:0;color:var(--ink-2)">Revisión interna · fase 1 · {perfumes.length} perfumes</p>
+      <div class="grid">
+        {perfumes.map((p, i) => (
+          <article>
+            <div class="foto">
+              <Image src={p.data.imagenes[0]} alt={`${p.data.nombre} de ${marcas[p.data.marca.id]}`} widths={[240, 360, 480]} sizes="(min-width: 900px) 280px, 50vw" loading={i < 4 ? 'eager' : 'lazy'} />
+            </div>
+            <p class="marca">{marcas[p.data.marca.id]}</p>
+            <p class="nombre">{p.data.nombre}</p>
+            <p class="precio">{agotado(p) ? 'Agotado' : `Desde ${formatoPrecio(precioDesde(p))}`}</p>
+            <p class="tam">{ordenarVariantes(p.data.variantes).map((v) => ETIQUETA_TAMANO[v.tamano]).join(' · ')}</p>
+          </article>
+        ))}
+      </div>
     </main>
   </body>
 </html>

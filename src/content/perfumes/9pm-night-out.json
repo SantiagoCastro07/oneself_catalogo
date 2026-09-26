@@ -1,0 +1,53 @@
+{
+  "nombre": "9PM Night Out",
+  "marca": "afnan",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "ambarado"
+  ],
+  "descripcion": "La evolución del 9PM original. Más intenso, nocturno y perfecto para eventos especiales.",
+  "notas": {
+    "salida": [
+      "Manzana",
+      "Canela",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Flor de Azahar",
+      "Lirio de los Valles"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba Tonka",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/9pm-night-out.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 290000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "9pm-night-out",
+    "img": "assets/9pmNightOut.png"
+  }
+}

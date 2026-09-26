@@ -1,0 +1,50 @@
+{
+  "nombre": "9PM",
+  "marca": "afnan",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "ambarado"
+  ],
+  "descripcion": "Dulce, nocturno y seductor. Una bomba de vainilla y manzana para salir de fiesta.",
+  "notas": {
+    "salida": [
+      "Manzana",
+      "Canela"
+    ],
+    "corazon": [
+      "Flor de azahar"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba tonka"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/9pm.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 36000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "9pm",
+    "img": "assets/9Pm.png"
+  }
+}

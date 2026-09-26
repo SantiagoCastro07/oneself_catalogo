@@ -1,0 +1,52 @@
+{
+  "nombre": "Hawas Verde",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "citrico",
+    "amaderado"
+  ],
+  "descripcion": "Fresco, verde y extremadamente limpio. Perfecto para clima cálido y uso diario.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Toronja"
+    ],
+    "corazon": [
+      "Jengibre",
+      "Cedro"
+    ],
+    "fondo": [
+      "Sándalo",
+      "Almizcle",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-verde.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 30000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 55000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 320000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "hawas-verde",
+    "img": "assets/HawasVerde.png"
+  }
+}

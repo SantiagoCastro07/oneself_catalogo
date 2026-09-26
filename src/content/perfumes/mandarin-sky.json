@@ -1,0 +1,51 @@
+{
+  "nombre": "Mandarin Sky",
+  "marca": "armaf",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "citrico",
+    "ambarado"
+  ],
+  "descripcion": "Cítrico vibrante con corazón cálido. Energizante y optimista.",
+  "notas": {
+    "salida": [
+      "Mandarina",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Neroli",
+      "Flores blancas"
+    ],
+    "fondo": [
+      "Cedro",
+      "Almizcle suave"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/mandarin-sky.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 20000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 36000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 204000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [],
+  "activo": true,
+  "legado": {
+    "id": "mandarin-sky",
+    "img": "assets/MandarinSky.png"
+  }
+}
