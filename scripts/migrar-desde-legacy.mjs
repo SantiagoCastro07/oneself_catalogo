@@ -23,6 +23,12 @@ const slugify = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 const RENOMBRAR = {
   'cdn-urban-man-elixir': 'club-de-nuit-urban-man-elixir',
   'eau-issey-pour-homme': 'l-eau-d-issey-pour-homme',
+  'precieux': 'club-de-nuit-precieux-i',
+};
+
+// Nombres corregidos respecto al sitio anterior (confirmado por OneSelf, 2026-09-26)
+const CORREGIR_NOMBRE = {
+  'precieux': 'Club de Nuit Précieux I',
 };
 
 // Marcas corregidas respecto al sitio anterior (confirmado por OneSelf, 2026-09-26)
@@ -116,7 +122,7 @@ for (const p of PERFUMES) {
 
   const ext = path.extname(p.img);
   const doc = {
-    nombre: p.name,
+    nombre: CORREGIR_NOMBRE[p.id] || p.name,
     marca: marcaSlug,
     genero: p.gender,
     tipo: p.category,
@@ -160,7 +166,7 @@ for (const p of PERFUMES) {
     const v = d.variantes.find(x => x.tamano === t);
     if (p.prices[k] !== v?.precio) throw new Error(`Precio distinto en ${p.id} ${k}`);
   }
-  if (d.descripcion !== p.desc || d.nombre !== p.name) throw new Error(`Texto distinto en ${p.id}`);
+  if (d.descripcion !== p.desc || d.nombre !== (CORREGIR_NOMBRE[p.id] || p.name)) throw new Error(`Texto distinto en ${p.id}`);
 }
 console.table({ origen, destino });
 for (const k of Object.keys(origen)) if (origen[k] !== destino[k]) throw new Error(`No cuadra: ${k}`);
