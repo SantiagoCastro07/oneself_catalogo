@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { url, whatsappUrl, telefonoLegible } from '../lib/url';
+import tienda from '../data/tienda.json';
+---
+<Base titulo="Nosotros" descripcion="OneSelf vende perfumes originales en decants para que descubras tu esencia antes de elegirla. Envíos a toda Colombia.">
+  <article class="wrap texto">
+    <nav class="migas" aria-label="Ruta"><a href={url()}>Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Nosotros</span></nav>
+    <h1 class="display">{tienda.eslogan}</h1>
+    <p class="lead">OneSelf nace de la idea de que cada fragancia es una forma de expresarte.</p>
+    <p>Vendemos perfumes originales en decants para que descubras tu esencia antes de elegirla. Pruebas un perfume en 5 o 10 ml, lo llevas unos días y decides con calma.</p>
+    <p>También tenemos frascos completos para quienes ya saben lo que quieren.</p>
+
+    <h2>Contacto</h2>
+    <ul class="contacto">
+      <li><a href={whatsappUrl(tienda.whatsapp)} target="_blank" rel="noopener"><Icono nombre="whatsapp" /> WhatsApp {telefonoLegible(tienda.whatsapp)}</a></li>
+      <li><a href={tienda.instagram} target="_blank" rel="noopener"><Icono nombre="instagram" /> Instagram {tienda.instagramUsuario}</a></li>
+      <li><a href={tienda.tiktok} target="_blank" rel="noopener"><Icono nombre="tiktok" /> TikTok {tienda.tiktokUsuario}</a></li>
+    </ul>
+    <a class="btn" href={url('catalogo')}>Ver catálogo</a>
+  </article>
+</Base>
+<style>
+  .texto { max-width: 760px; padding-top: var(--s5); }
+  .migas { display: flex; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s3); }
+  h1 { font-size: clamp(32px, 7vw, 48px); line-height: 1.05; }
+  .lead { font-size: 19px; margin-top: var(--s4); }
+  p + p { margin-top: var(--s3); }
+  p:not(.lead) { color: var(--ink-2); }
+  h2 { font-size: 20px; font-weight: 500; margin: var(--s7) 0 var(--s3); }
+  .contacto { display: grid; margin-bottom: var(--s6); border-top: 1px solid var(--line); }
+  .contacto a { display: flex; align-items: center; gap: var(--s3); padding: var(--s4) 0; border-bottom: 1px solid var(--line); }
+  .contacto a:hover { text-decoration: underline; text-underline-offset: 3px; }
+</style>

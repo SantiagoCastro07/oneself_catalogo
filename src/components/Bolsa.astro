@@ -1,11 +1,10 @@
 ---
 // Bolsa de pedido: vive en el navegador (localStorage), sin cuentas.
-// Al enviar, arma UN solo mensaje de WhatsApp con todos los perfumes.
+// "Continuar con el pedido" lleva a /pedido/, donde se piden los datos de envío.
 import Icono from './Icono.astro';
-import tienda from '../data/tienda.json';
 import { url } from '../lib/url';
 ---
-<aside id="bolsa" class="bolsa" aria-label="Tu bolsa" hidden data-numero={tienda.whatsapp} data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
+<aside id="bolsa" class="bolsa" aria-label="Tu bolsa" hidden data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
   <div class="bolsa__cab">
     <p class="bolsa__tit">Tu bolsa <span class="muted" data-bolsa-n></span></p>
     <button class="icon-btn" type="button" aria-label="Cerrar bolsa" data-bolsa-cerrar><Icono nombre="cerrar" /></button>
@@ -20,13 +19,9 @@ import { url } from '../lib/url';
     <p class="bolsa__aviso" data-bolsa-aviso hidden></p>
   </div>
   <div class="bolsa__pie" data-bolsa-pie hidden>
-    <label class="bolsa__ciudad">
-      <span>Ciudad de envío <span class="muted">(opcional)</span></span>
-      <input type="text" data-bolsa-ciudad autocomplete="address-level2" placeholder="Ej. Medellín" />
-    </label>
     <div class="bolsa__total"><span>Subtotal</span><strong data-bolsa-total></strong></div>
-    <p class="bolsa__nota muted">El envío y el pago se confirman por WhatsApp.</p>
-    <a class="btn btn--block" data-bolsa-enviar href="#" target="_blank" rel="noopener"><Icono nombre="whatsapp" /> Enviar pedido por WhatsApp</a>
+    <p class="bolsa__nota muted">El envío se calcula según tu ciudad y te lo confirmamos por WhatsApp.</p>
+    <a class="btn btn--block" href={url('pedido')}>Continuar con el pedido</a>
   </div>
 </aside>
 
@@ -47,8 +42,6 @@ import { url } from '../lib/url';
   .bolsa__vacia { padding: var(--s7) 0; display: grid; gap: var(--s3); justify-items: center; text-align: center; }
   .bolsa__aviso { margin: var(--s4) 0; padding: var(--s3); background: var(--bg-photo); font-size: 14px; border-radius: var(--radius); }
   .bolsa__pie { border-top: 1px solid var(--line); padding: var(--s4) var(--gutter) calc(var(--s4) + env(safe-area-inset-bottom)); display: grid; gap: var(--s3); }
-  .bolsa__ciudad { display: grid; gap: var(--s1); font-size: 14px; }
-  .bolsa__ciudad input { height: 44px; border: 1px solid var(--line); border-radius: var(--radius); padding: 0 var(--s3); background: var(--bg-raised); font-size: 16px; }
   .bolsa__total { display: flex; justify-content: space-between; font-size: 17px; }
   .bolsa__nota { font-size: 13px; }
 
@@ -63,7 +56,7 @@ import { url } from '../lib/url';
 </style>
 
 <script>
-  import { mensajePedido, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido } from '../lib/whatsapp';
+  import { pesos, TAMANO_TEXTO } from '../lib/whatsapp';
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
   const CLAVE = 'oneself_bolsa_v2';
@@ -74,15 +67,11 @@ import { url } from '../lib/url';
   const aviso = panel.querySelector<HTMLElement>('[data-bolsa-aviso]')!;
   const totalEl = panel.querySelector<HTMLElement>('[data-bolsa-total]')!;
   const nEl = panel.querySelector<HTMLElement>('[data-bolsa-n]')!;
-  const enviar = panel.querySelector<HTMLAnchorElement>('[data-bolsa-enviar]')!;
-  const ciudad = panel.querySelector<HTMLInputElement>('[data-bolsa-ciudad]')!;
-  const numero = panel.dataset.numero!;
   const catalogo = panel.dataset.catalogo!;
 
   const leer = (): Item[] => { try { return JSON.parse(localStorage.getItem(CLAVE) || '[]'); } catch { return []; } };
-  const guardar = (x: Item[]) => { try { localStorage.setItem(CLAVE, JSON.stringify(x)); } catch {} };
+  const guardar = (x: Item[]) => { try { localStorage.setItem(CLAVE, JSON.stringify(x)); } catch {} document.dispatchEvent(new CustomEvent('bolsa:cambio')); };
   let items = leer();
-  try { ciudad.value = localStorage.getItem(CLAVE + '_ciudad') || ''; } catch {}
 
   const pedibles = () => items.filter((i) => i.estado !== 'agotado' && i.estado !== 'retirado');
 
@@ -121,9 +110,7 @@ import { url } from '../lib/url';
       });
       lista.appendChild(li);
     }
-    const lineas: LineaPedido[] = pedibles().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido' }));
-    totalEl.textContent = pesos(lineas.reduce((s, l) => s + l.precio * l.cantidad, 0));
-    enviar.href = enlaceWhatsapp(numero, mensajePedido(lineas, ciudad.value));
+    totalEl.textContent = pesos(pedibles().reduce((s, l) => s + l.precio * l.cantidad, 0));
   }
 
   // Actualiza precios y estados con el catálogo publicado
@@ -144,7 +131,6 @@ import { url } from '../lib/url';
     } catch {}
   }
 
-  ciudad.addEventListener('input', () => { try { localStorage.setItem(CLAVE + '_ciudad', ciudad.value); } catch {} pintar(); });
 
   // Abrir / cerrar
   let origen: HTMLElement | null = null;

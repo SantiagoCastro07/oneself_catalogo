@@ -9,8 +9,9 @@ interface Props {
   descripcion?: string;
   imagenOg?: string;       // URL absoluta o ruta de imagen generada
   noindex?: boolean;
+  simple?: boolean;        // encabezado y pie reducidos (página de pedido)
 }
-const { titulo, descripcion = tienda.descripcion, imagenOg, noindex = false } = Astro.props;
+const { titulo, descripcion = tienda.descripcion, imagenOg, noindex = false, simple = false } = Astro.props;
 const tituloCompleto = titulo === tienda.nombre ? `${tienda.nombre} · Perfumes originales en decants` : `${titulo} | ${tienda.nombre}`;
 const canonica = new URL(Astro.url.pathname, Astro.site);
 const og = imagenOg ? new URL(imagenOg, Astro.site).href : undefined;
@@ -37,11 +38,11 @@ const og = imagenOg ? new URL(imagenOg, Astro.site).href : undefined;
   </head>
   <body>
     <a class="saltar sr-only" href="#contenido">Ir al contenido</a>
-    <Encabezado />
+    <Encabezado simple={simple} />
     <main id="contenido">
       <slot />
     </main>
-    <Pie />
+    <Pie simple={simple} />
     <style is:global>
       .saltar:focus { position: fixed; top: 8px; left: 8px; width: auto; height: auto; clip: auto; z-index: 100; background: var(--ink); color: var(--on-ink); padding: 8px 12px; border-radius: var(--radius); }
     </style>

@@ -7,7 +7,7 @@ import { getCollection } from 'astro:content';
 import { url } from '../../lib/url';
 import { perfumesActivos, mapaMarcas, ordenarVariantes, agotado, precioDesde, type Perfume } from '../../lib/catalogo';
 import { FAMILIA_ETIQUETA, TIPO_ETIQUETA, GENERO_ETIQUETA } from '../../lib/categorias';
-import { TAMANO_TEXTO, pesos, mensajePedido, mensajeAviso, enlaceWhatsapp } from '../../lib/whatsapp';
+import { TAMANO_TEXTO, pesos, mensajeAviso, enlaceWhatsapp } from '../../lib/whatsapp';
 import tienda from '../../data/tienda.json';
 
 export async function getStaticPaths() {
@@ -75,7 +75,7 @@ const migasLd = {
   ],
 };
 const datosCliente = {
-  slug: p.id, nombre: d.nombre, marca, img: miniatura.src, numero: tienda.whatsapp,
+  slug: p.id, nombre: d.nombre, marca, img: miniatura.src, numero: tienda.whatsapp, pedido: url('pedido'),
   variantes: Object.fromEntries(variantes.map((v) => [v.tamano, { precio: v.precio, estado: v.estado }])),
   rendimiento, estados: ESTADO_TEXTO,
 };
@@ -138,12 +138,10 @@ const datosCliente = {
                 <output data-cantidad aria-live="polite">1</output>
                 <button type="button" data-mas aria-label="Agregar uno">+</button>
               </div>
-              <a class="btn comprar__wa" data-pedir target="_blank" rel="noopener"
-                 href={enlaceWhatsapp(tienda.whatsapp, mensajePedido([{ nombre: d.nombre, marca, tamano: inicial.tamano, precio: inicial.precio, cantidad: 1 }]))}>
-                <Icono nombre="whatsapp" /> Pedir por WhatsApp
-              </a>
+              <a class="btn comprar__wa" data-pedir href={url(`pedido?item=${encodeURIComponent(`${p.id}|${inicial.tamano}|1`)}`)}>Pedir ahora</a>
             </div>
             <button type="button" class="btn btn--sec btn--block" data-agregar>Agregar a la bolsa</button>
+            <a class="comprar__duda" href={enlaceWhatsapp(tienda.whatsapp, `Hola OneSelf, tengo una pregunta sobre ${d.nombre} (${marca}).`)} target="_blank" rel="noopener"><Icono nombre="whatsapp" clase="icon icon--sm" /> ¿Dudas? Pregúntanos por WhatsApp</a>
           </div>
         ) : (
           <a class="btn btn--block" target="_blank" rel="noopener" href={enlaceWhatsapp(tienda.whatsapp, mensajeAviso(d.nombre, marca))}>
@@ -194,7 +192,7 @@ const datosCliente = {
   {!sinStock && (
     <div class="barra" data-barra hidden>
       <div class="barra__txt"><span class="barra__nombre">{d.nombre}</span><span class="muted" data-barra-resumen>{TAMANO_TEXTO[inicial.tamano]} · {pesos(inicial.precio)}</span></div>
-      <a class="btn btn--sm" data-pedir target="_blank" rel="noopener" href="#"><Icono nombre="whatsapp" /> Pedir</a>
+      <a class="btn btn--sm" data-pedir href="#">Pedir ahora</a>
     </div>
   )}
 
@@ -255,6 +253,9 @@ const datosCliente = {
   .paso--grande button { height: 46px; width: 42px; }
   .info > .btn { margin-top: var(--s4); }
   [data-aviso-tam] { margin-top: var(--s3); }
+  .comprar__duda { display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); font-size: 14px; color: var(--ink-2); padding: var(--s1) 0; }
+  .comprar__duda:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .comprar__duda :global(.icon--sm) { width: 18px; height: 18px; }
 
   .confianza { margin-top: var(--s5); display: grid; gap: var(--s2); font-size: 14px; color: var(--ink-2); }
   .confianza li { padding-left: 20px; position: relative; }
@@ -285,7 +286,7 @@ const datosCliente = {
 </style>
 
 <script>
-  import { mensajePedido, mensajeAviso, enlaceWhatsapp, pesos, TAMANO_TEXTO } from '../../lib/whatsapp';
+  import { mensajeAviso, enlaceWhatsapp, pesos, TAMANO_TEXTO } from '../../lib/whatsapp';
   const datos = JSON.parse(document.getElementById('datos-ficha')!.textContent!);
   const ficha = document.querySelector<HTMLElement>('[data-ficha]')!;
   const radios = [...ficha.querySelectorAll<HTMLInputElement>('input[name="tamano"]')];
@@ -318,7 +319,7 @@ const datosCliente = {
     if (cantEl) cantEl.textContent = String(cantidad);
     if (menos) menos.disabled = cantidad <= 1;
     if (mas) mas.disabled = cantidad >= 20;
-    const href = enlaceWhatsapp(datos.numero, mensajePedido([{ nombre: datos.nombre, marca: datos.marca, tamano: tam, precio: v.precio, cantidad, bajoPedido: v.estado === 'bajo_pedido' }]));
+    const href = `${datos.pedido}?item=${encodeURIComponent(`${datos.slug}|${tam}|${cantidad}`)}`;
     pedir.forEach((a) => (a.href = href));
     if (resumen) resumen.textContent = `${cantidad > 1 ? cantidad + ' × ' : ''}${TAMANO_TEXTO[tam]} · ${pesos(v.precio * cantidad)}`;
     const u = new URL(location.href); u.searchParams.set('tam', tam); history.replaceState(null, '', u);

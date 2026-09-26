@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+---
+<Base titulo="Página no encontrada" noindex>
+  <section class="wrap nf">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="display">No encontramos esta página</h1>
+    <p class="muted">Puede que el perfume ya no esté en el catálogo o que el enlace tenga un error.</p>
+    <div class="nf__cta"><a class="btn" href={url('catalogo')}>Ver catálogo</a><a class="btn btn--sec" href={url()}>Ir al inicio</a></div>
+  </section>
+</Base>
+<style>
+  .nf { padding: var(--s8) var(--gutter); display: grid; gap: var(--s3); max-width: 640px; }
+  h1 { font-size: 34px; }
+  .nf__cta { display: flex; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s3); }
+</style>

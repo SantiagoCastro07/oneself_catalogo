@@ -4,12 +4,13 @@ import { url, whatsappUrl, telefonoLegible } from '../lib/url';
 import { CATEGORIAS, MINIMO_EN_MENU } from '../lib/categorias';
 import { datosNavegacion } from '../lib/catalogo';
 import tienda from '../data/tienda.json';
+const { simple = false } = Astro.props as { simple?: boolean };
 const { perfumes } = await datosNavegacion();
 const cats = CATEGORIAS.filter((c) => perfumes.filter(c.filtro).length >= MINIMO_EN_MENU);
 const anio = new Date().getFullYear();
 ---
-<footer class="pie">
-  <div class="wrap pie__in">
+<footer class:list={['pie', { 'pie--simple': simple }]}>
+  {!simple && <div class="wrap pie__in">
     <div class="pie__marca">
       <a href={url()} class="display pie__logo">OneSelf</a>
       <p>{tienda.eslogan}</p>
@@ -23,6 +24,14 @@ const anio = new Date().getFullYear();
         <li><a href={url('marcas')}>Marcas</a></li>
       </ul>
     </nav>
+    <nav class="pie__col" aria-label="Ayuda">
+      <p class="pie__tit">Ayuda</p>
+      <ul>
+        <li><a href={url('como-funciona')}>Cómo funciona</a></li>
+        <li><a href={url('como-funciona') + '#preguntas'}>Preguntas frecuentes</a></li>
+        <li><a href={url('nosotros')}>Nosotros</a></li>
+      </ul>
+    </nav>
     <div class="pie__col">
       <p class="pie__tit">Contacto</p>
       <ul>
@@ -31,18 +40,20 @@ const anio = new Date().getFullYear();
         <li><a href={tienda.tiktok} target="_blank" rel="noopener"><Icono nombre="tiktok" clase="icon icon--sm" /> {tienda.tiktokUsuario}</a></li>
       </ul>
     </div>
-  </div>
+  </div>}
   <div class="wrap pie__legal">© {anio} OneSelf Parfums · Pedidos y pagos por WhatsApp</div>
 </footer>
 <style>
   .pie { background: var(--ink); color: var(--on-ink); margin-top: var(--s8); }
   .pie__in { display: grid; gap: var(--s6); padding-top: var(--s7); padding-bottom: var(--s6); }
-  @media (min-width: 768px) { .pie__in { grid-template-columns: 2fr 1fr 1fr; } }
+  @media (min-width: 768px) { .pie__in { grid-template-columns: 2fr 1fr 1fr 1.3fr; } }
   .pie__logo { font-size: 30px; display: inline-block; margin-bottom: var(--s2); }
   .pie__sub { color: #A9B0BB; font-size: 14px; margin-top: var(--s1); }
   .pie__tit { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #A9B0BB; margin-bottom: var(--s3); }
   .pie__col a { display: inline-flex; align-items: center; gap: var(--s2); padding: 6px 0; }
   .pie__col a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .pie :global(.icon--sm) { width: 18px; height: 18px; }
+  .pie--simple { margin-top: var(--s7); }
+  .pie--simple .pie__legal { border-top: 0; padding-top: var(--s5); }
   .pie__legal { border-top: 1px solid rgba(246,245,242,.14); padding-top: var(--s4); padding-bottom: var(--s5); font-size: 13px; color: #A9B0BB; }
 </style>

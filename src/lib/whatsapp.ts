@@ -31,3 +31,35 @@ export const mensajeAviso = (nombre: string, marca: string, tamano?: string) =>
 
 export const enlaceWhatsapp = (numero: string, texto: string) =>
   `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+
+export interface DatosEnvio {
+  nombre: string; apellidos: string; cedula?: string; telefono: string; correo?: string;
+  departamento: string; ciudad: string; direccion: string; detalle?: string; barrio?: string;
+  pago?: string; notas?: string;
+}
+
+/** Pedido completo con datos de envío, listo para despachar sin volver a preguntar. */
+export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
+  const total = lineas.reduce((s, l) => s + l.precio * l.cantidad, 0);
+  const n = lineas.reduce((s, l) => s + l.cantidad, 0);
+  const fila = (k: string, v?: string) => (v && v.trim() ? [`${k}: ${v.trim()}`] : []);
+  return [
+    'Hola OneSelf, quiero hacer este pedido:',
+    '',
+    '*PEDIDO*',
+    ...lineas.map((l) => `• ${l.nombre} (${l.marca}) · ${TAMANO_TEXTO[l.tamano] || l.tamano} × ${l.cantidad} · ${pesos(l.precio * l.cantidad)}${l.bajoPedido ? ' (bajo pedido)' : ''}`),
+    `Subtotal (${n} ${n === 1 ? 'artículo' : 'artículos'}): ${pesos(total)}`,
+    'Envío: por confirmar',
+    '',
+    '*DATOS DE ENVÍO*',
+    `Nombre: ${d.nombre.trim()} ${d.apellidos.trim()}`,
+    ...fila('Cédula', d.cedula),
+    `Teléfono: ${d.telefono.trim()}`,
+    ...fila('Correo', d.correo),
+    `Dirección: ${d.direccion.trim()}${d.detalle?.trim() ? `, ${d.detalle.trim()}` : ''}`,
+    ...fila('Barrio', d.barrio),
+    `Ciudad: ${d.ciudad.trim()}, ${d.departamento}`,
+    ...(d.pago ? ['', `Pago: ${d.pago}`] : []),
+    ...(d.notas?.trim() ? ['', `Notas: ${d.notas.trim()}`] : []),
+  ].join('\n');
+}

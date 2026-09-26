@@ -6,6 +6,7 @@ import { CATEGORIAS, MINIMO_EN_MENU } from '../lib/categorias';
 import { datosNavegacion } from '../lib/catalogo';
 import tienda from '../data/tienda.json';
 
+const { simple = false } = Astro.props as { simple?: boolean };
 const { perfumes, marcasTop } = await datosNavegacion();
 const visibles = CATEGORIAS.filter((c) => perfumes.filter(c.filtro).length >= MINIMO_EN_MENU);
 const genero = visibles.filter((c) => c.grupo === 'genero');
@@ -14,8 +15,8 @@ const hayNuevos = visibles.some((c) => c.slug === 'nuevos');
 const actual = Astro.url.pathname;
 const esActual = (href: string) => actual === href || (href !== url() && actual.startsWith(href) && href !== url('catalogo'));
 ---
-<div class="anuncio">{tienda.anuncio}</div>
-<header class="cab">
+{!simple && <div class="anuncio">{tienda.anuncio}</div>}
+<header class:list={['cab', { 'cab--simple': simple }]}>
   <div class="wrap cab__in">
     <button class="icon-btn cab__menu" type="button" aria-label="Abrir menú" aria-controls="menu" aria-expanded="false" data-abrir="menu">
       <Icono nombre="menu" />
@@ -28,6 +29,7 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
       {hayNuevos && <a href={url('catalogo/nuevos')} aria-current={esActual(url('catalogo/nuevos')) ? 'page' : undefined}>Nuevos</a>}
       <a href={url('marcas')} aria-current={actual.startsWith(url('marcas')) ? 'page' : undefined}>Marcas</a>
     </nav>
+    {simple && <a class="cab__volver" href={url('catalogo')}>Seguir comprando</a>}
     <div class="cab__acc">
       <button class="icon-btn" type="button" aria-label="Buscar" aria-controls="buscador" data-abrir="buscador"><Icono nombre="buscar" /></button>
       <button class="icon-btn" type="button" aria-label="Abrir bolsa" aria-controls="bolsa" data-abrir-bolsa><Icono nombre="bolsa" /><span class="contador" data-bolsa-contador hidden></span></button>
@@ -58,6 +60,11 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
     <ul class="menu__lista">
       {marcasTop.slice(0, 6).map((m) => <li><a href={url(`marcas/${m.slug}`)}>{m.nombre}</a></li>)}
       <li><a href={url('marcas')} class="muted">Ver todas las marcas</a></li>
+    </ul>
+    <p class="eyebrow menu__tit">OneSelf</p>
+    <ul class="menu__lista">
+      <li><a href={url('como-funciona')}>Cómo funciona</a></li>
+      <li><a href={url('nosotros')}>Nosotros</a></li>
     </ul>
   </nav>
   <div class="panel__pie">
@@ -94,6 +101,10 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
     .cab__nav a:hover, .cab__nav a[aria-current="page"] { border-color: var(--ink); }
   }
 
+  .cab--simple .cab__in { grid-template-columns: 1fr auto; }
+  .cab--simple .cab__menu, .cab--simple .cab__nav, .cab--simple .cab__acc { display: none; }
+  .cab--simple .cab__logo { justify-self: start; }
+  .cab__volver { font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
   .velo { position: fixed; inset: 0; background: rgba(11,18,32,.4); z-index: 40; }
   .panel { position: fixed; top: 0; bottom: 0; z-index: 50; width: min(86vw, 360px); background: var(--bg); display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--line); }
   .panel--izq { left: 0; }

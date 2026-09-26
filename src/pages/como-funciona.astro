@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { url, whatsappUrl } from '../lib/url';
+import { datosNavegacion, pedible, formatoPrecio, agotado } from '../lib/catalogo';
+import { TAMANO_TEXTO } from '../lib/whatsapp';
+import tienda from '../data/tienda.json';
+import preguntas from '../data/preguntas.json';
+
+const { perfumes } = await datosNavegacion();
+const disp = perfumes.filter((p) => !agotado(p));
+const rend = tienda.rendimiento as Record<string, number | string>;
+const filas = (['3ml', '5ml', '10ml', 'frasco'] as const).map((t) => {
+  const pr = disp.flatMap((p) => p.data.variantes.filter((v) => v.tamano === t && pedible(v)).map((v) => v.precio));
+  return { t, desde: pr.length ? Math.min(...pr) : 0, n: pr.length };
+}).filter((f) => f.n);
+const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: preguntas.map((q) => ({ '@type': 'Question', name: q.p, acceptedAnswer: { '@type': 'Answer', text: q.r } })) };
+---
+<Base titulo="Cómo funciona" descripcion="Qué es un decant, qué tamaños tenemos, cuánto rinden y cómo pedir tu perfume por WhatsApp con envío a toda Colombia.">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  <article class="wrap texto">
+    <nav class="migas" aria-label="Ruta"><a href={url()}>Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Cómo funciona</span></nav>
+    <h1 class="display">Cómo funciona</h1>
+    <p class="lead">{tienda.textoDecant}</p>
+
+    <h2>Tamaños</h2>
+    <table class="tabla">
+      <thead><tr><th>Tamaño</th><th>Rinde aprox.</th><th>Desde</th></tr></thead>
+      <tbody>
+        {filas.map((f) => (
+          <tr>
+            <td>{f.t === 'frasco' ? 'Frasco completo' : TAMANO_TEXTO[f.t]}{f.t === '3ml' && <span class="muted"> · diseñador y nicho</span>}</td>
+            <td>{typeof rend[f.t] === 'number' ? `${rend[f.t]} atomizaciones` : '—'}</td>
+            <td>{formatoPrecio(f.desde)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="muted nota">El rendimiento es aproximado y depende de cuántas veces apliques el perfume.</p>
+
+    <h2>Cómo pedir</h2>
+    <ol class="pasos-t">
+      <li><strong>Elige tu perfume</strong> en el <a href={url('catalogo')}>catálogo</a>. Puedes filtrar por género, familia olfativa, marca y precio.</li>
+      <li><strong>Elige el tamaño y la cantidad.</strong> Si quieres varios, agrégalos a la bolsa.</li>
+      <li><strong>Completa tus datos de envío</strong> y toca “Enviar pedido por WhatsApp”. Se abre WhatsApp con todo listo.</li>
+      <li><strong>Te confirmamos</strong> el total con envío y los medios de pago, y despachamos tu pedido.</li>
+    </ol>
+
+    <h2>Envíos</h2>
+    <p>Enviamos a toda Colombia. {tienda.envioTexto}</p>
+
+    <h2>Pagos</h2>
+    <p>No cobramos en la página. Al recibir tu pedido te enviamos por WhatsApp el total y los medios de pago disponibles.</p>
+
+    <h2 id="preguntas">Preguntas frecuentes</h2>
+    <div class="faq">
+      {preguntas.map((q) => (
+        <details>
+          <summary>{q.p}</summary>
+          <p>{q.r}</p>
+        </details>
+      ))}
+    </div>
+
+    <div class="cierre">
+      <p>¿Tienes otra pregunta?</p>
+      <a class="btn" href={whatsappUrl(tienda.whatsapp, 'Hola OneSelf, tengo una pregunta')} target="_blank" rel="noopener"><Icono nombre="whatsapp" /> Escríbenos por WhatsApp</a>
+    </div>
+  </article>
+</Base>
+<style>
+  .texto { max-width: 760px; padding-top: var(--s5); }
+  .migas { display: flex; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s3); }
+  h1 { font-size: 34px; }
+  .lead { font-size: 18px; margin-top: var(--s3); color: var(--ink-2); }
+  h2 { font-size: 20px; font-weight: 500; margin: var(--s7) 0 var(--s3); scroll-margin-top: calc(var(--header-h) + 16px); }
+  p + p { margin-top: var(--s3); }
+  a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .tabla th { text-align: left; font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding: var(--s2) var(--s2) var(--s2) 0; border-bottom: 1px solid var(--ink); }
+  .tabla td { padding: var(--s3) var(--s2) var(--s3) 0; border-bottom: 1px solid var(--line); }
+  .tabla td:last-child, .tabla th:last-child { text-align: right; padding-right: 0; white-space: nowrap; }
+  .nota { font-size: 13px; margin-top: var(--s2); }
+  .pasos-t { padding-left: 1.2em; display: grid; gap: var(--s3); }
+  .pasos-t strong { font-weight: 500; }
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; padding: var(--s4) var(--s6) var(--s4) 0; position: relative; font-weight: 500; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-size: 22px; font-weight: 400; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { padding-bottom: var(--s4); color: var(--ink-2); }
+  .cierre { margin-top: var(--s7); padding: var(--s5); background: var(--bg-photo); display: grid; gap: var(--s3); justify-items: start; border-radius: var(--radius); }
+  @media (min-width: 1024px) { h1 { font-size: 44px; } }
+</style>

@@ -14,5 +14,8 @@
     "5ml": 70,
     "10ml": 140
   },
-  "textoDecant": "Un decant es una porción del perfume original en un atomizador pequeño, para que lo pruebes antes de comprar el frasco."
+  "textoDecant": "Un decant es una porción del perfume original en un atomizador pequeño, para que lo pruebes antes de comprar el frasco.",
+  "metodosPago": [],
+  "_notaMetodosPago": "Lista de medios de pago que se muestran en el pedido (ej. \"Nequi\", \"Bancolombia\"). Vacía = el pago se acuerda por WhatsApp.",
+  "envioTexto": "El costo de envío depende de tu ciudad y te lo confirmamos por WhatsApp."
 }

@@ -1,0 +1,387 @@
+---
+// Pedido: recoge los datos de envío (como un checkout) y los manda en UN mensaje
+// de WhatsApp, para no tener que pedirlos a mano. No hay cuentas ni pagos en línea.
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import tienda from '../data/tienda.json';
+import departamentos from '../data/departamentos.json';
+import { url } from '../lib/url';
+const pagos: string[] = tienda.metodosPago || [];
+---
+<Base titulo="Finalizar pedido" noindex simple>
+  <div class="pedido" data-pedido data-numero={tienda.whatsapp} data-datos={url('catalogo.json').replace(/\/$/, '')} data-base={url()}>
+    <details class="resumen-movil" data-resumen-movil>
+      <summary class="wrap">
+        <span>Resumen del pedido <span class="flecha" aria-hidden="true"></span></span>
+        <strong data-total-corto></strong>
+      </summary>
+      <div class="wrap" data-slot-movil></div>
+    </details>
+
+    <div class="pedido__grid">
+      <div class="pedido__form-col">
+        <div class="pedido__form-in">
+          <h1 class="display pedido__tit">Finalizar pedido</h1>
+          <p class="muted pedido__intro">Completa tus datos y enviamos tu pedido por WhatsApp, listo para despachar.</p>
+
+          <form class="form" data-form novalidate>
+            <section class="form__sec">
+              <h2>Contacto</h2>
+              <div class="campo">
+                <label for="telefono">Celular (WhatsApp)</label>
+                <input id="telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel-national" required placeholder="300 123 4567" />
+                <p class="campo__error" data-error="telefono"></p>
+              </div>
+              <div class="campo">
+                <label for="correo">Correo electrónico <span class="opc">(opcional)</span></label>
+                <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" />
+                <p class="campo__error" data-error="correo"></p>
+              </div>
+            </section>
+
+            <section class="form__sec">
+              <h2>Entrega</h2>
+              <div class="campo campo--fijo"><span class="campo__mini">País</span>Colombia</div>
+              <div class="fila">
+                <div class="campo">
+                  <label for="nombre">Nombre</label>
+                  <input id="nombre" name="nombre" autocomplete="given-name" required />
+                  <p class="campo__error" data-error="nombre"></p>
+                </div>
+                <div class="campo">
+                  <label for="apellidos">Apellidos</label>
+                  <input id="apellidos" name="apellidos" autocomplete="family-name" required />
+                  <p class="campo__error" data-error="apellidos"></p>
+                </div>
+              </div>
+              <div class="campo">
+                <label for="cedula">Cédula <span class="opc">(opcional, para la guía de envío)</span></label>
+                <input id="cedula" name="cedula" inputmode="numeric" autocomplete="off" />
+              </div>
+              <div class="fila">
+                <div class="campo">
+                  <label for="departamento">Departamento</label>
+                  <select id="departamento" name="departamento" required autocomplete="address-level1">
+                    <option value="">Elige</option>
+                    {departamentos.map((d) => <option>{d}</option>)}
+                  </select>
+                  <p class="campo__error" data-error="departamento"></p>
+                </div>
+                <div class="campo">
+                  <label for="ciudad">Ciudad o municipio</label>
+                  <input id="ciudad" name="ciudad" autocomplete="address-level2" required />
+                  <p class="campo__error" data-error="ciudad"></p>
+                </div>
+              </div>
+              <div class="campo">
+                <label for="direccion">Dirección</label>
+                <input id="direccion" name="direccion" autocomplete="address-line1" required placeholder="Calle 10 # 20-30" />
+                <p class="campo__error" data-error="direccion"></p>
+              </div>
+              <div class="fila">
+                <div class="campo">
+                  <label for="detalle">Apto, casa, torre <span class="opc">(opcional)</span></label>
+                  <input id="detalle" name="detalle" autocomplete="address-line2" />
+                </div>
+                <div class="campo">
+                  <label for="barrio">Barrio <span class="opc">(opcional)</span></label>
+                  <input id="barrio" name="barrio" />
+                </div>
+              </div>
+            </section>
+
+            <section class="form__sec">
+              <h2>Pago</h2>
+              {pagos.length > 0 ? (
+                <div class="opciones">
+                  {pagos.map((p, i) => <label class="opcion"><input type="radio" name="pago" value={p} checked={i === 0} /> {p}</label>)}
+                </div>
+              ) : (
+                <p class="aviso">No cobramos en la página. Al recibir tu pedido te confirmamos el total con envío y los medios de pago por WhatsApp.</p>
+              )}
+            </section>
+
+            <section class="form__sec">
+              <div class="campo">
+                <label for="notas">Notas para el pedido <span class="opc">(opcional)</span></label>
+                <textarea id="notas" name="notas" rows="3" placeholder="Ej. es un regalo, horario de entrega…"></textarea>
+              </div>
+              <label class="check"><input type="checkbox" name="recordar" /> Guardar mis datos en este dispositivo para la próxima vez</label>
+            </section>
+
+            <button class="btn btn--block pedido__enviar" type="submit"><Icono nombre="whatsapp" /> Enviar pedido por WhatsApp</button>
+            <p class="pedido__nota muted">Se abrirá WhatsApp con tu pedido y tus datos. Solo se envía cuando tú lo confirmas. Tus datos se usan únicamente para este pedido.</p>
+          </form>
+
+          <div class="listo" data-listo hidden>
+            <h2 class="display">Tu pedido está listo en WhatsApp</h2>
+            <p class="muted">Envía el mensaje en WhatsApp y te respondemos para confirmar envío y pago.</p>
+            <a class="btn btn--block" data-reabrir target="_blank" rel="noopener" href="#"><Icono nombre="whatsapp" /> Abrir WhatsApp de nuevo</a>
+            <button class="btn btn--sec btn--block" type="button" data-vaciar hidden>Ya lo envié: vaciar mi bolsa</button>
+            <a class="listo__seguir" href={url('catalogo')}>Seguir viendo perfumes</a>
+          </div>
+
+          <div class="vacio-pedido" data-vacio hidden>
+            <p>No hay perfumes en tu pedido.</p>
+            <a class="btn" href={url('catalogo')}>Ver catálogo</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="pedido__resumen-col" aria-label="Resumen del pedido">
+        <div class="pedido__resumen-in" data-slot-escritorio>
+          <div class="resumen" data-resumen>
+            <ul class="resumen__lista" data-lineas></ul>
+            <p class="resumen__aviso" data-aviso hidden></p>
+            <div class="resumen__fila"><span data-n-articulos>Subtotal</span><span data-subtotal></span></div>
+            <div class="resumen__fila"><span>Envío</span><span class="muted">Por confirmar</span></div>
+            <div class="resumen__fila resumen__total"><span>Total</span><span><span data-total></span> <small class="muted">+ envío</small></span></div>
+            <p class="resumen__envio muted">{tienda.envioTexto}</p>
+            <button type="button" class="resumen__editar" data-editar hidden>Editar bolsa</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .pedido__grid { display: grid; }
+  .pedido__form-in { max-width: 560px; margin: 0 auto; padding: var(--s5) var(--gutter) 0; }
+  .pedido__tit { font-size: 28px; }
+  .pedido__intro { margin-top: var(--s2); }
+
+  .resumen-movil { background: var(--bg-photo); border-bottom: 1px solid var(--line); }
+  .resumen-movil summary { list-style: none; display: flex; justify-content: space-between; align-items: center; height: 56px; cursor: pointer; font-size: 15px; }
+  .resumen-movil summary::-webkit-details-marker { display: none; }
+  .flecha { display: inline-block; width: 7px; height: 7px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(45deg) translateY(-3px); margin-left: 6px; transition: transform var(--t); }
+  .resumen-movil[open] .flecha { transform: rotate(225deg) translateY(-1px); }
+  .resumen-movil [data-slot-movil] { padding-bottom: var(--s4); }
+
+  .form__sec { padding-top: var(--s5); }
+  .form__sec h2 { font-size: 18px; font-weight: 500; margin-bottom: var(--s3); }
+  .fila { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+  .campo { display: grid; gap: 6px; margin-bottom: var(--s3); min-width: 0; }
+  .campo label, .campo__mini { font-size: 13px; color: var(--ink-2); }
+  .opc { color: var(--ink-3); }
+  .campo input, .campo select, .campo textarea, .campo--fijo {
+    width: 100%; min-height: 48px; padding: 0 var(--s3); border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg-raised); font-size: 16px; transition: border-color var(--t);
+  }
+  .campo textarea { padding: var(--s3); resize: vertical; min-height: 80px; }
+  .campo select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 17px) 21px, calc(100% - 12px) 21px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+  .campo input:focus, .campo select:focus, .campo textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+  .campo--fijo { display: grid; align-content: center; background: var(--bg); line-height: 1.3; padding-block: 6px; }
+  .campo--fijo .campo__mini { font-size: 12px; }
+  .campo.is-error input, .campo.is-error select { border-color: var(--danger); box-shadow: 0 0 0 1px var(--danger); }
+  .campo__error { font-size: 13px; color: var(--danger); min-height: 0; }
+  .campo__error:empty { display: none; }
+  .aviso { padding: var(--s3) var(--s4); background: var(--bg-photo); border-radius: var(--radius); font-size: 14px; }
+  .opciones { display: grid; border: 1px solid var(--line); border-radius: var(--radius); }
+  .opcion { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); cursor: pointer; }
+  .opcion:last-child { border-bottom: 0; }
+  .opcion input, .check input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
+  .check { display: flex; gap: var(--s3); align-items: center; font-size: 14px; cursor: pointer; }
+  .pedido__enviar { margin-top: var(--s5); height: 52px; font-size: 16px; }
+  .pedido__nota { font-size: 13px; margin-top: var(--s3); text-align: center; }
+
+  .listo, .vacio-pedido { display: grid; gap: var(--s4); padding: var(--s6) 0; }
+  .listo h2 { font-size: 26px; }
+  .listo__seguir { text-align: center; text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
+  .vacio-pedido { justify-items: start; }
+
+  .pedido__resumen-col { display: none; }
+  .resumen__aviso { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin-bottom: var(--s3); }
+  .resumen__fila { display: flex; justify-content: space-between; gap: var(--s3); padding: 4px 0; font-size: 15px; }
+  .resumen__total { font-size: 19px; font-weight: 500; padding-top: var(--s3); }
+  .resumen__total small { font-size: 13px; font-weight: 400; }
+  .resumen__envio { font-size: 13px; margin-top: var(--s2); }
+  .resumen__editar { margin-top: var(--s3); border: 0; background: none; padding: 0; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (min-width: 1024px) {
+    .resumen-movil { display: none; }
+    .pedido__grid { grid-template-columns: 1fr 1fr; min-height: calc(100vh - var(--header-h)); }
+    .pedido__form-col { border-right: 1px solid var(--line); }
+    .pedido__form-in { margin: 0 var(--s7) 0 auto; padding: var(--s6) 0 var(--s7); max-width: 540px; }
+    .pedido__tit { font-size: 32px; }
+    .pedido__resumen-col { display: block; background: var(--bg-photo); }
+    .pedido__resumen-in { position: sticky; top: calc(var(--header-h) + var(--s5)); max-width: 460px; padding: var(--s6) 0 var(--s6) var(--s7); }
+  }
+</style>
+
+<style is:global>
+  /* Líneas del resumen: se crean con JS, por eso van como estilos globales */
+  .resumen__lista { display: grid; gap: var(--s4); padding: var(--s4) 0; }
+  .linea { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s3); align-items: center; }
+  .linea__foto { position: relative; width: 64px; height: 64px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 6px; }
+  .linea__foto img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .linea__n { position: absolute; top: -8px; right: -8px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 12px; display: grid; place-items: center; }
+  .linea__nombre { font-size: 14.5px; line-height: 1.3; }
+  .linea__tam { font-size: 13px; color: var(--ink-2); }
+  .linea__alerta { font-size: 12.5px; color: var(--danger); }
+  .linea.is-fuera { opacity: .55; }
+  .linea__precio { font-size: 14.5px; white-space: nowrap; }
+</style>
+
+<script>
+  import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
+
+  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
+  const CLAVE = 'oneself_bolsa_v2';
+  const CLAVE_DATOS = 'oneself_datos_envio_v1';
+  const raiz = document.querySelector<HTMLElement>('[data-pedido]')!;
+  const form = raiz.querySelector<HTMLFormElement>('[data-form]')!;
+  const resumen = raiz.querySelector<HTMLElement>('[data-resumen]')!;
+  const slotMovil = raiz.querySelector<HTMLElement>('[data-slot-movil]')!;
+  const slotEscritorio = raiz.querySelector<HTMLElement>('[data-slot-escritorio]')!;
+  const numero = raiz.dataset.numero!;
+  const base = raiz.dataset.base!;
+
+  // Un solo bloque de resumen: se mueve entre el desplegable (móvil) y la columna (escritorio)
+  const mq = matchMedia('(min-width: 1024px)');
+  const ubicar = () => (mq.matches ? slotEscritorio : slotMovil).appendChild(resumen);
+  mq.addEventListener('change', ubicar); ubicar();
+
+  // ¿Compra directa de un perfume (?item=slug|tam|cantidad) o toda la bolsa?
+  const itemParam = new URLSearchParams(location.search).get('item');
+  const modoBolsa = !itemParam;
+  const leerBolsa = (): Item[] => { try { return JSON.parse(localStorage.getItem(CLAVE) || '[]'); } catch { return []; } };
+  let items: Item[] = [];
+  if (itemParam) {
+    const [slug, tamano, n] = itemParam.split('|');
+    items = [{ slug, tamano, cantidad: Math.min(20, Math.max(1, Number(n) || 1)), nombre: '', marca: '', precio: 0, img: '' }];
+  } else items = leerBolsa();
+
+  const lineasValidas = () => items.filter((i) => i.precio > 0 && i.estado !== 'agotado' && i.estado !== 'retirado');
+
+  function pintar() {
+    const lista = resumen.querySelector<HTMLElement>('[data-lineas]')!;
+    lista.innerHTML = '';
+    for (const i of items) {
+      const fuera = i.estado === 'agotado' || i.estado === 'retirado';
+      const li = document.createElement('li');
+      li.className = 'linea' + (fuera ? ' is-fuera' : '');
+      li.innerHTML = `<div class="linea__foto">${i.img ? `<img src="${i.img}" alt="" width="64" height="64" />` : ''}<span class="linea__n">${i.cantidad}</span></div>
+        <div><p class="linea__nombre"></p><p class="linea__tam">${TAMANO_TEXTO[i.tamano] || i.tamano}${i.estado === 'bajo_pedido' ? ' · bajo pedido' : ''}</p>${fuera ? '<p class="linea__alerta">No disponible: no se incluirá</p>' : ''}</div>
+        <p class="linea__precio">${i.precio ? pesos(i.precio * i.cantidad) : ''}</p>`;
+      li.querySelector('.linea__nombre')!.textContent = `${i.nombre}${i.marca ? ' · ' + i.marca : ''}`;
+      lista.appendChild(li);
+    }
+    const val = lineasValidas();
+    const total = val.reduce((s, i) => s + i.precio * i.cantidad, 0);
+    const n = val.reduce((s, i) => s + i.cantidad, 0);
+    resumen.querySelector('[data-subtotal]')!.textContent = pesos(total);
+    resumen.querySelector('[data-total]')!.textContent = pesos(total);
+    resumen.querySelector('[data-n-articulos]')!.textContent = `Subtotal · ${n} ${n === 1 ? 'artículo' : 'artículos'}`;
+    raiz.querySelector('[data-total-corto]')!.textContent = pesos(total);
+    const vacio = val.length === 0;
+    raiz.querySelector<HTMLElement>('[data-vacio]')!.hidden = !vacio;
+    form.hidden = vacio;
+    resumen.querySelector<HTMLElement>('[data-editar]')!.hidden = !modoBolsa || vacio;
+  }
+
+  async function sincronizar() {
+    try {
+      const datos = await fetch(raiz.dataset.datos!).then((r) => r.json());
+      const cambios: string[] = [];
+      for (const i of items) {
+        const p = datos[i.slug]; const v = p?.v?.[i.tamano];
+        if (!v) { i.estado = 'retirado'; i.nombre = i.nombre || i.slug; continue; }
+        if (i.precio && v[0] !== i.precio) cambios.push(p.n);
+        i.precio = v[0]; i.estado = v[1]; i.nombre = p.n; i.marca = p.m; i.img = p.i;
+      }
+      const aviso = resumen.querySelector<HTMLElement>('[data-aviso]')!;
+      aviso.hidden = !cambios.length;
+      aviso.textContent = cambios.length ? `Actualizamos el precio de ${cambios.join(', ')}.` : '';
+      if (modoBolsa) try { localStorage.setItem(CLAVE, JSON.stringify(items)); } catch {}
+    } catch {}
+    pintar();
+  }
+
+  // Datos guardados
+  try {
+    const guardados = JSON.parse(localStorage.getItem(CLAVE_DATOS) || 'null');
+    if (guardados) {
+      for (const [k, v] of Object.entries(guardados)) {
+        const el = form.elements.namedItem(k) as HTMLInputElement | null;
+        if (el && typeof v === 'string' && el.type !== 'radio') el.value = v;
+      }
+      (form.elements.namedItem('recordar') as HTMLInputElement).checked = true;
+    }
+  } catch {}
+
+  // Validación
+  const REQ: Record<string, string> = {
+    telefono: 'Escribe tu celular', nombre: 'Escribe tu nombre', apellidos: 'Escribe tus apellidos',
+    departamento: 'Elige el departamento', ciudad: 'Escribe la ciudad', direccion: 'Escribe la dirección',
+  };
+  const limpiarTel = (t: string) => t.replace(/\D/g, '').replace(/^57(?=3\d{9}$)/, '');
+  function error(campo: string, msg: string) {
+    const p = form.querySelector<HTMLElement>(`[data-error="${campo}"]`);
+    if (p) p.textContent = msg;
+    form.querySelector(`[name="${campo}"]`)?.closest('.campo')?.classList.toggle('is-error', !!msg);
+  }
+  function validar(): string | null {
+    let primero: string | null = null;
+    const fd = new FormData(form);
+    for (const [k, msg] of Object.entries(REQ)) {
+      const v = String(fd.get(k) || '').trim();
+      let m = v ? '' : msg;
+      if (!m && k === 'telefono' && !/^3\d{9}$/.test(limpiarTel(v))) m = 'Escribe un celular de 10 dígitos, ej. 300 123 4567';
+      if (!m && k === 'direccion' && v.length < 5) m = 'Escribe la dirección completa';
+      error(k, m);
+      if (m && !primero) primero = k;
+    }
+    const correo = String(fd.get('correo') || '').trim();
+    const mc = correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) ? 'Revisa el correo' : '';
+    error('correo', mc);
+    if (mc && !primero) primero = 'correo';
+    return primero;
+  }
+  form.addEventListener('input', (e) => {
+    const n = (e.target as HTMLInputElement).name;
+    if (form.querySelector(`[name="${n}"]`)?.closest('.campo')?.classList.contains('is-error')) validar();
+  });
+
+  const reabrir = raiz.querySelector<HTMLAnchorElement>('[data-reabrir]')!;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const malo = validar();
+    if (malo) { (form.querySelector(`[name="${malo}"]`) as HTMLElement).focus(); return; }
+    const fd = new FormData(form);
+    const g = (k: string) => String(fd.get(k) || '');
+    const datos: DatosEnvio = {
+      nombre: g('nombre'), apellidos: g('apellidos'), cedula: g('cedula'), telefono: limpiarTel(g('telefono')).replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3'),
+      correo: g('correo'), departamento: g('departamento'), ciudad: g('ciudad'), direccion: g('direccion'),
+      detalle: g('detalle'), barrio: g('barrio'), pago: g('pago'), notas: g('notas'),
+    };
+    try {
+      if (fd.has('recordar')) {
+        const { notas, pago, ...resto } = datos;
+        localStorage.setItem(CLAVE_DATOS, JSON.stringify({ ...resto, telefono: g('telefono') }));
+      } else localStorage.removeItem(CLAVE_DATOS);
+    } catch {}
+    const lineas: LineaPedido[] = lineasValidas().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido' }));
+    const href = enlaceWhatsapp(numero, mensajeCompleto(lineas, datos));
+    reabrir.href = href;
+    window.open(href, '_blank', 'noopener');
+    form.hidden = true;
+    const listo = raiz.querySelector<HTMLElement>('[data-listo]')!;
+    listo.hidden = false;
+    raiz.querySelector<HTMLElement>('[data-vaciar]')!.hidden = !modoBolsa;
+    raiz.querySelector('.pedido__intro')?.setAttribute('hidden', '');
+    scrollTo({ top: 0 });
+  });
+
+  raiz.querySelector('[data-vaciar]')!.addEventListener('click', () => {
+    try { localStorage.removeItem(CLAVE); } catch {}
+    location.href = base;
+  });
+  resumen.querySelector('[data-editar]')!.addEventListener('click', () => document.dispatchEvent(new CustomEvent('bolsa:abrir')));
+  // Si se edita la bolsa desde esta página, recargar el resumen
+  addEventListener('storage', () => { if (modoBolsa) { items = leerBolsa(); sincronizar(); } });
+  document.addEventListener('bolsa:cambio', () => { if (modoBolsa) { items = leerBolsa(); sincronizar(); } });
+
+  pintar();
+  sincronizar();
+</script>
