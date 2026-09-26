@@ -25,6 +25,12 @@ const RENOMBRAR = {
   'eau-issey-pour-homme': 'l-eau-d-issey-pour-homme',
 };
 
+// Marcas corregidas respecto al sitio anterior (confirmado por OneSelf, 2026-09-26)
+const CORREGIR_MARCA = {
+  'precieux': 'Armaf',        // la caja dice Club de Nuit Précieux I
+  'liquid-brun': 'French Avenue',
+};
+
 // Familias olfativas PROPUESTAS (no existían en el sitio anterior). Validar en la hoja de revisión.
 const FAMILIAS = {
   'valentino-born-in-roma-intense': ['gourmand', 'aromatico'],
@@ -92,8 +98,9 @@ for (const p of PERFUMES) {
   vistos.add(slug);
   if (!FAMILIAS[p.id]) throw new Error(`Falta familia propuesta para ${p.id}`);
 
-  const marcaSlug = slugify(p.brand);
-  marcas.set(marcaSlug, { slug: marcaSlug, nombre: p.brand });
+  const marcaNombre = CORREGIR_MARCA[p.id] || p.brand;
+  const marcaSlug = slugify(marcaNombre);
+  marcas.set(marcaSlug, { slug: marcaSlug, nombre: marcaNombre });
 
   const estado = p.stock === false ? 'agotado' : 'disponible';
   const variantes = [];
