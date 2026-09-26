@@ -1,0 +1,14 @@
+# dependencias y build
+node_modules/
+dist/
+.astro/
+.vercel/
+.env*
+
+# fuente con licencia solo personal: no se sube al repositorio
+sunny-bella-cute-font/
+sunny-bella-cute-font.zip
+
+# sistema
+.DS_Store
+Thumbs.db
