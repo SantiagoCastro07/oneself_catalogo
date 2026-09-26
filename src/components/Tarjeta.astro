@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import { url } from '../lib/url';
+import { type Perfume, agotado, precioDesde, formatoPrecio, ordenarVariantes, pedible, ETIQUETA_TAMANO } from '../lib/catalogo';
+
+interface Props { p: Perfume; marca: string; orden?: number; prioridad?: boolean }
+const { p, marca, orden = 0, prioridad = false } = Astro.props;
+const sinStock = agotado(p);
+const nuevo = p.data.etiquetas.includes('nuevo');
+const tamanos = ordenarVariantes(p.data.variantes).filter(pedible).map((v) => ETIQUETA_TAMANO[v.tamano]);
+const desde = precioDesde(p);
+---
+<a
+  class:list={['tarjeta', { 'is-agotado': sinStock }]}
+  href={url(`perfume/${p.id}`)}
+  data-tarjeta
+  data-nombre={`${p.data.nombre} ${marca}`.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')}
+  data-marca={p.data.marca.id}
+  data-tipo={p.data.tipo}
+  data-genero={p.data.genero}
+  data-familias={p.data.familias.join(' ')}
+  data-precio={desde}
+  data-nuevo={nuevo ? '1' : '0'}
+  data-disponible={sinStock ? '0' : '1'}
+  data-tamanos={p.data.variantes.filter(pedible).map((v) => v.tamano).join(' ')}
+  data-orden={orden}
+>
+  <div class="tarjeta__foto">
+    <Image
+      src={p.data.imagenes[0]}
+      alt={`${p.data.nombre} de ${marca}`}
+      widths={[200, 300, 420, 600]}
+      sizes="(min-width: 1280px) 270px, (min-width: 1024px) 22vw, (min-width: 640px) 31vw, 46vw"
+      loading={prioridad ? 'eager' : 'lazy'}
+      fetchpriority={prioridad ? 'high' : 'auto'}
+      decoding="async"
+    />
+    {sinStock ? <span class="sello sello--agotado">Agotado</span> : nuevo && <span class="sello">Nuevo</span>}
+  </div>
+  <p class="tarjeta__marca">{marca}</p>
+  <h3 class="tarjeta__nombre">{p.data.nombre}</h3>
+  <p class="tarjeta__precio">{sinStock ? formatoPrecio(desde) : <>Desde {formatoPrecio(desde)}</>}</p>
+  {!sinStock && <p class="tarjeta__tam">{tamanos.join(' · ')}</p>}
+</a>
+<style>
+  .tarjeta { display: block; min-width: 0; }
+  .tarjeta__foto { position: relative; aspect-ratio: 1; background: var(--bg-photo); overflow: hidden; }
+  .tarjeta__foto img { width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: transform 300ms ease; }
+  @media (hover: hover) { .tarjeta:hover .tarjeta__foto img { transform: scale(1.03); } .tarjeta:hover .tarjeta__nombre { text-decoration: underline; text-underline-offset: 3px; } }
+  .sello { position: absolute; top: 8px; left: 8px; background: var(--bg); color: var(--ink); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+  .sello--agotado { background: var(--ink); color: var(--on-ink); }
+  .is-agotado .tarjeta__foto img { opacity: .5; }
+  .tarjeta__marca { margin-top: var(--s3); font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
+  .tarjeta__nombre { margin-top: 2px; font-size: 15px; font-weight: 500; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tarjeta__precio { margin-top: var(--s1); font-size: 15px; }
+  .is-agotado .tarjeta__precio { color: var(--ink-3); text-decoration: line-through; }
+  .tarjeta__tam { margin-top: 2px; font-size: 12.5px; color: var(--ink-2); }
+</style>

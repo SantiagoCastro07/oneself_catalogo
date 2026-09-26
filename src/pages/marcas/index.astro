@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { datosNavegacion } from '../../lib/catalogo';
+import { url } from '../../lib/url';
+const { marcasTop } = await datosNavegacion();
+const alfabetico = [...marcasTop].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+---
+<Base titulo="Marcas de perfumes" descripcion={`Perfumes originales en decants de ${alfabetico.map((m) => m.nombre).slice(0, 6).join(', ')} y más.`}>
+  <section class="wrap marcas">
+    <nav class="migas" aria-label="Ruta"><a href={url()}>Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Marcas</span></nav>
+    <h1 class="display">Marcas</h1>
+    <ul class="lista">
+      {alfabetico.map((m) => (
+        <li><a href={url(`marcas/${m.slug}`)}><span>{m.nombre}</span><span class="muted">{m.n} {m.n === 1 ? 'perfume' : 'perfumes'}</span></a></li>
+      ))}
+    </ul>
+  </section>
+</Base>
+<style>
+  .marcas { padding-top: var(--s5); }
+  .migas { display: flex; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s3); }
+  h1 { font-size: 30px; margin-bottom: var(--s5); }
+  @media (min-width: 1024px) { h1 { font-size: 40px; } }
+  .lista { display: grid; border-top: 1px solid var(--line); }
+  @media (min-width: 768px) { .lista { grid-template-columns: 1fr 1fr; column-gap: var(--s6); } }
+  .lista a { display: flex; justify-content: space-between; align-items: baseline; padding: var(--s4) 0; border-bottom: 1px solid var(--line); font-size: 18px; }
+  .lista a:hover span:first-child { text-decoration: underline; text-underline-offset: 3px; }
+  .lista .muted { font-size: 14px; }
+</style>

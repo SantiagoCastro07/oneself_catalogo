@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+import Encabezado from '../components/Encabezado.astro';
+import Pie from '../components/Pie.astro';
+import tienda from '../data/tienda.json';
+
+interface Props {
+  titulo: string;          // sin " | OneSelf": se agrega solo
+  descripcion?: string;
+  imagenOg?: string;       // URL absoluta o ruta de imagen generada
+  noindex?: boolean;
+}
+const { titulo, descripcion = tienda.descripcion, imagenOg, noindex = false } = Astro.props;
+const tituloCompleto = titulo === tienda.nombre ? `${tienda.nombre} · Perfumes originales en decants` : `${titulo} | ${tienda.nombre}`;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+const og = imagenOg ? new URL(imagenOg, Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica.href} />
+    <meta name="theme-color" content="#F6F5F2" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content={tienda.nombre} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica.href} />
+    {og && <meta property="og:image" content={og} />}
+    <meta name="twitter:card" content={og ? 'summary_large_image' : 'summary'} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="saltar sr-only" href="#contenido">Ir al contenido</a>
+    <Encabezado />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Pie />
+    <style is:global>
+      .saltar:focus { position: fixed; top: 8px; left: 8px; width: auto; height: auto; clip: auto; z-index: 100; background: var(--ink); color: var(--on-ink); padding: 8px 12px; border-radius: var(--radius); }
+    </style>
+  </body>
+</html>

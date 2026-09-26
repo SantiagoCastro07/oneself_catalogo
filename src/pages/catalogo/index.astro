@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import Catalogo from '../../components/Catalogo.astro';
+import { datosNavegacion } from '../../lib/catalogo';
+import { url } from '../../lib/url';
+const { perfumes, marcas } = await datosNavegacion();
+---
+<Base titulo="Catálogo de perfumes en decants" descripcion={`${perfumes.length} perfumes originales en decants de 5 y 10 ml: árabes, de diseñador y nicho. Envíos a toda Colombia, pedidos por WhatsApp.`}>
+  <Catalogo titulo="Catálogo" intro="Todos nuestros perfumes en decants de 5 y 10 ml. Prueba antes de comprar el frasco." perfumes={perfumes} marcas={marcas} activo=""
+    migas={[{ texto: 'Inicio', href: url() }, { texto: 'Catálogo' }]} />
+</Base>

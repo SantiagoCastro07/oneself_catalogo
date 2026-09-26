@@ -1,0 +1,294 @@
+---
+// Vista de catálogo reutilizable: /catalogo/, /catalogo/<categoria>/ y /marcas/<marca>/.
+// Todo se genera en HTML; el filtrado y el orden ocurren en el navegador sin recargar.
+import Tarjeta from './Tarjeta.astro';
+import Icono from './Icono.astro';
+import { url } from '../lib/url';
+import { type Perfume } from '../lib/catalogo';
+import { CATEGORIAS, FAMILIA_ETIQUETA, TIPO_ETIQUETA } from '../lib/categorias';
+import { FAMILIAS, TIPOS } from '../content.config';
+
+interface Props {
+  titulo: string;
+  intro?: string;
+  perfumes: Perfume[];
+  marcas: Record<string, string>;
+  activo?: string;          // slug del chip de género activo ('' = todos)
+  migas?: { texto: string; href?: string }[];
+}
+const { titulo, intro, perfumes, marcas, activo, migas } = Astro.props;
+
+const chips = [{ slug: '', corto: 'Todos' }, ...CATEGORIAS.filter((c) => c.grupo === 'genero')];
+const cuenta = <T extends string>(f: (p: Perfume) => T[]) => {
+  const m = new Map<T, number>();
+  for (const p of perfumes) for (const k of f(p)) m.set(k, (m.get(k) || 0) + 1);
+  return m;
+};
+const cTipo = cuenta((p) => [p.data.tipo]);
+const cFam = cuenta((p) => p.data.familias);
+const cMarca = cuenta((p) => [p.data.marca.id]);
+const tipos = TIPOS.filter((t) => cTipo.has(t));
+const familias = FAMILIAS.filter((f) => cFam.has(f));
+const listaMarcas = [...cMarca.keys()].sort((a, b) => marcas[a].localeCompare(marcas[b], 'es'));
+const hay3ml = perfumes.some((p) => p.data.variantes.some((v) => v.tamano === '3ml'));
+const PRECIOS = [
+  { v: '0-20000', t: 'Hasta $20.000' },
+  { v: '20001-30000', t: '$20.000 a $30.000' },
+  { v: '30001-999999999', t: 'Más de $30.000' },
+];
+---
+<section class="wrap cat">
+  {migas && (
+    <nav class="migas" aria-label="Ruta">
+      {migas.map((m, i) => (<>{i > 0 && <span aria-hidden="true">/</span>}{m.href ? <a href={m.href}>{m.texto}</a> : <span aria-current="page">{m.texto}</span>}</>))}
+    </nav>
+  )}
+  <header class="cat__cab">
+    <h1 class="display cat__tit">{titulo}</h1>
+    {intro && <p class="muted cat__intro">{intro}</p>}
+  </header>
+
+  {activo !== undefined && (
+    <nav class="chips cat__chips" aria-label="Género">
+      {chips.map((c) => {
+        const href = c.slug ? url(`catalogo/${c.slug}`) : url('catalogo');
+        return <a class="chip" href={href} aria-current={activo === c.slug ? 'page' : undefined}>{c.corto}</a>;
+      })}
+    </nav>
+  )}
+
+  <div class="cat__barra">
+    <button type="button" class="btn btn--sec btn--sm cat__btn-filtro" data-abrir-filtros aria-controls="filtros" aria-expanded="false">
+      <Icono nombre="filtro" /> Filtrar <span class="cat__nfiltros" data-nfiltros hidden></span>
+    </button>
+    <p class="cat__cuenta muted" data-cuenta aria-live="polite">{perfumes.length} perfumes</p>
+    <label class="cat__orden">
+      <span class="sr-only">Ordenar por</span>
+      <select data-orden>
+        <option value="recomendados">Recomendados</option>
+        <option value="nuevos">Nuevos primero</option>
+        <option value="precio-asc">Precio: menor a mayor</option>
+        <option value="precio-desc">Precio: mayor a menor</option>
+        <option value="nombre">Nombre A–Z</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="cat__cuerpo">
+    <aside id="filtros" class="filtros" aria-label="Filtros">
+      <div class="filtros__cab">
+        <p class="filtros__tit">Filtrar</p>
+        <button type="button" class="icon-btn" data-cerrar-filtros aria-label="Cerrar filtros"><Icono nombre="cerrar" /></button>
+      </div>
+      <form class="filtros__form" data-filtros>
+        <div class="busqueda" data-busqueda hidden>
+          <p class="filtros__grupo">Búsqueda</p>
+          <label class="casilla is-on"><input type="checkbox" name="q" checked /> <span data-texto-q></span></label>
+        </div>
+        <fieldset>
+          <legend class="filtros__grupo">Disponibilidad</legend>
+          <label class="casilla"><input type="checkbox" name="disponibles" value="1" /> Solo disponibles</label>
+          {hay3ml && <label class="casilla"><input type="checkbox" name="tamano" value="3ml" /> Disponible en 3 ml</label>}
+        </fieldset>
+        {tipos.length > 1 && (
+          <fieldset>
+            <legend class="filtros__grupo">Tipo</legend>
+            {tipos.map((t) => <label class="casilla"><input type="checkbox" name="tipo" value={t} /> {TIPO_ETIQUETA[t]} <span class="n">{cTipo.get(t)}</span></label>)}
+          </fieldset>
+        )}
+        {familias.length > 0 && (
+          <fieldset>
+            <legend class="filtros__grupo">Familia olfativa</legend>
+            {familias.map((f) => <label class="casilla"><input type="checkbox" name="familia" value={f} /> {FAMILIA_ETIQUETA[f]} <span class="n">{cFam.get(f)}</span></label>)}
+          </fieldset>
+        )}
+        <fieldset>
+          <legend class="filtros__grupo">Precio desde</legend>
+          {PRECIOS.map((r) => <label class="casilla"><input type="checkbox" name="precio" value={r.v} /> {r.t}</label>)}
+        </fieldset>
+        {listaMarcas.length > 1 && (
+          <fieldset>
+            <legend class="filtros__grupo">Marca</legend>
+            {listaMarcas.map((m) => <label class="casilla"><input type="checkbox" name="marca" value={m} /> {marcas[m]} <span class="n">{cMarca.get(m)}</span></label>)}
+          </fieldset>
+        )}
+      </form>
+      <div class="filtros__pie">
+        <button type="button" class="btn btn--sec btn--sm" data-limpiar>Limpiar</button>
+        <button type="button" class="btn btn--sm" data-cerrar-filtros data-ver>Ver perfumes</button>
+      </div>
+    </aside>
+
+    <div class="cat__res">
+      <div class="rejilla" data-rejilla>
+        {perfumes.map((p, i) => <Tarjeta p={p} marca={marcas[p.data.marca.id]} orden={i} prioridad={i < 4} />)}
+      </div>
+      <div class="vacio" data-vacio hidden>
+        <p>No encontramos perfumes con esos filtros.</p>
+        <button type="button" class="btn btn--sec btn--sm" data-limpiar>Quitar filtros</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cat { padding-top: var(--s5); }
+  .migas { display: flex; flex-wrap: wrap; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s3); }
+  .migas a:hover { color: var(--ink); text-decoration: underline; }
+  .cat__tit { font-size: 30px; }
+  .cat__intro { margin-top: var(--s2); max-width: 60ch; }
+  .cat__chips { margin-top: var(--s4); }
+  .cat__barra { display: flex; align-items: center; gap: var(--s3); margin: var(--s4) 0; padding: var(--s3) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cat__btn-filtro :global(.icon) { width: 18px; height: 18px; }
+  .cat__nfiltros { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 12px; }
+  .cat__btn-filtro:hover .cat__nfiltros { background: var(--on-ink); color: var(--ink); }
+  .cat__cuenta { flex: 1; font-size: 14px; text-align: center; }
+  .cat__orden select { height: 40px; max-width: 150px; border: 1px solid var(--line); border-radius: var(--radius); background: transparent; padding: 0 28px 0 10px; font-size: 14px; appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+    background-position: calc(100% - 15px) 17px, calc(100% - 10px) 17px; background-size: 5px 5px; background-repeat: no-repeat; }
+
+  .rejilla { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s6) var(--s3); }
+  @media (min-width: 640px) { .rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s6) var(--s4); } }
+  .vacio { padding: var(--s7) 0; text-align: center; display: grid; gap: var(--s4); justify-items: center; }
+
+  /* Filtros: hoja inferior en móvil, columna lateral en escritorio */
+  .filtros { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; max-height: 88vh; background: var(--bg); border-radius: 12px 12px 0 0; display: flex; flex-direction: column; transform: translateY(105%); transition: transform 220ms ease; visibility: hidden; }
+  .filtros.is-open { transform: none; visibility: visible; }
+  .filtros__cab { display: flex; align-items: center; justify-content: space-between; padding: var(--s2) var(--s2) var(--s2) var(--gutter); border-bottom: 1px solid var(--line); }
+  .filtros__tit { font-weight: 500; font-size: 17px; }
+  .filtros__form { overflow-y: auto; padding: 0 var(--gutter) var(--s4); }
+  .filtros fieldset { border: 0; margin: 0; padding: var(--s4) 0 var(--s2); border-bottom: 1px solid var(--line); }
+  .filtros legend.filtros__grupo { float: left; width: 100%; }
+  .filtros legend + * { clear: both; }
+  .filtros__grupo { padding: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-bottom: var(--s2); }
+  .busqueda { padding-top: var(--s4); }
+  .casilla { display: flex; align-items: center; gap: var(--s3); padding: 8px 0; font-size: 15px; cursor: pointer; }
+  .casilla input { width: 18px; height: 18px; accent-color: var(--ink); margin: 0; flex: none; }
+  .casilla .n { margin-left: auto; font-size: 13px; color: var(--ink-3); }
+  .filtros__pie { display: grid; grid-template-columns: 1fr 2fr; gap: var(--s3); padding: var(--s3) var(--gutter) calc(var(--s3) + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+  :global(.velo-filtros) { position: fixed; inset: 0; z-index: 45; background: rgba(11,18,32,.4); }
+
+  @media (min-width: 1024px) {
+    .cat__tit { font-size: 40px; }
+    .cat__barra { border-top: 0; margin-top: var(--s2); }
+    .cat__btn-filtro { display: none; }
+    .cat__cuenta { text-align: left; }
+    .cat__cuerpo { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--s6); align-items: start; }
+    .filtros { position: sticky; top: calc(var(--header-h) + var(--s4)); max-height: calc(100vh - var(--header-h) - var(--s6)); transform: none; visibility: visible; border-radius: 0; background: transparent; z-index: 1; }
+    .filtros__cab, .filtros__pie [data-ver] { display: none; }
+    .filtros__form { padding: 0; }
+    .filtros fieldset:first-of-type { padding-top: 0; }
+    .filtros__pie { grid-template-columns: 1fr; padding: var(--s4) 0 0; border: 0; }
+    .rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s7) var(--s5); }
+  }
+</style>
+
+<script>
+  // Filtrado, orden y búsqueda del catálogo (sin librerías). El estado vive en la URL
+  // para que un enlace compartido abra el catálogo con los mismos filtros.
+  const form = document.querySelector<HTMLFormElement>('[data-filtros]')!;
+  const rejilla = document.querySelector<HTMLElement>('[data-rejilla]')!;
+  const tarjetas = [...rejilla.querySelectorAll<HTMLElement>('[data-tarjeta]')];
+  const selOrden = document.querySelector<HTMLSelectElement>('[data-orden]')!;
+  const cuenta = document.querySelector<HTMLElement>('[data-cuenta]')!;
+  const vacio = document.querySelector<HTMLElement>('[data-vacio]')!;
+  const badge = document.querySelector<HTMLElement>('[data-nfiltros]')!;
+  const panel = document.getElementById('filtros')!;
+  const btnAbrir = document.querySelector<HTMLElement>('[data-abrir-filtros]')!;
+  const bloqueQ = document.querySelector<HTMLElement>('[data-busqueda]')!;
+  const MULTI = ['tipo', 'familia', 'marca', 'precio', 'tamano'];
+  const normal = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  let q = '';
+
+  function leer() {
+    const fd = new FormData(form);
+    const f: Record<string, string[]> = {};
+    for (const k of MULTI) f[k] = fd.getAll(k).map(String);
+    return { f, disponibles: fd.has('disponibles'), q: fd.has('q') ? q : '' };
+  }
+
+  function aplicar(actualizarUrl = true) {
+    const { f, disponibles, q: texto } = leer();
+    const palabras = normal(texto).split(/\s+/).filter(Boolean);
+    let n = 0;
+    for (const t of tarjetas) {
+      const d = t.dataset;
+      const ok =
+        (!disponibles || d.disponible === '1') &&
+        (!f.tipo.length || f.tipo.includes(d.tipo!)) &&
+        (!f.marca.length || f.marca.includes(d.marca!)) &&
+        (!f.familia.length || f.familia.some((x) => d.familias!.split(' ').includes(x))) &&
+        (!f.tamano.length || f.tamano.every((x) => d.tamanos!.split(' ').includes(x))) &&
+        (!f.precio.length || f.precio.some((r) => { const [a, b] = r.split('-').map(Number); const p = Number(d.precio); return p >= a && p <= b; })) &&
+        palabras.every((w) => d.nombre!.includes(w));
+      t.hidden = !ok;
+      if (ok) n++;
+    }
+    const orden = selOrden.value;
+    const val = (t: HTMLElement) => {
+      const d = t.dataset;
+      if (orden === 'precio-asc') return Number(d.precio);
+      if (orden === 'precio-desc') return -Number(d.precio);
+      if (orden === 'nuevos') return (d.nuevo === '1' ? 0 : 1) * 1000 + Number(d.orden);
+      return Number(d.orden);
+    };
+    const ordenadas = [...tarjetas].sort((a, b) =>
+      orden === 'nombre' ? a.dataset.nombre!.localeCompare(b.dataset.nombre!, 'es') : val(a) - val(b) || Number(a.dataset.orden) - Number(b.dataset.orden));
+    ordenadas.forEach((t) => rejilla.appendChild(t));
+
+    cuenta.textContent = `${n} perfume${n === 1 ? '' : 's'}`;
+    vacio.hidden = n > 0;
+    const activos = Object.values(f).reduce((s, a) => s + a.length, 0) + (disponibles ? 1 : 0) + (texto ? 1 : 0);
+    badge.hidden = activos === 0; badge.textContent = String(activos);
+    const ver = document.querySelector<HTMLElement>('[data-ver]');
+    if (ver) ver.textContent = `Ver ${n} perfume${n === 1 ? '' : 's'}`;
+
+    if (actualizarUrl) {
+      const u = new URL(location.href);
+      u.search = '';
+      for (const k of MULTI) f[k].forEach((v) => u.searchParams.append(k, v));
+      if (disponibles) u.searchParams.set('disponibles', '1');
+      if (texto) u.searchParams.set('q', texto);
+      if (orden !== 'recomendados') u.searchParams.set('orden', orden);
+      history.replaceState(null, '', u);
+    }
+  }
+
+  // Estado inicial desde la URL
+  const params = new URLSearchParams(location.search);
+  for (const k of MULTI) for (const v of params.getAll(k)) {
+    const input = form.querySelector<HTMLInputElement>(`input[name="${k}"][value="${CSS.escape(v)}"]`);
+    if (input) input.checked = true;
+  }
+  if (params.get('disponibles')) form.querySelector<HTMLInputElement>('input[name="disponibles"]')!.checked = true;
+  if (params.get('orden')) selOrden.value = params.get('orden')!;
+  q = params.get('q') || '';
+  if (q) { bloqueQ.hidden = false; bloqueQ.querySelector('[data-texto-q]')!.textContent = `“${q}”`; }
+  else bloqueQ.remove();
+
+  form.addEventListener('change', () => aplicar());
+  selOrden.addEventListener('change', () => aplicar());
+  document.querySelectorAll('[data-limpiar]').forEach((b) => b.addEventListener('click', () => {
+    form.querySelectorAll<HTMLInputElement>('input').forEach((i) => (i.checked = false));
+    selOrden.value = 'recomendados';
+    aplicar();
+  }));
+  aplicar(false);
+
+  // Hoja de filtros en móvil
+  let velo: HTMLElement | null = null;
+  function abrir() {
+    panel.classList.add('is-open'); btnAbrir.setAttribute('aria-expanded', 'true');
+    velo = Object.assign(document.createElement('div'), { className: 'velo-filtros' });
+    velo.addEventListener('click', cerrar); document.body.appendChild(velo);
+    document.body.style.overflow = 'hidden';
+  }
+  function cerrar() {
+    if (!panel.classList.contains('is-open')) return;
+    panel.classList.remove('is-open'); btnAbrir.setAttribute('aria-expanded', 'false');
+    velo?.remove(); velo = null; document.body.style.overflow = ''; btnAbrir.focus();
+  }
+  btnAbrir.addEventListener('click', abrir);
+  document.querySelectorAll('[data-cerrar-filtros]').forEach((b) => b.addEventListener('click', cerrar));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
+</script>

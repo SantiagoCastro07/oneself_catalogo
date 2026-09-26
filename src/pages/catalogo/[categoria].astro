@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Catalogo from '../../components/Catalogo.astro';
+import { datosNavegacion } from '../../lib/catalogo';
+import { CATEGORIAS } from '../../lib/categorias';
+import { url } from '../../lib/url';
+
+export function getStaticPaths() {
+  return CATEGORIAS.map((c) => ({ params: { categoria: c.slug } }));
+}
+const cat = CATEGORIAS.find((c) => c.slug === Astro.params.categoria)!;
+const { perfumes, marcas } = await datosNavegacion();
+const lista = perfumes.filter(cat.filtro);
+---
+<Base titulo={`${cat.titulo} en decants`} descripcion={cat.descripcion}>
+  <Catalogo titulo={cat.titulo} perfumes={lista} marcas={marcas}
+    activo={cat.grupo === 'genero' ? cat.slug : undefined}
+    migas={[{ texto: 'Inicio', href: url() }, { texto: 'Catálogo', href: url('catalogo') }, { texto: cat.corto }]} />
+</Base>

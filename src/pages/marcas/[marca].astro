@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Catalogo from '../../components/Catalogo.astro';
+import { datosNavegacion } from '../../lib/catalogo';
+import { getCollection } from 'astro:content';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const marcas = await getCollection('marcas');
+  return marcas.map((m) => ({ params: { marca: m.id }, props: { nombre: m.data.nombre } }));
+}
+const { nombre } = Astro.props;
+const { perfumes, marcas } = await datosNavegacion();
+const lista = perfumes.filter((p) => p.data.marca.id === Astro.params.marca);
+---
+<Base titulo={`Perfumes ${nombre} en decants`} descripcion={`Perfumes ${nombre} originales en decants de 5 y 10 ml. Envíos a toda Colombia, pedidos por WhatsApp.`}>
+  <Catalogo titulo={nombre} intro={`${lista.length} ${lista.length === 1 ? 'perfume' : 'perfumes'} de ${nombre} en decants.`} perfumes={lista} marcas={marcas}
+    migas={[{ texto: 'Inicio', href: url() }, { texto: 'Marcas', href: url('marcas') }, { texto: nombre }]} />
+</Base>

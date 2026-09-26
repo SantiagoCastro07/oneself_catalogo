@@ -1,18 +1,83 @@
-@import '@fontsource/grandstander/700.css';
-@import '@fontsource/jost/400.css';
-@import '@fontsource/jost/500.css';
+@import '@fontsource/grandstander/latin-700.css';
+@import '@fontsource/jost/latin-400.css';
+@import '@fontsource/jost/latin-500.css';
 
+/* ── Tokens ───────────────────────────────────────── */
 :root {
   --bg: #F6F5F2;
   --bg-photo: #EDEBE6;
+  --bg-raised: #FFFFFF;
   --ink: #0B1220;
   --ink-2: #5B6472;
+  --ink-3: #8A919C;
   --line: #DAD8D2;
   --accent: #8A97A8;
   --danger: #9A3B3B;
-  --font-display: 'Grandstander', system-ui, sans-serif;
-  --font-body: 'Jost', system-ui, sans-serif;
+  --on-ink: #F6F5F2;
+
+  --font-display: 'Grandstander', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --gutter: 16px;
+  --max: 1200px;
+  --radius: 4px;
+  --header-h: 56px;
+  --t: 160ms ease;
 }
+@media (min-width: 768px) { :root { --gutter: 24px; --header-h: 64px; } }
+
+/* ── Base ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.5 var(--font-body); }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 15px/1.55 var(--font-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3 { margin: 0; font-weight: 500; line-height: 1.2; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.muted { color: var(--ink-2); }
+
+/* ── Botones ─────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  height: 48px; padding: 0 var(--s5); border-radius: var(--radius);
+  border: 1px solid var(--ink); background: var(--ink); color: var(--on-ink);
+  font-weight: 500; font-size: 15px; letter-spacing: .01em; transition: opacity var(--t), background var(--t);
+}
+.btn:hover { opacity: .88; }
+.btn--sec { background: transparent; color: var(--ink); }
+.btn--sec:hover { background: var(--ink); color: var(--on-ink); opacity: 1; }
+.btn--block { width: 100%; }
+.btn--sm { height: 40px; padding: 0 var(--s4); font-size: 14px; }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 44px; height: 44px;
+  border: 0; background: none; border-radius: var(--radius); position: relative;
+}
+.icon-btn:hover { background: rgba(11,18,32,.05); }
+.icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── Chips ───────────────────────────────────────── */
+.chips { display: flex; gap: var(--s2); overflow-x: auto; scrollbar-width: none; padding: 2px 0; margin: 0 calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; height: 36px; padding: 0 var(--s4); display: inline-flex; align-items: center;
+  border: 1px solid var(--line); border-radius: 999px; font-size: 14px; background: transparent; white-space: nowrap;
+  transition: border-color var(--t), background var(--t);
+}
+.chip:hover { border-color: var(--ink); }
+.chip[aria-current="page"], .chip.is-on { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
