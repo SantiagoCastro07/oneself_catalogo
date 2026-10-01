@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Tarjeta from '../components/Tarjeta.astro';
 import Icono from '../components/Icono.astro';
 import { Image } from 'astro:assets';
+import imagenHero from '../assets/hero.jpg';
 import { url } from '../lib/url';
 import { datosNavegacion, agotado, pedible, formatoPrecio, type Perfume } from '../lib/catalogo';
 import { CATEGORIAS } from '../lib/categorias';
@@ -18,11 +19,8 @@ const vistaMarca = new Set<string>();
 const seleccion = destacados.length >= 4 ? destacados.slice(0, 8) : disponibles.filter((p) => !nuevos.includes(p) && !vistaMarca.has(p.data.marca.id) && vistaMarca.add(p.data.marca.id)).slice(0, 8);
 const tituloSeleccion = destacados.length >= 4 ? 'Favoritos de OneSelf' : 'Para empezar a descubrir';
 
-// Hero: tres frascos disponibles (prioriza nuevos)
-const hero = [...nuevos, ...disponibles.filter((p) => !nuevos.includes(p))].slice(0, 3);
-
 // Categorías con foto representativa
-const usadas = new Set<Perfume>([...hero, ...nuevos]);
+const usadas = new Set<Perfume>([...nuevos]);
 const cats = ['hombre', 'mujer', 'unisex', 'arabes'].map((s) => CATEGORIAS.find((c) => c.slug === s)!).map((c) => {
   const lista = disponibles.filter(c.filtro);
   const foto = lista.find((p) => !usadas.has(p)) || lista[0];
@@ -55,12 +53,8 @@ const DESC_TAMANO: Record<string, string> = {
           <a class="btn btn--sec" href={url('como-funciona')}>Cómo funciona</a>
         </div>
       </div>
-      <div class="hero__fotos" aria-hidden="true">
-        {hero.map((p, i) => (
-          <a class={`hero__foto hero__foto--${i}`} href={url(`perfume/${p.id}`)} tabindex="-1">
-            <Image src={p.data.imagenes[0]} alt="" widths={[240, 360, 520]} sizes="(min-width: 1024px) 300px, 45vw" loading="eager" fetchpriority={i === 0 ? 'high' : 'auto'} />
-          </a>
-        ))}
+      <div class="hero__foto">
+        <Image src={imagenHero} alt="Frascos originales de perfume y, delante, decants OneSelf de 5 y 10 ml" widths={[480, 720, 1000, 1287]} sizes="(min-width: 1024px) 560px, 100vw" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </section>
@@ -134,17 +128,13 @@ const DESC_TAMANO: Record<string, string> = {
 </Base>
 
 <style>
-  .hero { background: var(--bg-photo); overflow: hidden; }
+  .hero { overflow: hidden; }
   .hero__in { display: grid; gap: var(--s4); padding-top: var(--s5); padding-bottom: var(--s5); }
   .hero__tit { font-size: clamp(32px, 8.4vw, 60px); line-height: 1.04; margin-top: var(--s3); max-width: 16ch; }
   .hero__sub { margin-top: var(--s4); font-size: 16.5px; color: var(--ink-2); max-width: 40ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
-  .hero__fotos { position: relative; height: 200px; }
-  .hero__foto { position: absolute; width: 46%; aspect-ratio: 1; }
-  .hero__foto img { width: 100%; height: 100%; object-fit: contain; }
-  .hero__foto--0 { left: 27%; top: 0; width: 50%; z-index: 2; }
-  .hero__foto--1 { left: -2%; top: 18%; width: 40%; }
-  .hero__foto--2 { right: -2%; top: 18%; width: 40%; }
+  .hero__foto { border-radius: var(--radius); overflow: hidden; }
+  .hero__foto img { display: block; width: 100%; height: auto; aspect-ratio: 1287 / 832; object-fit: cover; }
 
   .pasos { border-bottom: 1px solid var(--line); }
   .pasos__in { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); padding-top: var(--s4); padding-bottom: var(--s4); margin: 0 auto; list-style: none; font-size: 13px; line-height: 1.35; }
@@ -197,7 +187,6 @@ const DESC_TAMANO: Record<string, string> = {
   }
   @media (min-width: 1024px) {
     .hero__in { grid-template-columns: 1fr 1fr; align-items: center; padding-top: var(--s8); padding-bottom: var(--s8); }
-    .hero__fotos { height: 420px; }
     .hero__tit { max-width: 12ch; }
     .pasos__in { justify-content: center; }
     .seccion { margin-top: var(--s8); }
