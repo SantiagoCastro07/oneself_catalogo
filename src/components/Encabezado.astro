@@ -17,7 +17,17 @@ const hayNuevos = visibles.some((c) => c.slug === 'nuevos');
 const actual = Astro.url.pathname;
 const esActual = (href: string) => actual === href || (href !== url() && actual.startsWith(href) && href !== url('catalogo'));
 ---
-{!simple && <div class="anuncio">{tienda.anuncio}</div>}
+{!simple && (
+  <div class="anuncio" role="region" aria-label="Avisos de la tienda">
+    <div class="anuncio__pista">
+      {[0, 1, 2, 3].map((copia) => (
+        <ul class="anuncio__grupo" aria-hidden={copia > 0 ? 'true' : undefined}>
+          {tienda.anuncios.map((t) => <li>{t}</li>)}
+        </ul>
+      ))}
+    </div>
+  </div>
+)}
 <header class:list={['cab', { 'cab--simple': simple }]}>
   <div class="wrap cab__in">
     <button class="icon-btn cab__menu" type="button" aria-label="Abrir menú" aria-controls="menu" aria-expanded="false" data-abrir="menu">
@@ -87,9 +97,19 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
 </div>
 
 <style>
-  .anuncio { background: var(--ink); color: var(--on-ink); font-size: 12.5px; letter-spacing: .03em; text-align: center; padding: 7px var(--gutter); }
-  .cab { position: sticky; top: 0; z-index: 30; background: rgba(246,245,242,.96); border-bottom: 1px solid var(--line); }
-  @supports (backdrop-filter: blur(1px)) { .cab { background: rgba(246,245,242,.9); backdrop-filter: saturate(1.2) blur(8px); } }
+  .anuncio { background: var(--ink); color: var(--on-ink); font-size: 12.5px; letter-spacing: .03em; padding: 8px 0; overflow: hidden; }
+  .anuncio__pista { display: flex; width: max-content; animation: anuncio-mover 40s linear infinite; }
+  .anuncio:hover .anuncio__pista { animation-play-state: paused; }
+  .anuncio__grupo { display: flex; flex: none; margin: 0; padding: 0; list-style: none; }
+  .anuncio__grupo li { flex: none; white-space: nowrap; padding: 0 var(--s5); }
+  .anuncio__grupo li::after { content: '\2022'; margin-left: var(--s5); opacity: .5; }
+  @keyframes anuncio-mover { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .anuncio__pista { animation: none; width: auto; justify-content: center; }
+    .anuncio__grupo[aria-hidden] { display: none; }
+  }
+  .cab { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+  @supports (backdrop-filter: blur(1px)) { .cab { background: rgba(255,255,255,.9); backdrop-filter: saturate(1.2) blur(8px); } }
   .cab__in { height: var(--header-h); display: grid; grid-template-columns: 88px 1fr 88px; align-items: center; }
   .cab__logo { justify-self: center; font-size: 26px; line-height: 1; display: inline-flex; align-items: center; gap: var(--s2); }
   .logo-img { width: 32px; height: 32px; flex: none; }
