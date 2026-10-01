@@ -12,13 +12,13 @@ export interface Categoria {
 
 export const CATEGORIAS: Categoria[] = [
   { slug: 'hombre', corto: 'Hombre', titulo: 'Perfumes para hombre', grupo: 'genero',
-    descripcion: 'Perfumes originales para hombre en decants de 5 y 10 ml. Árabes, de diseñador y nicho. Envíos a toda Colombia.',
+    descripcion: 'Perfumes originales para hombre en decants de 3, 5 y 10 ml. Árabes, de diseñador y nicho. Envíos a toda Colombia.',
     filtro: (p) => p.data.genero === 'hombre' },
   { slug: 'mujer', corto: 'Mujer', titulo: 'Perfumes para mujer', grupo: 'genero',
-    descripcion: 'Perfumes originales para mujer en decants de 5 y 10 ml. Envíos a toda Colombia, pedidos por WhatsApp.',
+    descripcion: 'Perfumes originales para mujer en decants de 3, 5 y 10 ml. Envíos a toda Colombia, pedidos por WhatsApp.',
     filtro: (p) => p.data.genero === 'mujer' },
   { slug: 'unisex', corto: 'Unisex', titulo: 'Perfumes unisex', grupo: 'genero',
-    descripcion: 'Perfumes unisex originales en decants de 5 y 10 ml. Envíos a toda Colombia.',
+    descripcion: 'Perfumes unisex originales en decants de 3, 5 y 10 ml. Envíos a toda Colombia.',
     filtro: (p) => p.data.genero === 'unisex' },
   { slug: 'arabes', corto: 'Árabes', titulo: 'Perfumes árabes', grupo: 'tipo',
     descripcion: 'Perfumes árabes originales en decants: Lattafa, Armaf, Rasasi, Afnan y más. Envíos a toda Colombia.',
@@ -30,7 +30,7 @@ export const CATEGORIAS: Categoria[] = [
     descripcion: 'Perfumes nicho originales en decants de 3, 5 y 10 ml. Envíos a toda Colombia.',
     filtro: (p) => p.data.tipo === 'nicho' },
   { slug: 'nuevos', corto: 'Nuevos', titulo: 'Lo nuevo', grupo: 'especial',
-    descripcion: 'Los perfumes que acaban de llegar a OneSelf, en decants de 5 y 10 ml.',
+    descripcion: 'Los perfumes que acaban de llegar a OneSelf, en decants de 3, 5 y 10 ml.',
     filtro: (p) => p.data.etiquetas.includes('nuevo') },
 ];
 
