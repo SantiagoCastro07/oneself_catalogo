@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Encabezado from '../components/Encabezado.astro';
 import Pie from '../components/Pie.astro';
 import tienda from '../data/tienda.json';
+import { url } from '../lib/url';
 
 interface Props {
   titulo: string;          // sin " | OneSelf": se agrega solo
@@ -24,7 +25,8 @@ const og = imagenOg ? new URL(imagenOg, Astro.site).href : undefined;
     <title>{tituloCompleto}</title>
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonica.href} />
-    <meta name="theme-color" content="#F6F5F2" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" type="image/png" href={url('favicon.png')} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CO" />

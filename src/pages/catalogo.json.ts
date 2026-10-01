@@ -1,4 +1,4 @@
-// Precios, estados y miniaturas vigentes. Lo usan la bolsa y la página de pedido
+// Precios, estados y miniaturas vigentes. Lo usan el carrito y la página de pedido
 // para mostrar datos actuales aunque el navegador tenga guardada una versión vieja.
 import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';

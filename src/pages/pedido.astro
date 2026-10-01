@@ -125,7 +125,7 @@ const pagos: string[] = tienda.metodosPago || [];
             <h2 class="display">Tu pedido está listo en WhatsApp</h2>
             <p class="muted">Envía el mensaje en WhatsApp y te respondemos para confirmar envío y pago.</p>
             <a class="btn btn--block" data-reabrir target="_blank" rel="noopener" href="#"><Icono nombre="whatsapp" /> Abrir WhatsApp de nuevo</a>
-            <button class="btn btn--sec btn--block" type="button" data-vaciar hidden>Ya lo envié: vaciar mi bolsa</button>
+            <button class="btn btn--sec btn--block" type="button" data-vaciar hidden>Ya lo envié: vaciar mi carrito</button>
             <a class="listo__seguir" href={url('catalogo')}>Seguir viendo perfumes</a>
           </div>
 
@@ -145,7 +145,7 @@ const pagos: string[] = tienda.metodosPago || [];
             <div class="resumen__fila"><span data-envio-nombre>Envío</span><span data-envio-precio class="muted">Ingresa tu ciudad</span></div>
             <p class="resumen__faltante" data-faltante hidden></p>
             <div class="resumen__fila resumen__total"><span>Total</span><span><small class="muted">COP</small> <span data-total></span></span></div>
-            <button type="button" class="resumen__editar" data-editar hidden>Editar bolsa</button>
+            <button type="button" class="resumen__editar" data-editar hidden>Editar carrito</button>
           </div>
         </div>
       </aside>
@@ -223,7 +223,7 @@ const pagos: string[] = tienda.metodosPago || [];
   .envio { display: grid; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-raised); overflow: hidden; }
   .envio__op { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3); align-items: center; padding: var(--s4); border-bottom: 1px solid var(--line); cursor: pointer; transition: background var(--t); }
   .envio__op:last-child { border-bottom: 0; }
-  .envio__op.is-on { background: #F1F0EC; box-shadow: inset 0 0 0 1px var(--ink); }
+  .envio__op.is-on { background: #F4F4F4; box-shadow: inset 0 0 0 1px var(--ink); }
   .envio__op.is-off { cursor: not-allowed; opacity: .5; }
   .envio__op input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
   .envio__nombre { display: block; font-weight: 500; }

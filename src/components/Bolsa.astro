@@ -1,18 +1,18 @@
 ---
-// Bolsa de pedido: vive en el navegador (localStorage), sin cuentas.
+// Carrito de pedido: vive en el navegador (localStorage), sin cuentas.
 // "Continuar con el pedido" lleva a /pedido/, donde se piden los datos de envío.
 import Icono from './Icono.astro';
 import { url } from '../lib/url';
 ---
-<aside id="bolsa" class="bolsa" aria-label="Tu bolsa" hidden data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
+<aside id="bolsa" class="bolsa" aria-label="Tu carrito" hidden data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
   <div class="bolsa__cab">
-    <p class="bolsa__tit">Tu bolsa <span class="muted" data-bolsa-n></span></p>
-    <button class="icon-btn" type="button" aria-label="Cerrar bolsa" data-bolsa-cerrar><Icono nombre="cerrar" /></button>
+    <p class="bolsa__tit">Tu carrito <span class="muted" data-bolsa-n></span></p>
+    <button class="icon-btn" type="button" aria-label="Cerrar carrito" data-bolsa-cerrar><Icono nombre="cerrar" /></button>
   </div>
   <div class="bolsa__cuerpo">
     <ul class="bolsa__lista" data-bolsa-lista></ul>
     <div class="bolsa__vacia" data-bolsa-vacia>
-      <p>Tu bolsa está vacía.</p>
+      <p>Tu carrito está vacío.</p>
       <p class="muted">Agrega varios decants y pídelos todos en un solo mensaje.</p>
       <a class="btn btn--sec btn--sm" href={url('catalogo')}>Ver catálogo</a>
     </div>
@@ -160,7 +160,7 @@ import { url } from '../lib/url';
     if (existente) { existente.cantidad = Math.min(20, existente.cantidad + nuevo.cantidad); existente.precio = nuevo.precio; existente.estado = nuevo.estado; }
     else items.push(nuevo);
     guardar(items); pintar();
-    toast.textContent = `${nuevo.nombre} · ${TAMANO_TEXTO[nuevo.tamano]} agregado a tu bolsa`;
+    toast.textContent = `${nuevo.nombre} · ${TAMANO_TEXTO[nuevo.tamano]} agregado a tu carrito`;
     toast.classList.add('is-on'); clearTimeout(t); t = window.setTimeout(() => toast.classList.remove('is-on'), 2400);
   }) as EventListener);
   document.addEventListener('bolsa:abrir', () => abrir());

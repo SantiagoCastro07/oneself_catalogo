@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
 import Icono from './Icono.astro';
 import { url, whatsappUrl, telefonoLegible } from '../lib/url';
 import { CATEGORIAS, MINIMO_EN_MENU } from '../lib/categorias';
@@ -12,7 +14,7 @@ const anio = new Date().getFullYear();
 <footer class:list={['pie', { 'pie--simple': simple }]}>
   {!simple && <div class="wrap pie__in">
     <div class="pie__marca">
-      <a href={url()} class="display pie__logo">OneSelf</a>
+      <a href={url()} class="display pie__logo"><Image src={logo} alt="" width={80} height={80} class="pie__img" />OneSelf</a>
       <p>{tienda.eslogan}</p>
       <p class="pie__sub">Perfumes originales en decants. Envíos a toda Colombia.</p>
     </div>
@@ -47,7 +49,8 @@ const anio = new Date().getFullYear();
   .pie { background: var(--ink); color: var(--on-ink); margin-top: var(--s8); }
   .pie__in { display: grid; gap: var(--s6); padding-top: var(--s7); padding-bottom: var(--s6); }
   @media (min-width: 768px) { .pie__in { grid-template-columns: 2fr 1fr 1fr 1.3fr; } }
-  .pie__logo { font-size: 30px; display: inline-block; margin-bottom: var(--s2); }
+  .pie__logo { font-size: 30px; display: inline-flex; align-items: center; gap: var(--s3); margin-bottom: var(--s2); }
+  .pie__img { width: 40px; height: 40px; }
   .pie__sub { color: #A9B0BB; font-size: 14px; margin-top: var(--s1); }
   .pie__tit { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #A9B0BB; margin-bottom: var(--s3); }
   .pie__col a { display: inline-flex; align-items: center; gap: var(--s2); padding: 6px 0; }

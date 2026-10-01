@@ -4,16 +4,16 @@
 
 /* ── Tokens ───────────────────────────────────────── */
 :root {
-  --bg: #F6F5F2;
-  --bg-photo: #EDEBE6;
+  --bg: #FFFFFF;
+  --bg-photo: #F4F4F4;
   --bg-raised: #FFFFFF;
   --ink: #0B1220;
   --ink-2: #5B6472;
   --ink-3: #8A919C;
-  --line: #DAD8D2;
+  --line: #E3E3E3;
   --accent: #8A97A8;
   --danger: #9A3B3B;
-  --on-ink: #F6F5F2;
+  --on-ink: #FFFFFF;
 
   --font-display: 'Grandstander', ui-rounded, system-ui, sans-serif;
   --font-body: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;

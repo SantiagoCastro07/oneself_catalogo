@@ -1,0 +1,34 @@
+{
+  "nombre": "Hawas Highness",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "acuatico"
+  ],
+  "descripcion": "Fragancia árabe de Rasasi, fresca y con buena proyección.",
+  "notas": {
+    "salida": [],
+    "corazon": [],
+    "fondo": []
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-highness.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}

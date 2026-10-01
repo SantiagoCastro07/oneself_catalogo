@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
 import Icono from './Icono.astro';
 import Bolsa from './Bolsa.astro';
 import { url, whatsappUrl } from '../lib/url';
@@ -21,7 +23,7 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
     <button class="icon-btn cab__menu" type="button" aria-label="Abrir menú" aria-controls="menu" aria-expanded="false" data-abrir="menu">
       <Icono nombre="menu" />
     </button>
-    <a class="cab__logo display" href={url()} aria-label="OneSelf, inicio">OneSelf</a>
+    <a class="cab__logo display" href={url()} aria-label="OneSelf, inicio"><Image src={logo} alt="" width={64} height={64} class="logo-img" loading="eager" />OneSelf</a>
     <nav class="cab__nav" aria-label="Principal">
       <a href={url('catalogo')} aria-current={actual === url('catalogo') ? 'page' : undefined}>Catálogo</a>
       {genero.map((c) => <a href={url(`catalogo/${c.slug}`)} aria-current={esActual(url(`catalogo/${c.slug}`)) ? 'page' : undefined}>{c.corto}</a>)}
@@ -32,7 +34,7 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
     {simple && <a class="cab__volver" href={url('catalogo')}>Seguir comprando</a>}
     <div class="cab__acc">
       <button class="icon-btn" type="button" aria-label="Buscar" aria-controls="buscador" data-abrir="buscador"><Icono nombre="buscar" /></button>
-      <button class="icon-btn" type="button" aria-label="Abrir bolsa" aria-controls="bolsa" data-abrir-bolsa><Icono nombre="bolsa" /><span class="contador" data-bolsa-contador hidden></span></button>
+      <button class="icon-btn" type="button" aria-label="Abrir carrito" aria-controls="bolsa" data-abrir-bolsa><Icono nombre="bolsa" /><span class="contador" data-bolsa-contador hidden></span></button>
     </div>
   </div>
 </header>
@@ -42,7 +44,7 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
 
 <aside id="menu" class="panel panel--izq" aria-label="Menú" hidden>
   <div class="panel__cab">
-    <span class="display panel__logo">OneSelf</span>
+    <span class="display panel__logo"><Image src={logo} alt="" width={64} height={64} class="logo-img" />OneSelf</span>
     <button class="icon-btn" type="button" aria-label="Cerrar menú" data-cerrar><Icono nombre="cerrar" /></button>
   </div>
   <nav class="panel__cuerpo">
@@ -89,7 +91,9 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
   .cab { position: sticky; top: 0; z-index: 30; background: rgba(246,245,242,.96); border-bottom: 1px solid var(--line); }
   @supports (backdrop-filter: blur(1px)) { .cab { background: rgba(246,245,242,.9); backdrop-filter: saturate(1.2) blur(8px); } }
   .cab__in { height: var(--header-h); display: grid; grid-template-columns: 88px 1fr 88px; align-items: center; }
-  .cab__logo { justify-self: center; font-size: 26px; line-height: 1; }
+  .cab__logo { justify-self: center; font-size: 26px; line-height: 1; display: inline-flex; align-items: center; gap: var(--s2); }
+  .logo-img { width: 32px; height: 32px; flex: none; }
+  .panel__logo { display: inline-flex; align-items: center; gap: var(--s2); }
   .cab__nav { display: none; }
   .cab__acc { justify-self: end; display: flex; }
   @media (min-width: 1024px) {

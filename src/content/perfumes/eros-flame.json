@@ -1,0 +1,40 @@
+{
+  "nombre": "Eros Flame",
+  "marca": "versace",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "aromatico",
+    "especiado"
+  ],
+  "descripcion": "Intenso y apasionado. Una fragancia masculina de Versace con carácter.",
+  "notas": {
+    "salida": [],
+    "corazon": [],
+    "fondo": []
+  },
+  "imagenes": [
+    "../../assets/perfumes/eros-flame.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 18000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 45000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}

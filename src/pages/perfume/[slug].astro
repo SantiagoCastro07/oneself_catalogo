@@ -140,7 +140,7 @@ const datosCliente = {
               </div>
               <a class="btn comprar__wa" data-pedir href={url(`pedido?item=${encodeURIComponent(`${p.id}|${inicial.tamano}|1`)}`)}>Pedir ahora</a>
             </div>
-            <button type="button" class="btn btn--sec btn--block" data-agregar>Agregar a la bolsa</button>
+            <button type="button" class="btn btn--sec btn--block" data-agregar>Agregar al carrito</button>
             <a class="comprar__duda" href={enlaceWhatsapp(tienda.whatsapp, `Hola OneSelf, tengo una pregunta sobre ${d.nombre} (${marca}).`)} target="_blank" rel="noopener"><Icono nombre="whatsapp" clase="icon icon--sm" /> ¿Dudas? Pregúntanos por WhatsApp</a>
           </div>
         ) : (
@@ -344,13 +344,13 @@ const datosCliente = {
   menos?.addEventListener('click', () => { cantidad = Math.max(1, cantidad - 1); reiniciarAgregar(); pintar(); });
   mas?.addEventListener('click', () => { cantidad = Math.min(20, cantidad + 1); reiniciarAgregar(); pintar(); });
   // Tras agregar, el mismo botón abre la bolsa; si cambia tamaño o cantidad, vuelve a "Agregar".
-  const reiniciarAgregar = () => { if (agregar) { delete agregar.dataset.hecho; agregar.textContent = 'Agregar a la bolsa'; } };
+  const reiniciarAgregar = () => { if (agregar) { delete agregar.dataset.hecho; agregar.textContent = 'Agregar al carrito'; } };
   agregar?.addEventListener('click', () => {
     if (agregar.dataset.hecho) { document.dispatchEvent(new CustomEvent('bolsa:abrir')); return; }
     const tam = actual(); const v = datos.variantes[tam];
     document.dispatchEvent(new CustomEvent('bolsa:agregar', { detail: { slug: datos.slug, nombre: datos.nombre, marca: datos.marca, tamano: tam, precio: v.precio, cantidad, img: datos.img, estado: v.estado } }));
     agregar.dataset.hecho = '1';
-    agregar.textContent = 'Agregado · Ver bolsa';
+    agregar.textContent = 'Agregado · Ver carrito';
   });
 
   // Galería: puntos

@@ -1,0 +1,40 @@
+{
+  "nombre": "Acqua di Giò Profondo",
+  "marca": "giorgio-armani",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "acuatico",
+    "aromatico"
+  ],
+  "descripcion": "Fresco, marino y profundo. Una fragancia acuática elegante para el día a día.",
+  "notas": {
+    "salida": [],
+    "corazon": [],
+    "fondo": []
+  },
+  "imagenes": [
+    "../../assets/perfumes/acqua-di-gio.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 26000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "5ml",
+      "precio": 40000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 72000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
