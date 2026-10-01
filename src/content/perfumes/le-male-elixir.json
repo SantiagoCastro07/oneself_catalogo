@@ -27,9 +27,8 @@
   "variantes": [
     {
       "tamano": "3ml",
-      "precio": 21000,
-      "estado": "disponible",
-      "provisional": true
+      "precio": 25000,
+      "estado": "disponible"
     },
     {
       "tamano": "5ml",
