@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Tarjeta from '../components/Tarjeta.astro';
 import Icono from '../components/Icono.astro';
 import { Image } from 'astro:assets';
-import imagenHero from '../assets/hero.jpg';
+import imagenHero from '../assets/hero.png';
 import { url } from '../lib/url';
 import { datosNavegacion, agotado, pedible, formatoPrecio, type Perfume } from '../lib/catalogo';
 import { CATEGORIAS } from '../lib/categorias';
@@ -54,7 +54,7 @@ const DESC_TAMANO: Record<string, string> = {
         </div>
       </div>
       <div class="hero__foto">
-        <Image src={imagenHero} alt="Frascos originales de perfume y, delante, decants OneSelf de 5 y 10 ml" widths={[480, 720, 1000, 1287]} sizes="(min-width: 1024px) 560px, 100vw" loading="eager" fetchpriority="high" />
+        <Image src={imagenHero} alt="Frascos originales de perfume y, delante, decants OneSelf de 5 y 10 ml" widths={[360, 622]} sizes="(min-width: 1024px) 560px, 100vw" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </section>
@@ -133,8 +133,8 @@ const DESC_TAMANO: Record<string, string> = {
   .hero__tit { font-size: clamp(32px, 8.4vw, 60px); line-height: 1.04; margin-top: var(--s3); max-width: 16ch; }
   .hero__sub { margin-top: var(--s4); font-size: 16.5px; color: var(--ink-2); max-width: 40ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
-  .hero__foto { border-radius: var(--radius); overflow: hidden; }
-  .hero__foto img { display: block; width: 100%; height: auto; aspect-ratio: 1287 / 832; object-fit: cover; }
+  .hero__foto { display: grid; place-items: center; }
+  .hero__foto img { display: block; width: 100%; height: auto; max-width: 622px; aspect-ratio: 622 / 401; object-fit: contain; }
 
   .pasos { border-bottom: 1px solid var(--line); }
   .pasos__in { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); padding-top: var(--s4); padding-bottom: var(--s4); margin: 0 auto; list-style: none; font-size: 13px; line-height: 1.35; }
