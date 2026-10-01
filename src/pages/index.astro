@@ -54,7 +54,7 @@ const DESC_TAMANO: Record<string, string> = {
         </div>
       </div>
       <div class="hero__foto">
-        <Image src={imagenHero} alt="Frascos originales de perfume y, delante, decants OneSelf de 5 y 10 ml" widths={[360, 622]} sizes="(min-width: 1024px) 560px, 100vw" loading="eager" fetchpriority="high" />
+        <Image src={imagenHero} alt="Frascos originales de perfume y, delante, decants OneSelf de 5 y 10 ml" widths={[360, 480, 560]} sizes="(min-width: 1024px) 560px, 100vw" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </section>
@@ -134,7 +134,7 @@ const DESC_TAMANO: Record<string, string> = {
   .hero__sub { margin-top: var(--s4); font-size: 16.5px; color: var(--ink-2); max-width: 40ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
   .hero__foto { display: grid; place-items: center; }
-  .hero__foto img { display: block; width: 100%; height: auto; max-width: 622px; aspect-ratio: 622 / 401; object-fit: contain; }
+  .hero__foto img { display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; }
 
   .pasos { border-bottom: 1px solid var(--line); }
   .pasos__in { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); padding-top: var(--s4); padding-bottom: var(--s4); margin: 0 auto; list-style: none; font-size: 13px; line-height: 1.35; }
