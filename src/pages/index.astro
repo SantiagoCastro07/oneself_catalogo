@@ -134,7 +134,7 @@ const DESC_TAMANO: Record<string, string> = {
   .hero__sub { margin-top: var(--s4); font-size: 16.5px; color: var(--ink-2); max-width: 40ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
   .hero__foto { display: grid; place-items: center; }
-  .hero__foto img { display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; }
+  .hero__foto img { display: block; width: 100%; max-width: 340px; height: auto; object-fit: contain; }
 
   .pasos { border-bottom: 1px solid var(--line); }
   .pasos__in { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); padding-top: var(--s4); padding-bottom: var(--s4); margin: 0 auto; list-style: none; font-size: 13px; line-height: 1.35; }
@@ -188,6 +188,7 @@ const DESC_TAMANO: Record<string, string> = {
   @media (min-width: 1024px) {
     .hero__in { grid-template-columns: 1fr 1fr; align-items: center; padding-top: var(--s8); padding-bottom: var(--s8); }
     .hero__tit { max-width: 12ch; }
+    .hero__foto img { max-width: 440px; }
     .pasos__in { justify-content: center; }
     .seccion { margin-top: var(--s8); }
     .seccion__cab h2, .porque h2 { font-size: 34px; }
