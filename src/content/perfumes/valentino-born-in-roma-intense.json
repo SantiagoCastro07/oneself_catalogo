@@ -26,22 +26,22 @@
     {
       "tamano": "3ml",
       "precio": 26000,
-      "estado": "disponible"
+      "estado": "agotado"
     },
     {
       "tamano": "5ml",
       "precio": 40000,
-      "estado": "disponible"
+      "estado": "agotado"
     },
     {
       "tamano": "10ml",
       "precio": 75000,
-      "estado": "disponible"
+      "estado": "agotado"
     },
     {
       "tamano": "frasco",
       "precio": 620000,
-      "estado": "disponible"
+      "estado": "agotado"
     }
   ],
   "etiquetas": [],
