@@ -1,0 +1,42 @@
+{
+  "nombre": "Nitro Red",
+  "marca": "dumont",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "aromatico"
+  ],
+  "descripcion": "Dulce y fresco, con manzana y lavanda sobre un fondo ambarado y amaderado. Buena proyección y duración.",
+  "notas": {
+    "salida": [
+      "Manzana",
+      "Lavanda",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Sandía",
+      "Cedro",
+      "Cálamo"
+    ],
+    "fondo": [
+      "Ámbar",
+      "Sándalo",
+      "Pachulí"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/_pendiente.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "frasco",
+      "precio": 210000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}

@@ -1,0 +1,43 @@
+{
+  "nombre": "Angham",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "gourmand",
+    "especiado"
+  ],
+  "descripcion": "Oriental vainilla y gourmand: cálido, dulce y especiado, con cacao y praliné.",
+  "notas": {
+    "salida": [
+      "Mandarina",
+      "Jengibre",
+      "Pimienta rosa"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Praliné",
+      "Cacao",
+      "Jazmín"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Ámbar",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/_pendiente.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "frasco",
+      "precio": 205000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
