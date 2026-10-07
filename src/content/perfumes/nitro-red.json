@@ -26,12 +26,12 @@
     ]
   },
   "imagenes": [
-    "../../assets/perfumes/_pendiente.png"
+    "../../assets/perfumes/nitro-red.png"
   ],
   "variantes": [
     {
       "tamano": "frasco",
-      "precio": 210000,
+      "precio": 219000,
       "estado": "disponible"
     }
   ],

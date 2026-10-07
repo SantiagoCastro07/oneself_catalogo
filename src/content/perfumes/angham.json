@@ -27,12 +27,12 @@
     ]
   },
   "imagenes": [
-    "../../assets/perfumes/_pendiente.png"
+    "../../assets/perfumes/angham.png"
   ],
   "variantes": [
     {
       "tamano": "frasco",
-      "precio": 205000,
+      "precio": 210000,
       "estado": "disponible"
     }
   ],
