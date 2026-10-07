@@ -49,9 +49,7 @@
       "estado": "disponible"
     }
   ],
-  "etiquetas": [
-    "nuevo"
-  ],
+  "etiquetas": [],
   "activo": true,
   "legado": {
     "id": "odyssey-mega",
