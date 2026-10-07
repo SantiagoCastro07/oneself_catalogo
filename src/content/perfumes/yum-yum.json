@@ -1,0 +1,43 @@
+{
+  "nombre": "Yum Yum",
+  "marca": "armaf",
+  "genero": "mujer",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "gourmand"
+  ],
+  "descripcion": "Dulce, frutal y alegre. Frutos rojos y vainilla sobre un fondo suave y empolvado, ideal para el día.",
+  "notas": {
+    "salida": [
+      "Frutos rojos",
+      "Cereza",
+      "Bergamota",
+      "Naranja"
+    ],
+    "corazon": [
+      "Vainilla",
+      "Flores blancas",
+      "Rosa"
+    ],
+    "fondo": [
+      "Notas empolvadas",
+      "Ámbar",
+      "Almizcle"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/_pendiente.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "frasco",
+      "precio": 235000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
