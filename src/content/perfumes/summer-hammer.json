@@ -1,0 +1,55 @@
+{
+  "nombre": "Summer Hammer",
+  "marca": "lorenzo-pazzaglia",
+  "genero": "unisex",
+  "tipo": "nicho",
+  "familias": [
+    "frutal",
+    "acuatico"
+  ],
+  "descripcion": "Nicho italiano tropical y veraniego. Mango, piña y coco con un toque de ron blanco sobre un fondo de vetiver y ámbar.",
+  "notas": {
+    "salida": [
+      "Mango",
+      "Piña",
+      "Coco",
+      "Bergamota",
+      "Ron blanco"
+    ],
+    "corazon": [
+      "Leche de coco",
+      "Notas marinas",
+      "Flores blancas"
+    ],
+    "fondo": [
+      "Vetiver",
+      "Almizcle",
+      "Sándalo",
+      "Ámbar"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/_pendiente.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 56000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "5ml",
+      "precio": 85000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 160000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}

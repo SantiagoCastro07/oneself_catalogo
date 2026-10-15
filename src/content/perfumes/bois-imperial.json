@@ -28,19 +28,18 @@
   "variantes": [
     {
       "tamano": "3ml",
-      "precio": 24000,
-      "estado": "agotado",
-      "provisional": true
+      "precio": 30000,
+      "estado": "disponible"
     },
     {
       "tamano": "5ml",
-      "precio": 40000,
-      "estado": "agotado"
+      "precio": 44000,
+      "estado": "disponible"
     },
     {
       "tamano": "10ml",
-      "precio": 75000,
-      "estado": "agotado"
+      "precio": 79000,
+      "estado": "disponible"
     },
     {
       "tamano": "frasco",

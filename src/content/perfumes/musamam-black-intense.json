@@ -1,0 +1,35 @@
+{
+  "nombre": "Musamam Black Intense",
+  "marca": "lattafa",
+  "genero": "unisex",
+  "tipo": "arabe",
+  "familias": [
+    "ambarado",
+    "especiado"
+  ],
+  "descripcion": "Oriental intenso y envolvente, de carácter oscuro y estela duradera.",
+  "notas": {
+    "salida": [],
+    "corazon": [],
+    "fondo": []
+  },
+  "imagenes": [
+    "../../assets/perfumes/_pendiente.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 26000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 46000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
