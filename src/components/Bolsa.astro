@@ -58,7 +58,8 @@ import { url } from '../lib/url';
 <script>
   import { pesos, TAMANO_TEXTO } from '../lib/whatsapp';
 
-  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
+  // tt: texto del tamaño de los combos ("3 decants de 3 ml: …")
+  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
   const CLAVE = 'oneself_bolsa_v2';
   const panel = document.getElementById('bolsa')!;
   const lista = panel.querySelector<HTMLElement>('[data-bolsa-lista]')!;
@@ -89,8 +90,8 @@ import { url } from '../lib/url';
       li.innerHTML = `
         <img src="${i.img}" alt="" width="64" height="64" loading="lazy" />
         <div>
-          <p class="bolsa__marca"></p><a class="bolsa__nombre" href="${catalogo.replace(/catalogo\/$/, '')}perfume/${i.slug}/"></a>
-          <p class="bolsa__tam">${TAMANO_TEXTO[i.tamano] || i.tamano}${i.estado === 'bajo_pedido' ? ' · bajo pedido' : ''}</p>
+          <p class="bolsa__marca"></p><a class="bolsa__nombre" href="${catalogo.replace(/catalogo\/$/, '')}${i.slug.startsWith('combo-') ? 'combos/' + i.slug.slice(6) : 'perfume/' + i.slug}/"></a>
+          <p class="bolsa__tam"></p>
           <div class="bolsa__fila">
             <div class="paso"><button type="button" data-a="menos" aria-label="Quitar uno">−</button><span>${i.cantidad}</span><button type="button" data-a="mas" aria-label="Agregar uno" ${i.cantidad >= 20 ? 'disabled' : ''}>+</button></div>
             <button type="button" class="bolsa__quitar" data-a="quitar">Quitar</button>
@@ -99,6 +100,7 @@ import { url } from '../lib/url';
         <p class="bolsa__precio">${pesos(i.precio * i.cantidad)}</p>
         ${problema ? `<p class="bolsa__alerta">${problema}</p>` : ''}`;
       li.querySelector('.bolsa__marca')!.textContent = i.marca;
+      li.querySelector('.bolsa__tam')!.textContent = (i.tt || TAMANO_TEXTO[i.tamano] || i.tamano) + (i.estado === 'bajo_pedido' ? ' · bajo pedido' : '');
       li.querySelector('.bolsa__nombre')!.textContent = i.nombre;
       li.addEventListener('click', (e) => {
         const a = (e.target as HTMLElement).closest<HTMLElement>('[data-a]')?.dataset.a;
@@ -123,7 +125,7 @@ import { url } from '../lib/url';
         const p = datos[i.slug]; const v = p?.v?.[i.tamano];
         if (!v) { i.estado = 'retirado'; continue; }
         if (v[0] !== i.precio) { cambios.push(i.nombre); i.precio = v[0]; }
-        i.estado = v[1]; i.nombre = p.n; i.marca = p.m;
+        i.estado = v[1]; i.nombre = p.n; i.marca = p.m; i.tt = p.t?.[i.tamano];
       }
       aviso.hidden = cambios.length === 0;
       aviso.textContent = cambios.length ? `Actualizamos el precio de ${cambios.join(', ')}.` : '';
@@ -157,10 +159,10 @@ import { url } from '../lib/url';
   document.addEventListener('bolsa:agregar', ((e: CustomEvent<Item>) => {
     const nuevo = e.detail;
     const existente = items.find((i) => i.slug === nuevo.slug && i.tamano === nuevo.tamano);
-    if (existente) { existente.cantidad = Math.min(20, existente.cantidad + nuevo.cantidad); existente.precio = nuevo.precio; existente.estado = nuevo.estado; }
+    if (existente) { existente.cantidad = Math.min(20, existente.cantidad + nuevo.cantidad); existente.precio = nuevo.precio; existente.estado = nuevo.estado; existente.tt = nuevo.tt; }
     else items.push(nuevo);
     guardar(items); pintar();
-    toast.textContent = `${nuevo.nombre} · ${TAMANO_TEXTO[nuevo.tamano]} agregado a tu carrito`;
+    toast.textContent = `${nuevo.nombre} · ${nuevo.tt ? nuevo.tt.split(':')[0] : TAMANO_TEXTO[nuevo.tamano]} agregado a tu carrito`;
     toast.classList.add('is-on'); clearTimeout(t); t = window.setTimeout(() => toast.classList.remove('is-on'), 2400);
   }) as EventListener);
   document.addEventListener('bolsa:abrir', () => abrir());

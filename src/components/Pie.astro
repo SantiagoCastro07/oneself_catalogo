@@ -5,10 +5,12 @@ import Icono from './Icono.astro';
 import { url, whatsappUrl, telefonoLegible } from '../lib/url';
 import { CATEGORIAS, MINIMO_EN_MENU } from '../lib/categorias';
 import { datosNavegacion } from '../lib/catalogo';
+import { combosActivos } from '../lib/combos';
 import tienda from '../data/tienda.json';
 const { simple = false } = Astro.props as { simple?: boolean };
 const { perfumes } = await datosNavegacion();
 const cats = CATEGORIAS.filter((c) => perfumes.filter(c.filtro).length >= MINIMO_EN_MENU);
+const hayCombos = (await combosActivos()).length > 0;
 const anio = new Date().getFullYear();
 ---
 <footer class:list={['pie', { 'pie--simple': simple }]}>
@@ -23,6 +25,7 @@ const anio = new Date().getFullYear();
       <ul>
         <li><a href={url('catalogo')}>Todos</a></li>
         {cats.map((c) => <li><a href={url(`catalogo/${c.slug}`)}>{c.corto}</a></li>)}
+        {hayCombos && <li><a href={url('combos')}>Combos</a></li>}
         <li><a href={url('marcas')}>Marcas</a></li>
       </ul>
     </nav>

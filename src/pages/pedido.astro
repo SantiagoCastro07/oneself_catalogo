@@ -248,7 +248,7 @@ const pagos: string[] = tienda.metodosPago || [];
   import { opcionesEnvio, ciudadLocal, precioPendiente, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
   const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
-  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string }
+  interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
   const CLAVE = 'oneself_bolsa_v2';
   const CLAVE_DATOS = 'oneself_datos_envio_v1';
   const raiz = document.querySelector<HTMLElement>('[data-pedido]')!;
@@ -284,9 +284,10 @@ const pagos: string[] = tienda.metodosPago || [];
       const li = document.createElement('li');
       li.className = 'linea' + (fuera ? ' is-fuera' : '');
       li.innerHTML = `<div class="linea__foto">${i.img ? `<img src="${i.img}" alt="" width="64" height="64" />` : ''}<span class="linea__n">${i.cantidad}</span></div>
-        <div><p class="linea__nombre"></p><p class="linea__tam">${TAMANO_TEXTO[i.tamano] || i.tamano}${i.estado === 'bajo_pedido' ? ' · bajo pedido' : ''}</p>${fuera ? '<p class="linea__alerta">No disponible: no se incluirá</p>' : ''}</div>
+        <div><p class="linea__nombre"></p><p class="linea__tam"></p>${fuera ? '<p class="linea__alerta">No disponible: no se incluirá</p>' : ''}</div>
         <p class="linea__precio">${i.precio ? pesos(i.precio * i.cantidad) : ''}</p>`;
       li.querySelector('.linea__nombre')!.textContent = `${i.nombre}${i.marca ? ' · ' + i.marca : ''}`;
+      li.querySelector('.linea__tam')!.textContent = (i.tt || TAMANO_TEXTO[i.tamano] || i.tamano) + (i.estado === 'bajo_pedido' ? ' · bajo pedido' : '');
       lista.appendChild(li);
     }
     const val = lineasValidas();
@@ -363,7 +364,7 @@ const pagos: string[] = tienda.metodosPago || [];
         const p = datos[i.slug]; const v = p?.v?.[i.tamano];
         if (!v) { i.estado = 'retirado'; i.nombre = i.nombre || i.slug; continue; }
         if (i.precio && v[0] !== i.precio) cambios.push(p.n);
-        i.precio = v[0]; i.estado = v[1]; i.nombre = p.n; i.marca = p.m; i.img = p.i;
+        i.precio = v[0]; i.estado = v[1]; i.nombre = p.n; i.marca = p.m; i.img = p.i; i.tt = p.t?.[i.tamano];
       }
       const aviso = resumen.querySelector<HTMLElement>('[data-aviso]')!;
       aviso.hidden = !cambios.length;
@@ -440,7 +441,7 @@ const pagos: string[] = tienda.metodosPago || [];
         localStorage.setItem(CLAVE_DATOS, JSON.stringify({ ...resto, telefono: g('telefono') }));
       } else localStorage.removeItem(CLAVE_DATOS);
     } catch {}
-    const lineas: LineaPedido[] = lineasValidas().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido' }));
+    const lineas: LineaPedido[] = lineasValidas().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido', tamanoTexto: i.tt }));
     const href = enlaceWhatsapp(numero, mensajeCompleto(lineas, datos));
     reabrir.href = href;
     window.open(href, '_blank', 'noopener');

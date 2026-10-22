@@ -58,4 +58,25 @@ const perfumes = defineCollection({
     }),
 });
 
-export const collections = { marcas, perfumes };
+// Combos: varios decants del mismo tamaño a un precio especial. La disponibilidad de cada
+// opción se deduce de los perfumes que incluye (si uno se agota, la opción se agota).
+export const TAMANOS_COMBO = ['3ml', '5ml', '10ml'] as const;
+
+const combos = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/combos' }),
+  schema: ({ image }) =>
+    z.object({
+      nombre: z.string().min(1),
+      marca: reference('marcas').optional(), // solo si todos los perfumes son de la misma marca
+      descripcion: z.string().min(1),
+      perfumes: z.array(reference('perfumes')).min(2, 'Un combo necesita al menos dos perfumes'),
+      imagen: image(),
+      opciones: z
+        .array(z.object({ tamano: z.enum(TAMANOS_COMBO), precio: z.number().int().positive() }))
+        .min(1)
+        .refine((o) => new Set(o.map((x) => x.tamano)).size === o.length, 'Hay un tamaño repetido'),
+      activo: z.boolean().default(true),
+    }),
+});
+
+export const collections = { marcas, perfumes, combos };

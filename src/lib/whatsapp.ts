@@ -6,15 +6,17 @@ export interface LineaPedido {
   precio: number;     // precio unitario
   cantidad: number;
   bajoPedido?: boolean;
+  tamanoTexto?: string; // combos: "3 decants de 3 ml: …" en lugar del tamaño suelto
 }
 
 export const TAMANO_TEXTO: Record<string, string> = { '3ml': '3 ml', '5ml': '5 ml', '10ml': '10 ml', frasco: 'Frasco completo' };
+export const textoTamano = (l: Pick<LineaPedido, 'tamano' | 'tamanoTexto'>) => l.tamanoTexto || TAMANO_TEXTO[l.tamano] || l.tamano;
 export const pesos = (n: number) => '$' + n.toLocaleString('es-CO');
 
 export function mensajePedido(lineas: LineaPedido[], ciudad = ''): string {
   const total = lineas.reduce((s, l) => s + l.precio * l.cantidad, 0);
   const cuerpo = lineas.map((l) =>
-    `• ${l.nombre} (${l.marca})\n  Tamaño: ${TAMANO_TEXTO[l.tamano] || l.tamano} · Cantidad: ${l.cantidad} · ${pesos(l.precio * l.cantidad)}` +
+    `• ${l.nombre} (${l.marca})\n  Tamaño: ${textoTamano(l)} · Cantidad: ${l.cantidad} · ${pesos(l.precio * l.cantidad)}` +
     (l.bajoPedido ? '\n  (bajo pedido)' : ''));
   return [
     'Hola OneSelf, quiero hacer este pedido:',
@@ -48,7 +50,7 @@ export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
     'Hola OneSelf, quiero hacer este pedido:',
     '',
     '*PEDIDO*',
-    ...lineas.map((l) => `• ${l.nombre} (${l.marca}) · ${TAMANO_TEXTO[l.tamano] || l.tamano} × ${l.cantidad} · ${pesos(l.precio * l.cantidad)}${l.bajoPedido ? ' (bajo pedido)' : ''}`),
+    ...lineas.map((l) => `• ${l.nombre} (${l.marca}) · ${textoTamano(l)} × ${l.cantidad} · ${pesos(l.precio * l.cantidad)}${l.bajoPedido ? ' (bajo pedido)' : ''}`),
     `Subtotal (${n} ${n === 1 ? 'artículo' : 'artículos'}): ${pesos(total)}`,
     ...(d.envio
       ? [`${d.envio.nombre}: ${d.envio.precio ? pesos(d.envio.precio) : `gratis${d.envio.motivo ? ` (${d.envio.motivo.charAt(0).toLowerCase() + d.envio.motivo.slice(1)})` : ''}`}`,

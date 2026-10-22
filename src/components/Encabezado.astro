@@ -6,6 +6,7 @@ import Bolsa from './Bolsa.astro';
 import { url, whatsappUrl } from '../lib/url';
 import { CATEGORIAS, MINIMO_EN_MENU } from '../lib/categorias';
 import { datosNavegacion } from '../lib/catalogo';
+import { combosActivos } from '../lib/combos';
 import tienda from '../data/tienda.json';
 
 const { simple = false } = Astro.props as { simple?: boolean };
@@ -14,6 +15,7 @@ const visibles = CATEGORIAS.filter((c) => perfumes.filter(c.filtro).length >= MI
 const genero = visibles.filter((c) => c.grupo === 'genero');
 const tipo = visibles.filter((c) => c.grupo === 'tipo');
 const hayNuevos = visibles.some((c) => c.slug === 'nuevos');
+const hayCombos = (await combosActivos()).length > 0;
 const actual = Astro.url.pathname;
 const esActual = (href: string) => actual === href || (href !== url() && actual.startsWith(href) && href !== url('catalogo'));
 ---
@@ -39,6 +41,7 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
       {genero.map((c) => <a href={url(`catalogo/${c.slug}`)} aria-current={esActual(url(`catalogo/${c.slug}`)) ? 'page' : undefined}>{c.corto}</a>)}
       {tipo.map((c) => <a href={url(`catalogo/${c.slug}`)} aria-current={esActual(url(`catalogo/${c.slug}`)) ? 'page' : undefined}>{c.corto}</a>)}
       {hayNuevos && <a href={url('catalogo/nuevos')} aria-current={esActual(url('catalogo/nuevos')) ? 'page' : undefined}>Nuevos</a>}
+      {hayCombos && <a href={url('combos')} aria-current={actual.startsWith(url('combos')) ? 'page' : undefined}>Combos</a>}
       <a href={url('marcas')} aria-current={actual.startsWith(url('marcas')) ? 'page' : undefined}>Marcas</a>
     </nav>
     {simple && <a class="cab__volver" href={url('catalogo')}>Seguir comprando</a>}
@@ -67,7 +70,12 @@ const esActual = (href: string) => actual === href || (href !== url() && actual.
       <p class="eyebrow menu__tit">Tipo</p>
       <ul class="menu__lista">{tipo.map((c) => <li><a href={url(`catalogo/${c.slug}`)}>{c.corto}</a></li>)}</ul>
     </>)}
-    {hayNuevos && <ul class="menu__lista"><li><a href={url('catalogo/nuevos')}>Lo nuevo</a></li></ul>}
+    {(hayNuevos || hayCombos) && (
+      <ul class="menu__lista">
+        {hayNuevos && <li><a href={url('catalogo/nuevos')}>Lo nuevo</a></li>}
+        {hayCombos && <li><a href={url('combos')}>Combos</a></li>}
+      </ul>
+    )}
     <p class="eyebrow menu__tit">Marcas</p>
     <ul class="menu__lista">
       {marcasTop.slice(0, 6).map((m) => <li><a href={url(`marcas/${m.slug}`)}>{m.nombre}</a></li>)}

@@ -1,0 +1,16 @@
+{
+  "nombre": "Combo JPG",
+  "marca": "jean-paul-gaultier",
+  "descripcion": "Los tres Jean Paul Gaultier del catálogo en decants: Le Beau Le Parfum, Le Male y Le Male Elixir. Pruébalos todos y quédate con el tuyo.",
+  "perfumes": [
+    "le-beau-le-parfum",
+    "le-male",
+    "le-male-elixir"
+  ],
+  "imagen": "../../assets/combos/jpg.png",
+  "opciones": [
+    { "tamano": "3ml", "precio": 60000 },
+    { "tamano": "5ml", "precio": 85000 }
+  ],
+  "activo": true
+}

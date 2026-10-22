@@ -1,17 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
 import Tarjeta from '../components/Tarjeta.astro';
+import TarjetaCombo from '../components/TarjetaCombo.astro';
 import Icono from '../components/Icono.astro';
 import { Image } from 'astro:assets';
 import imagenHero from '../assets/hero.jpg';
 import { url } from '../lib/url';
 import { datosNavegacion, agotado, pedible, formatoPrecio, type Perfume } from '../lib/catalogo';
+import { combosActivos } from '../lib/combos';
 import { CATEGORIAS } from '../lib/categorias';
 import { TAMANO_TEXTO } from '../lib/whatsapp';
 import tienda from '../data/tienda.json';
 
 const { perfumes, marcas, marcasTop } = await datosNavegacion();
 const disponibles = perfumes.filter((p) => !agotado(p));
+const combos = (await combosActivos()).filter((c) => !c.agotado);
 const nuevos = disponibles.filter((p) => p.data.etiquetas.includes('nuevo'));
 const destacados = disponibles.filter((p) => p.data.etiquetas.includes('destacado'));
 // Sin destacados marcados todavía: mostrar una selección variada (uno por marca, en orden recomendado)
@@ -82,6 +85,13 @@ const DESC_TAMANO: Record<string, string> = {
     <section class="wrap seccion">
       <div class="seccion__cab"><h2 class="display">Lo nuevo</h2><a class="seccion__mas" href={url('catalogo/nuevos')}>Ver todo <Icono nombre="flecha" clase="icon icon--xs" /></a></div>
       <div class="carril">{nuevos.map((p) => <div class="carril__item"><Tarjeta p={p} marca={marcas[p.data.marca.id]} /></div>)}</div>
+    </section>
+  )}
+
+  {combos.length > 0 && (
+    <section class="wrap seccion">
+      <div class="seccion__cab"><h2 class="display">Combos</h2><a class="seccion__mas" href={url('combos')}>Ver todo <Icono nombre="flecha" clase="icon icon--xs" /></a></div>
+      <div class="rejilla-combos">{combos.map((c) => <TarjetaCombo c={c} />)}</div>
     </section>
   )}
 
@@ -175,6 +185,9 @@ const DESC_TAMANO: Record<string, string> = {
   .tam-c__rinde { font-size: 13px; }
   .tam-c__desde { margin-top: var(--s2); font-weight: 500; }
 
+  .rejilla-combos { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6) var(--s4); }
+  @media (min-width: 768px) { .rejilla-combos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .rejilla-combos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .rejilla-home { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s6) var(--s3); }
   .marcas-fila { display: flex; flex-wrap: wrap; gap: var(--s2); }
 

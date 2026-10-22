@@ -1,0 +1,299 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import { Image, getImage } from 'astro:assets';
+import { url } from '../../lib/url';
+import { ETIQUETA_TAMANO } from '../../lib/catalogo';
+import { combosActivos, ahorroMaximo, type ComboResuelto } from '../../lib/combos';
+import { pesos, enlaceWhatsapp } from '../../lib/whatsapp';
+import tienda from '../../data/tienda.json';
+
+export async function getStaticPaths() {
+  const combos = await combosActivos();
+  return combos.map((c) => ({ params: { slug: c.combo.id }, props: { c } }));
+}
+const { c } = Astro.props as { c: ComboResuelto };
+const d = c.combo.data;
+const n = c.perfumes.length;
+const nombres = c.perfumes.map((p) => p.data.nombre);
+const pedibles = c.opciones.filter((o) => o.estado !== 'agotado');
+const inicial = pedibles.find((o) => o.tamano === '5ml') || pedibles[0] || c.opciones[0];
+const sinStock = c.agotado;
+const ahorro = ahorroMaximo(c);
+
+const miniatura = await getImage({ src: d.imagen, width: 128, format: 'webp' });
+const og = await getImage({ src: d.imagen, width: 1200, format: 'png' });
+
+const ESTADO_TEXTO: Record<string, string> = {
+  disponible: 'Disponible',
+  ultimas: 'Últimas unidades de alguno de los decants',
+  bajo_pedido: 'Bajo pedido: te confirmamos el tiempo de entrega por WhatsApp',
+  agotado: 'Agotado en este tamaño',
+};
+const titulo = `${d.nombre}: ${nombres.join(', ')}`;
+const descripcionMeta = `${d.nombre}: ${n} decants originales (${nombres.join(', ')}) desde ${pesos(Math.min(...c.opciones.map((o) => o.precio)))}. Envíos a toda Colombia.`.slice(0, 158);
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: d.nombre,
+  ...(c.marca ? { brand: { '@type': 'Brand', name: c.marca } } : {}),
+  description: d.descripcion,
+  image: new URL(og.src, Astro.site).href,
+  offers: c.opciones.map((o) => ({
+    '@type': 'Offer',
+    name: o.texto,
+    price: o.precio,
+    priceCurrency: 'COP',
+    availability: o.estado === 'agotado' ? 'https://schema.org/OutOfStock' : o.estado === 'bajo_pedido' ? 'https://schema.org/PreOrder' : o.estado === 'ultimas' ? 'https://schema.org/LimitedAvailability' : 'https://schema.org/InStock',
+    url: new URL(url(`combos/${c.combo.id}`), Astro.site).href + `?tam=${o.tamano}`,
+  })),
+};
+const migasLd = {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL(url(), Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Combos', item: new URL(url('combos'), Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: d.nombre },
+  ],
+};
+const datosCliente = {
+  slug: c.id, nombre: d.nombre, marca: c.marca || 'Combo', img: miniatura.src, numero: tienda.whatsapp, pedido: url('pedido'),
+  opciones: Object.fromEntries(c.opciones.map((o) => [o.tamano, { precio: o.precio, estado: o.estado, texto: o.texto, individual: o.individual, ahorro: o.ahorro }])),
+  estados: ESTADO_TEXTO,
+};
+---
+<Base titulo={`${d.nombre} · Combo de decants`} descripcion={descripcionMeta} imagenOg={og.src}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(migasLd)} />
+
+  <article class="wrap ficha" data-ficha data-inicial={inicial.tamano}>
+    <nav class="migas" aria-label="Ruta">
+      <a href={url()}>Inicio</a><span aria-hidden="true">/</span>
+      <a href={url('combos')}>Combos</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{d.nombre}</span>
+    </nav>
+
+    <div class="ficha__grid">
+      <div class="galeria">
+        <div class="galeria__foto">
+          <Image src={d.imagen} alt={titulo} widths={[600, 900, 1200]} sizes="(min-width: 1024px) 620px, 100vw" loading="eager" fetchpriority="high" />
+        </div>
+        {sinStock && <span class="sello-ficha">Agotado</span>}
+      </div>
+
+      <div class="info">
+        {c.marca && c.combo.data.marca ? <a class="info__marca" href={url(`marcas/${c.combo.data.marca.id}`)}>{c.marca}</a> : <span class="info__marca">Combo</span>}
+        <h1 class="display info__nombre">{d.nombre}</h1>
+        <p class="info__meta">{n} decants · {nombres.join(', ')}</p>
+
+        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <span class="info__precio-tam muted" data-precio-tam>{n} × {ETIQUETA_TAMANO[inicial.tamano]}</span></p>
+        <p class="ahorro" data-ahorro hidden></p>
+
+        <fieldset class="tamanos">
+          <legend>Elige el tamaño de tus decants</legend>
+          <div class="tamanos__grid" style={`--n:${c.opciones.length}`}>
+            {c.opciones.map((o) => (
+              <label class:list={['tamano', { 'is-agotado': o.estado === 'agotado' }]}>
+                <input type="radio" name="tamano" value={o.tamano} checked={o.tamano === inicial.tamano} disabled={o.estado === 'agotado'} />
+                <span class="tamano__ml">{n} × {ETIQUETA_TAMANO[o.tamano]}</span>
+                <span class="tamano__precio">{pesos(o.precio)}</span>
+                {o.ahorro > 0 && o.estado !== 'agotado' && <span class="tamano__nota">Ahorras {pesos(o.ahorro)}</span>}
+                {o.estado === 'ultimas' && <span class="tamano__nota">Últimas</span>}
+                {o.estado === 'bajo_pedido' && <span class="tamano__nota">Bajo pedido</span>}
+                {o.estado === 'agotado' && <span class="tamano__nota">Agotado</span>}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <p class="estado" data-estado><span class="estado__punto"></span><span data-estado-texto>{ESTADO_TEXTO[inicial.estado]}</span></p>
+
+        {!sinStock ? (
+          <div class="comprar" data-comprar>
+            <div class="comprar__fila">
+              <div class="paso paso--grande" aria-label="Cantidad de combos">
+                <button type="button" data-menos aria-label="Quitar uno" disabled>−</button>
+                <output data-cantidad aria-live="polite">1</output>
+                <button type="button" data-mas aria-label="Agregar uno">+</button>
+              </div>
+              <a class="btn comprar__wa" data-pedir href={url(`pedido?item=${encodeURIComponent(`${c.id}|${inicial.tamano}|1`)}`)}>Pedir ahora</a>
+            </div>
+            <button type="button" class="btn btn--sec btn--block" data-agregar>Agregar al carrito</button>
+            <a class="comprar__duda" href={enlaceWhatsapp(tienda.whatsapp, `Hola OneSelf, tengo una pregunta sobre el ${d.nombre}.`)} target="_blank" rel="noopener"><Icono nombre="whatsapp" clase="icon icon--sm" /> ¿Dudas? Pregúntanos por WhatsApp</a>
+          </div>
+        ) : (
+          <a class="btn btn--block" target="_blank" rel="noopener" href={enlaceWhatsapp(tienda.whatsapp, `Hola OneSelf, ¿me avisan cuando vuelva a estar disponible el ${d.nombre}?`)}>
+            <Icono nombre="whatsapp" /> Avisarme cuando llegue
+          </a>
+        )}
+
+        <ul class="confianza">
+          <li>Perfumes originales</li>
+          <li>Envíos a toda Colombia</li>
+          <li>Pago y envío se confirman por WhatsApp</li>
+        </ul>
+
+        <section class="bloque">
+          <h2 class="bloque__tit">Descripción</h2>
+          <p>{d.descripcion}</p>
+        </section>
+
+        <section class="bloque">
+          <h2 class="bloque__tit">Qué incluye</h2>
+          <ul class="incluye">
+            {c.perfumes.map((p) => (
+              <li>
+                <a class="incluye__item" href={url(`perfume/${p.id}`)}>
+                  <span class="incluye__foto"><Image src={p.data.imagenes[0]} alt="" width={96} height={96} loading="lazy" /></span>
+                  <span class="incluye__nombre">{p.data.nombre}</span>
+                  <span class="incluye__ver muted">Ver perfume</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="muted incluye__nota">Un decant de cada perfume, todos del mismo tamaño.</p>
+        </section>
+
+        <section class="bloque">
+          <h2 class="bloque__tit">¿Qué es un decant?</h2>
+          <p>{tienda.textoDecant}</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <script is:inline type="application/json" id="datos-ficha" set:html={JSON.stringify(datosCliente)} />
+</Base>
+
+<style>
+  .ficha { padding-top: var(--s4); padding-bottom: var(--s8); }
+  .migas { display: flex; flex-wrap: wrap; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s4); }
+  .migas a:hover { color: var(--ink); text-decoration: underline; }
+  .migas [aria-current] { color: var(--ink); }
+  .ficha__grid { display: grid; gap: var(--s5); }
+
+  .galeria { position: relative; margin: 0 calc(var(--gutter) * -1); background: var(--bg-photo); }
+  .galeria__foto { aspect-ratio: 4 / 3; }
+  .galeria__foto img { width: 100%; height: 100%; object-fit: contain; padding: 4%; }
+  .sello-ficha { position: absolute; top: 12px; left: var(--gutter); background: var(--ink); color: var(--on-ink); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 4px 8px; }
+
+  .info__marca { display: inline-block; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  a.info__marca:hover { color: var(--ink); text-decoration: underline; }
+  .info__nombre { font-size: 32px; line-height: 1.08; margin-top: var(--s2); }
+  .info__meta { margin-top: var(--s2); font-size: 14px; color: var(--ink-2); }
+  .info__precio { margin-top: var(--s4); font-size: 26px; font-weight: 500; }
+  .info__precio-tam { font-size: 15px; font-weight: 400; }
+  .ahorro { margin-top: var(--s1); font-size: 14px; color: #3E7C59; }
+
+  .tamanos { border: 0; margin: var(--s5) 0 0; padding: 0; }
+  .tamanos legend { font-size: 14px; font-weight: 500; margin-bottom: var(--s3); padding: 0; }
+  .tamanos__grid { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: var(--s2); }
+  .tamano { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 76px; padding: var(--s2) var(--s1); border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; text-align: center; transition: border-color var(--t), background var(--t); }
+  .tamano:hover { border-color: var(--ink); }
+  .tamano input { position: absolute; opacity: 0; pointer-events: none; }
+  .tamano__ml { font-size: 16px; font-weight: 500; }
+  .tamano__precio { font-size: 13px; color: var(--ink-2); }
+  .tamano__nota { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); }
+  .tamano:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+  .tamano:has(input:checked) .tamano__precio, .tamano:has(input:checked) .tamano__nota { color: #C9CED6; }
+  .tamano:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .tamano.is-agotado { cursor: not-allowed; color: var(--ink-3); background: repeating-linear-gradient(135deg, transparent 0 8px, rgba(11,18,32,.04) 8px 9px); }
+  .tamano.is-agotado .tamano__ml { text-decoration: line-through; }
+  .tamano.is-agotado:hover { border-color: var(--line); }
+
+  .estado { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s4); font-size: 14px; }
+  .estado__punto { width: 8px; height: 8px; border-radius: 50%; background: #3E7C59; flex: none; }
+  .estado[data-e="ultimas"] .estado__punto { background: #B07A1E; }
+  .estado[data-e="bajo_pedido"] .estado__punto { background: var(--accent); }
+  .estado[data-e="agotado"] .estado__punto { background: var(--danger); }
+
+  .comprar { display: grid; gap: var(--s3); margin-top: var(--s4); }
+  .comprar__fila { display: grid; grid-template-columns: auto 1fr; gap: var(--s3); }
+  .paso--grande { height: 48px; }
+  .paso--grande button { height: 46px; width: 42px; }
+  .info > .btn { margin-top: var(--s4); }
+  .comprar__duda { display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); font-size: 14px; color: var(--ink-2); padding: var(--s1) 0; }
+  .comprar__duda:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .comprar__duda :global(.icon--sm) { width: 18px; height: 18px; }
+
+  .confianza { margin-top: var(--s5); display: grid; gap: var(--s2); font-size: 14px; color: var(--ink-2); }
+  .confianza li { padding-left: 20px; position: relative; }
+  .confianza li::before { content: ''; position: absolute; left: 2px; top: 7px; width: 8px; height: 5px; border-left: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(-45deg); }
+
+  .bloque { margin-top: var(--s5); padding-top: var(--s5); border-top: 1px solid var(--line); }
+  .bloque__tit { font-size: 14px; font-weight: 500; margin-bottom: var(--s2); }
+
+  .incluye { display: grid; gap: var(--s3); margin: 0; padding: 0; list-style: none; }
+  .incluye__item { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: var(--s3); }
+  .incluye__foto { width: 56px; height: 56px; background: var(--bg-photo); display: block; }
+  .incluye__foto :global(img) { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .incluye__nombre { font-weight: 500; }
+  .incluye__ver { font-size: 13px; }
+  .incluye__item:hover .incluye__nombre { text-decoration: underline; text-underline-offset: 3px; }
+  .incluye__nota { margin-top: var(--s3); font-size: 13px; }
+
+  @media (min-width: 1024px) {
+    .ficha__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s7); align-items: start; }
+    .galeria { margin: 0; position: sticky; top: calc(var(--header-h) + var(--s4)); }
+    .sello-ficha { left: 12px; }
+    .info__nombre { font-size: 44px; }
+  }
+</style>
+
+<script>
+  import { pesos } from '../../lib/whatsapp';
+  const datos = JSON.parse(document.getElementById('datos-ficha')!.textContent!);
+  const ficha = document.querySelector<HTMLElement>('[data-ficha]')!;
+  const radios = [...ficha.querySelectorAll<HTMLInputElement>('input[name="tamano"]')];
+  const precio = ficha.querySelector<HTMLElement>('[data-precio]')!;
+  const precioTam = ficha.querySelector<HTMLElement>('[data-precio-tam]')!;
+  const ahorroEl = ficha.querySelector<HTMLElement>('[data-ahorro]')!;
+  const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
+  const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
+  const cantEl = ficha.querySelector<HTMLOutputElement>('[data-cantidad]');
+  const menos = ficha.querySelector<HTMLButtonElement>('[data-menos]');
+  const mas = ficha.querySelector<HTMLButtonElement>('[data-mas]');
+  const pedir = [...document.querySelectorAll<HTMLAnchorElement>('[data-pedir]')];
+  const agregar = ficha.querySelector<HTMLButtonElement>('[data-agregar]');
+  let cantidad = 1;
+
+  const actual = () => radios.find((r) => r.checked)?.value || ficha.dataset.inicial!;
+  const decants = (t: string) => datos.opciones[t].texto.split(':')[0]; // "3 decants de 3 ml"
+
+  function pintar() {
+    const tam = actual();
+    const o = datos.opciones[tam];
+    precio.textContent = pesos(o.precio * cantidad);
+    precioTam.textContent = cantidad > 1 ? `${cantidad} combos · ${decants(tam)} c/u` : decants(tam);
+    ahorroEl.hidden = !(o.ahorro > 0);
+    ahorroEl.textContent = o.ahorro > 0 ? `Ahorras ${pesos(o.ahorro * cantidad)} frente a pedirlos por separado (${pesos(o.individual * cantidad)}).` : '';
+    estado.dataset.e = o.estado;
+    estadoTxt.textContent = datos.estados[o.estado];
+    if (cantEl) cantEl.textContent = String(cantidad);
+    if (menos) menos.disabled = cantidad <= 1;
+    if (mas) mas.disabled = cantidad >= 20;
+    const href = `${datos.pedido}?item=${encodeURIComponent(`${datos.slug}|${tam}|${cantidad}`)}`;
+    pedir.forEach((a) => (a.href = href));
+    const u = new URL(location.href); u.searchParams.set('tam', tam); history.replaceState(null, '', u);
+  }
+
+  // ?tam= desde enlaces compartidos
+  const pedido = new URLSearchParams(location.search).get('tam');
+  const r0 = radios.find((r) => r.value === pedido && !r.disabled);
+  if (r0) r0.checked = true;
+
+  // Tras agregar, el mismo botón abre la bolsa; si cambia tamaño o cantidad, vuelve a "Agregar".
+  const reiniciarAgregar = () => { if (agregar) { delete agregar.dataset.hecho; agregar.textContent = 'Agregar al carrito'; } };
+  radios.forEach((r) => r.addEventListener('change', () => { reiniciarAgregar(); pintar(); }));
+  menos?.addEventListener('click', () => { cantidad = Math.max(1, cantidad - 1); reiniciarAgregar(); pintar(); });
+  mas?.addEventListener('click', () => { cantidad = Math.min(20, cantidad + 1); reiniciarAgregar(); pintar(); });
+  agregar?.addEventListener('click', () => {
+    if (agregar.dataset.hecho) { document.dispatchEvent(new CustomEvent('bolsa:abrir')); return; }
+    const tam = actual(); const o = datos.opciones[tam];
+    document.dispatchEvent(new CustomEvent('bolsa:agregar', { detail: { slug: datos.slug, nombre: datos.nombre, marca: datos.marca, tamano: tam, precio: o.precio, cantidad, img: datos.img, estado: o.estado, tt: o.texto } }));
+    agregar.dataset.hecho = '1';
+    agregar.textContent = 'Agregado · Ver carrito';
+  });
+  pintar();
+</script>
