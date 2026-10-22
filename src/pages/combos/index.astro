@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import TarjetaCombo from '../../components/TarjetaCombo.astro';
+import ChipsCatalogo from '../../components/ChipsCatalogo.astro';
 import { url } from '../../lib/url';
 import { combosActivos } from '../../lib/combos';
 
@@ -18,6 +19,8 @@ const descripcion = 'Combos de decants originales: varios perfumes del mismo tam
       <p class="muted combos__intro">Varios decants juntos, a mejor precio que pedirlos por separado. Ideal para comparar y quedarte con tu favorito.</p>
     </header>
 
+    <ChipsCatalogo activo="combos" />
+
     {combos.length > 0 ? (
       <div class="combos__rejilla">
         {combos.map((c, i) => <TarjetaCombo c={c} prioridad={i === 0} />)}
@@ -33,10 +36,9 @@ const descripcion = 'Combos de decants originales: varios perfumes del mismo tam
   .migas { display: flex; flex-wrap: wrap; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s4); }
   .migas a:hover { color: var(--ink); text-decoration: underline; }
   .migas [aria-current] { color: var(--ink); }
-  .combos__cab { margin-bottom: var(--s5); }
   .combos__tit { font-size: 32px; }
   .combos__intro { margin-top: var(--s2); max-width: 56ch; }
-  .combos__rejilla { display: grid; gap: var(--s6) var(--s4); grid-template-columns: minmax(0, 1fr); }
+  .combos__rejilla { margin-top: var(--s5); display: grid; gap: var(--s6) var(--s4); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 768px) { .combos__rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); } .combos__tit { font-size: 44px; } }
   @media (min-width: 1100px) { .combos__rejilla { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .combos__vacio a { text-decoration: underline; text-underline-offset: 3px; }

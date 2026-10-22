@@ -3,9 +3,9 @@
 // Todo se genera en HTML; el filtrado y el orden ocurren en el navegador sin recargar.
 import Tarjeta from './Tarjeta.astro';
 import Icono from './Icono.astro';
-import { url } from '../lib/url';
+import ChipsCatalogo from './ChipsCatalogo.astro';
 import { type Perfume } from '../lib/catalogo';
-import { CATEGORIAS, FAMILIA_ETIQUETA, TIPO_ETIQUETA } from '../lib/categorias';
+import { FAMILIA_ETIQUETA, TIPO_ETIQUETA } from '../lib/categorias';
 import { FAMILIAS, TIPOS } from '../content.config';
 
 interface Props {
@@ -18,7 +18,6 @@ interface Props {
 }
 const { titulo, intro, perfumes, marcas, activo, migas } = Astro.props;
 
-const chips = [{ slug: '', corto: 'Todos' }, ...CATEGORIAS.filter((c) => c.grupo === 'genero')];
 const cuenta = <T extends string>(f: (p: Perfume) => T[]) => {
   const m = new Map<T, number>();
   for (const p of perfumes) for (const k of f(p)) m.set(k, (m.get(k) || 0) + 1);
@@ -48,14 +47,7 @@ const PRECIOS = [
     {intro && <p class="muted cat__intro">{intro}</p>}
   </header>
 
-  {activo !== undefined && (
-    <nav class="chips cat__chips" aria-label="Género">
-      {chips.map((c) => {
-        const href = c.slug ? url(`catalogo/${c.slug}`) : url('catalogo');
-        return <a class="chip" href={href} aria-current={activo === c.slug ? 'page' : undefined}>{c.corto}</a>;
-      })}
-    </nav>
-  )}
+  {activo !== undefined && <ChipsCatalogo activo={activo} />}
 
   <div class="cat__barra">
     <button type="button" class="btn btn--sec btn--sm cat__btn-filtro" data-abrir-filtros aria-controls="filtros" aria-expanded="false">
@@ -137,7 +129,6 @@ const PRECIOS = [
   .migas a:hover { color: var(--ink); text-decoration: underline; }
   .cat__tit { font-size: 30px; }
   .cat__intro { margin-top: var(--s2); max-width: 60ch; }
-  .cat__chips { margin-top: var(--s4); }
   .cat__barra { display: flex; align-items: center; gap: var(--s3); margin: var(--s4) 0; padding: var(--s3) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .cat__btn-filtro :global(.icon) { width: 18px; height: 18px; }
   .cat__nfiltros { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--ink); color: var(--on-ink); font-size: 12px; }

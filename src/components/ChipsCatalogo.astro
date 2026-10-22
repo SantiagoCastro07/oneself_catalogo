@@ -1,0 +1,22 @@
+---
+// Fila de accesos del catálogo: Todos · Combos · Hombre · Mujer · Unisex.
+// La usan el catálogo y la página de combos, para pasar de una a otra con un toque.
+import { url } from '../lib/url';
+import { CATEGORIAS } from '../lib/categorias';
+import { combosActivos } from '../lib/combos';
+
+interface Props { activo: string } // '' = Todos, 'combos', o el slug de género
+const { activo } = Astro.props;
+const hayCombos = (await combosActivos()).length > 0;
+const chips = [
+  { slug: '', corto: 'Todos', href: url('catalogo') },
+  ...(hayCombos ? [{ slug: 'combos', corto: 'Combos', href: url('combos') }] : []),
+  ...CATEGORIAS.filter((c) => c.grupo === 'genero').map((c) => ({ slug: c.slug, corto: c.corto, href: url(`catalogo/${c.slug}`) })),
+];
+---
+<nav class="chips chips-cat" aria-label="Secciones del catálogo">
+  {chips.map((c) => <a class="chip" href={c.href} aria-current={activo === c.slug ? 'page' : undefined}>{c.corto}</a>)}
+</nav>
+<style>
+  .chips-cat { margin-top: var(--s4); }
+</style>
