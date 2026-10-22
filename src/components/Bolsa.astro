@@ -199,5 +199,12 @@ import tienda from '../data/tienda.json';
   }) as EventListener);
   document.addEventListener('bolsa:abrir', () => abrir());
 
+  // Al volver atrás el navegador puede restaurar la página con el estado viejo en memoria (bfcache)
+  // o con el contador sin pintar: se vuelve a leer el carrito guardado. También cubre otras pestañas.
+  const releer = () => { items = leer(); pintar(); };
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { cerrar(); releer(); } });
+  window.addEventListener('storage', (e) => { if (e.key === CLAVE) releer(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) releer(); });
+
   pintar();
 </script>
