@@ -3,8 +3,10 @@
 // "Continuar con el pedido" lleva a /pedido/, donde se piden los datos de envío.
 import Icono from './Icono.astro';
 import { url } from '../lib/url';
+import { pesos } from '../lib/whatsapp';
+import tienda from '../data/tienda.json';
 ---
-<aside id="bolsa" class="bolsa" aria-label="Tu carrito" hidden data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')}>
+<aside id="bolsa" class="bolsa" aria-label="Tu carrito" hidden data-datos={url('catalogo.json').replace(/\/$/, '')} data-catalogo={url('catalogo')} data-reglas={JSON.stringify(tienda.envios)}>
   <div class="bolsa__cab">
     <p class="bolsa__tit">Tu carrito <span class="muted" data-bolsa-n></span></p>
     <button class="icon-btn" type="button" aria-label="Cerrar carrito" data-bolsa-cerrar><Icono nombre="cerrar" /></button>
@@ -20,7 +22,13 @@ import { url } from '../lib/url';
   </div>
   <div class="bolsa__pie" data-bolsa-pie hidden>
     <div class="bolsa__total"><span>Subtotal</span><strong data-bolsa-total></strong></div>
-    <p class="bolsa__nota muted">Envío gratis en decants desde $220.000 (nacional) o $75.000 (Cúcuta, Los Patios y Villa del Rosario). Los frascos incluyen envío.</p>
+    <div class="envgratis" data-bolsa-envgratis hidden>
+      <p class="envgratis__ctx" data-envgratis-ctx hidden></p>
+      <p class="envgratis__txt" data-envgratis-txt></p>
+      <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+      <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
+    </div>
+    <p class="bolsa__nota muted">Envío gratis en decants desde {pesos(tienda.envios.nacional.gratisDesde)} (nacional) o {pesos(tienda.envios.local.gratisDesde)} (Cúcuta, Los Patios y Villa del Rosario). Los frascos incluyen envío.</p>
     <a class="btn btn--block" href={url('pedido')}>Continuar con el pedido</a>
   </div>
 </aside>
@@ -57,6 +65,8 @@ import { url } from '../lib/url';
 
 <script>
   import { pesos, TAMANO_TEXTO } from '../lib/whatsapp';
+  import { opcionesEnvio, type ReglasEnvio } from '../lib/envio';
+  import { progresoEnvio, pintarProgresoEnvio, decantMasBarato } from '../lib/envioProgreso';
 
   // tt: texto del tamaño de los combos ("3 decants de 3 ml: …")
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
@@ -69,6 +79,26 @@ import { url } from '../lib/url';
   const totalEl = panel.querySelector<HTMLElement>('[data-bolsa-total]')!;
   const nEl = panel.querySelector<HTMLElement>('[data-bolsa-n]')!;
   const catalogo = panel.dataset.catalogo!;
+  const reglas: ReglasEnvio = JSON.parse(panel.dataset.reglas!);
+  const cajaEnvio = panel.querySelector<HTMLElement>('[data-bolsa-envgratis]')!;
+  let minDecant = 0; // decant más barato: para decir "con un decant más lo logras"
+  let minCargado = false;
+
+  // Aviso de envío gratis. Usa la ciudad que el cliente dejó guardada en el pedido; si no hay,
+  // muestra el mínimo local (el más cercano) indicando a qué ciudades aplica.
+  function pintarEnvio() {
+    // El precio del decant más barato se pide una sola vez, la primera vez que hay algo en el carrito
+    if (!minCargado && pedibles().length) {
+      minCargado = true;
+      fetch(panel.dataset.datos!).then((r) => r.json()).then((d) => { minDecant = decantMasBarato(d); pintarEnvio(); }).catch(() => {});
+    }
+    let dep = '', ciu = '';
+    try { const g = JSON.parse(localStorage.getItem('oneself_datos_envio_v1') || 'null'); dep = g?.departamento || ''; ciu = g?.ciudad || ''; } catch {}
+    const { opciones, sugerido, local } = opcionesEnvio(reglas, dep, ciu, pedibles().map((i) => ({ tamano: i.tamano, precio: i.precio, cantidad: i.cantidad })));
+    const o = opciones.find((x) => x.id === (ciu.trim() ? sugerido : 'local'))!;
+    const contexto = o.id === 'nacional' ? `Envío nacional` : local ? `Entrega local · ${local}` : `Entrega local · ${Object.keys(reglas.local.ciudades).join(', ')}`;
+    pintarProgresoEnvio(cajaEnvio, pedibles().length ? progresoEnvio(o, minDecant) : null, { contexto, enlace: catalogo });
+  }
 
   const leer = (): Item[] => { try { return JSON.parse(localStorage.getItem(CLAVE) || '[]'); } catch { return []; } };
   const guardar = (x: Item[]) => { try { localStorage.setItem(CLAVE, JSON.stringify(x)); } catch {} document.dispatchEvent(new CustomEvent('bolsa:cambio')); };
@@ -113,6 +143,7 @@ import { url } from '../lib/url';
       lista.appendChild(li);
     }
     totalEl.textContent = pesos(pedibles().reduce((s, l) => s + l.precio * l.cantidad, 0));
+    pintarEnvio();
   }
 
   // Actualiza precios y estados con el catálogo publicado
@@ -120,6 +151,7 @@ import { url } from '../lib/url';
     if (!items.length) return;
     try {
       const datos = await fetch(panel.dataset.datos!).then((r) => r.json());
+      minDecant = decantMasBarato(datos);
       const cambios: string[] = [];
       for (const i of items) {
         const p = datos[i.slug]; const v = p?.v?.[i.tamano];

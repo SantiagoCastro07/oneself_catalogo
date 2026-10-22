@@ -143,7 +143,11 @@ const pagos: string[] = tienda.metodosPago || [];
             <p class="resumen__aviso" data-aviso hidden></p>
             <div class="resumen__fila"><span data-n-articulos>Subtotal</span><span data-subtotal></span></div>
             <div class="resumen__fila"><span data-envio-nombre>Envío</span><span data-envio-precio class="muted">Ingresa tu ciudad</span></div>
-            <p class="resumen__faltante" data-faltante hidden></p>
+            <div class="envgratis resumen__faltante" data-faltante hidden>
+              <p class="envgratis__txt" data-envgratis-txt></p>
+              <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+              <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
+            </div>
             <div class="resumen__fila resumen__total"><span>Total</span><span><small class="muted">COP</small> <span data-total></span></span></div>
             <button type="button" class="resumen__editar" data-editar hidden>Editar carrito</button>
           </div>
@@ -199,7 +203,7 @@ const pagos: string[] = tienda.metodosPago || [];
   .vacio-pedido { justify-items: start; }
 
   .pedido__resumen-col { display: none; }
-  .resumen__faltante { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin: var(--s1) 0; }
+  .resumen__faltante { margin: var(--s2) 0; }
   .resumen__aviso { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin-bottom: var(--s3); }
   .resumen__fila { display: flex; justify-content: space-between; gap: var(--s3); padding: 4px 0; font-size: 15px; }
   .resumen__total { font-size: 19px; font-weight: 500; padding-top: var(--s3); }
@@ -246,6 +250,7 @@ const pagos: string[] = tienda.metodosPago || [];
 <script>
   import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
   import { opcionesEnvio, ciudadLocal, precioPendiente, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
+  import { progresoEnvio, pintarProgresoEnvio, decantMasBarato } from '../lib/envioProgreso';
   const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
@@ -309,6 +314,7 @@ const pagos: string[] = tienda.metodosPago || [];
   const cajaEnvio = form.querySelector<HTMLElement>('[data-envio-opciones]')!;
   const datalist = form.querySelector<HTMLDataListElement>('[data-datalist]')!;
   let envioActual: OpcionEnvio | null = null;
+  let minDecant = 0;                               // decant más barato: para decir "con un decant más lo logras"
   let elegido: OpcionEnvio['id'] | null = null;   // elección manual del cliente
   let ultimoSugerido: OpcionEnvio['id'] | null = null;
   cajaEnvio.innerHTML = ['local', 'nacional'].map((id) => `
@@ -346,11 +352,10 @@ const pagos: string[] = tienda.metodosPago || [];
     error('envio', '');
     const nombreEl = resumen.querySelector<HTMLElement>('[data-envio-nombre]')!;
     const precioEl = resumen.querySelector<HTMLElement>('[data-envio-precio]')!;
-    const falta = resumen.querySelector<HTMLElement>('[data-faltante]')!;
     nombreEl.textContent = o.nombre;
     precioEl.textContent = precioPendiente(o) ? 'Según tu ciudad' : o.precio ? pesos(o.precio) : 'Gratis'; precioEl.className = precioPendiente(o) ? 'muted' : '';
-    falta.hidden = !o.faltante;
-    if (o.faltante) falta.textContent = `Agrega ${pesos(o.faltante)} en decants y el envío es gratis.`;
+    // Aviso de envío gratis: solo si hay algo que pedir; el enlace a seguir comprando solo si se arma desde el carrito
+    pintarProgresoEnvio(resumen.querySelector<HTMLElement>('[data-faltante]')!, lineasValidas().length ? progresoEnvio(o, minDecant) : null, { enlace: modoBolsa ? `${base}catalogo/` : null });
     return o;
   }
   ['departamento', 'ciudad'].forEach((k) => form.elements.namedItem(k)!.addEventListener('input', () => pintar()));
@@ -359,6 +364,7 @@ const pagos: string[] = tienda.metodosPago || [];
   async function sincronizar() {
     try {
       const datos = await fetch(raiz.dataset.datos!).then((r) => r.json());
+      minDecant = decantMasBarato(datos);
       const cambios: string[] = [];
       for (const i of items) {
         const p = datos[i.slug]; const v = p?.v?.[i.tamano];

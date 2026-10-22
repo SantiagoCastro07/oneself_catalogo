@@ -15,6 +15,8 @@ export interface OpcionEnvio {
   precio: number;       // lo que se cobra (0 = gratis)
   motivo?: string;      // por qué es gratis
   faltante?: number;    // cuánto falta en decants para envío gratis
+  umbral?: number;      // mínimo de decants para envío gratis
+  acumulado?: number;   // lo que lleva el pedido en decants
   disponible: boolean;  // false = la dirección no permite este método
 }
 
@@ -38,6 +40,7 @@ export function opcionesEnvio(r: ReglasEnvio, departamento: string, ciudad: stri
   const ciudadEscrita = normal(ciudad).length > 2;
 
   const aplicar = (o: OpcionEnvio, umbral: number) => {
+    o.umbral = umbral; o.acumulado = decants;
     if (hayFrasco && r.frascoIncluyeEnvio) { o.precio = 0; o.motivo = 'Incluido con el frasco completo'; }
     else if (decants >= umbral) { o.precio = 0; o.motivo = `Por pedido de decants desde $${umbral.toLocaleString('es-CO')}`; }
     else o.faltante = umbral - decants;
