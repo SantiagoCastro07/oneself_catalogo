@@ -81,19 +81,26 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .chip:hover { border-color: var(--ink); }
 
-/* Aviso de envío gratis: texto que cambia + barra de progreso (carrito y pedido) */
-.envgratis { display: grid; gap: var(--s2); padding: var(--s3); background: var(--bg-photo); border-radius: var(--radius); font-size: 13.5px; }
+/* Aviso de envío gratis (carrito y pedido): texto que cambia, barra con brillo y un camión que avanza.
+   Colores por etapa: ámbar mientras avanza, naranja pulsante cuando falta poco, verde al lograrlo. */
+.envgratis { --p: 0%; --c1: #F2B84B; --c2: #E08A00; position: relative; display: grid; gap: var(--s2); padding: var(--s3) var(--s3) var(--s3); background: #FFF7E8; border: 1px solid #F2DDB0; border-radius: 8px; font-size: 13.5px; color: var(--ink); }
 .envgratis[hidden] { display: none; }
-.envgratis__ctx { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.envgratis__ctx { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: #8A6414; }
 .envgratis__txt { line-height: 1.4; }
-.envgratis__barra { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
-.envgratis__barra span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--ink); transition: width 500ms cubic-bezier(.2, .8, .2, 1), background-color 300ms; }
+.envgratis__barra { position: relative; height: 8px; margin-top: 18px; border-radius: 999px; background: #F3E3BF; }
+.envgratis__barra span { position: relative; display: block; height: 100%; width: 0; border-radius: inherit; overflow: hidden; background: linear-gradient(90deg, var(--c1), var(--c2)); transition: width 700ms cubic-bezier(.2, .8, .2, 1); }
+.envgratis__barra span::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .55) 50%, transparent 80%); transform: translateX(-100%); animation: envgratis-brillo 2.2s ease-in-out infinite; }
+.envgratis__barra::after { content: ''; position: absolute; bottom: 100%; left: var(--p); width: 24px; height: 15px; margin: 0 0 3px -12px; background: var(--c2); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 15'%3E%3Cpath d='M0 1.5A1.5 1.5 0 0 1 1.5 0H14v11H0zM15 3h4.2L24 7.5V11h-9z'/%3E%3Ccircle cx='6' cy='12.5' r='2.5'/%3E%3Ccircle cx='19' cy='12.5' r='2.5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 15'%3E%3Cpath d='M0 1.5A1.5 1.5 0 0 1 1.5 0H14v11H0zM15 3h4.2L24 7.5V11h-9z'/%3E%3Ccircle cx='6' cy='12.5' r='2.5'/%3E%3Ccircle cx='19' cy='12.5' r='2.5'/%3E%3C/svg%3E") center / contain no-repeat; transition: left 700ms cubic-bezier(.2, .8, .2, 1), background-color 300ms; animation: envgratis-camion 1.1s ease-in-out infinite; }
 .envgratis__cta { justify-self: start; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.envgratis.is-cerca { --c1: #F59E0B; --c2: #EA580C; background: #FFEFD0; border-color: #F0B25A; animation: envgratis-latido 1.6s ease-in-out infinite; }
 .envgratis.is-cerca .envgratis__txt { font-weight: 500; }
-.envgratis.is-cerca .envgratis__barra span { background-image: linear-gradient(90deg, var(--ink), #3E7C59); }
-.envgratis.is-logrado { background: #EAF3EE; color: #1F5136; }
+.envgratis.is-logrado { --c1: #5DAA7B; --c2: #3E7C59; background: #EAF6EE; border-color: #BFE0CB; color: #1F5136; animation: none; }
+.envgratis.is-logrado .envgratis__ctx { color: #3E7C59; }
 .envgratis.is-logrado .envgratis__txt { font-weight: 500; animation: envgratis-pop 450ms ease-out; }
 .envgratis.is-logrado .envgratis__barra { background: #CFE3D8; }
-.envgratis.is-logrado .envgratis__barra span { background: #3E7C59; }
+.envgratis.is-logrado .envgratis__barra::after { animation: none; }
+@keyframes envgratis-brillo { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+@keyframes envgratis-camion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes envgratis-latido { 0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, .35); } 50% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0); } }
 @keyframes envgratis-pop { 0% { transform: scale(.96); opacity: .4; } 60% { transform: scale(1.02); } 100% { transform: scale(1); opacity: 1; } }
 .chip[aria-current="page"], .chip.is-on { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }

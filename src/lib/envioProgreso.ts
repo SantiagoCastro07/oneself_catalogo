@@ -36,6 +36,7 @@ export function pintarProgresoEnvio(caja: HTMLElement, p: ProgresoEnvio | null, 
   if (!p) return;
   caja.classList.toggle('is-logrado', p.logrado);
   caja.classList.toggle('is-cerca', p.cerca);
+  caja.style.setProperty('--p', `${p.pct}%`);   // el camión y la barra avanzan juntos
   const ctx = caja.querySelector<HTMLElement>('[data-envgratis-ctx]');
   if (ctx) { ctx.textContent = opts.contexto || ''; ctx.hidden = !opts.contexto; }
   caja.querySelector<HTMLElement>('[data-envgratis-txt]')!.textContent = p.texto;

@@ -22,11 +22,6 @@ const pagos: string[] = tienda.metodosPago || [];
     <div class="pedido__grid">
       <div class="pedido__form-col">
         <div class="pedido__form-in">
-          <div class="envgratis envgratis--movil" data-faltante-movil hidden>
-            <p class="envgratis__txt" data-envgratis-txt></p>
-            <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
-            <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
-          </div>
           <h1 class="display pedido__tit">Finalizar pedido</h1>
           <p class="muted pedido__intro">Completa tus datos y enviamos tu pedido por WhatsApp, listo para despachar.</p>
 
@@ -100,6 +95,11 @@ const pagos: string[] = tienda.metodosPago || [];
             <section class="form__sec">
               <h2>Método de envío</h2>
               <div class="envio" role="radiogroup" aria-label="Método de envío" data-envio-opciones></div>
+              <div class="envgratis envgratis--movil" data-faltante-movil hidden>
+                <p class="envgratis__txt" data-envgratis-txt></p>
+                <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+                <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
+              </div>
               <p class="campo__error" data-error="envio"></p>
             </section>
 
@@ -209,8 +209,8 @@ const pagos: string[] = tienda.metodosPago || [];
 
   .pedido__resumen-col { display: none; }
   .resumen__faltante { margin: var(--s2) 0; }
-  .envgratis--movil { margin-bottom: var(--s4); }
-  /* En el celular el resumen va dentro de un desplegable cerrado: el aviso sube sobre el formulario */
+  .envgratis--movil { margin-top: var(--s3); }
+  /* En el celular el resumen va dentro de un desplegable cerrado: el aviso se muestra bajo las opciones de envío */
   @media (max-width: 1023.98px) { .resumen__faltante { display: none !important; } }
   @media (min-width: 1024px) { .envgratis--movil { display: none !important; } }
   .resumen__aviso { font-size: 13px; padding: var(--s2) var(--s3); background: var(--bg); border-radius: var(--radius); margin-bottom: var(--s3); }
@@ -367,7 +367,7 @@ const pagos: string[] = tienda.metodosPago || [];
     const prog = lineasValidas().length ? progresoEnvio(o, minDecant) : null;
     const opcsProg = { enlace: modoBolsa ? `${base}catalogo/` : null };
     pintarProgresoEnvio(resumen.querySelector<HTMLElement>('[data-faltante]')!, prog, opcsProg);        // columna del resumen (escritorio)
-    pintarProgresoEnvio(raiz.querySelector<HTMLElement>('[data-faltante-movil]')!, prog, opcsProg);     // arriba del formulario (celular)
+    pintarProgresoEnvio(raiz.querySelector<HTMLElement>('[data-faltante-movil]')!, prog, opcsProg);     // bajo las opciones de envío (celular)
     return o;
   }
   ['departamento', 'ciudad'].forEach((k) => form.elements.namedItem(k)!.addEventListener('input', () => pintar()));
