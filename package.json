@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "vista": "ONESELF_BASE=/vista-previa astro build --outDir ../vista-previa"
+    "vista": "node scripts/vista.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
