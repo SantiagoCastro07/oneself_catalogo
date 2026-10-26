@@ -51,9 +51,7 @@
       "estado": "disponible"
     }
   ],
-  "etiquetas": [
-    "nuevo"
-  ],
+  "etiquetas": [],
   "activo": true,
   "legado": {
     "id": "cdn-urban-man-elixir",
