@@ -1,0 +1,54 @@
+{
+  "nombre": "One Million Lucky",
+  "marca": "paco-rabanne",
+  "genero": "hombre",
+  "tipo": "disenador",
+  "familias": [
+    "amaderado",
+    "frutal"
+  ],
+  "concentracion": "EDT",
+  "descripcion": "Fresco, afrutado y amaderado. Avellana, ciruela y miel sobre un fondo de cedro y pachulí, con un toque de suerte.",
+  "notas": {
+    "salida": [
+      "Avellana",
+      "Ciruela",
+      "Bergamota",
+      "Pomelo"
+    ],
+    "corazon": [
+      "Miel",
+      "Cedro",
+      "Pachulí"
+    ],
+    "fondo": [
+      "Musgo de roble",
+      "Ámbar",
+      "Maderas"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/one-million-lucky.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "3ml",
+      "precio": 28000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "5ml",
+      "precio": 40000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 75000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
