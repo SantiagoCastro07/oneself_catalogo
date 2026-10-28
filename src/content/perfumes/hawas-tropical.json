@@ -1,0 +1,48 @@
+{
+  "nombre": "Hawas Tropical",
+  "marca": "rasasi",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "frutal",
+    "amaderado"
+  ],
+  "concentracion": "EDP",
+  "descripcion": "Fresco, verde y tropical. Hoja de higo, agua de coco y jengibre sobre un fondo cremoso de haba tonka, almizcle y sándalo.",
+  "notas": {
+    "salida": [
+      "Hoja de higo",
+      "Agua de coco",
+      "Jengibre"
+    ],
+    "corazon": [
+      "Coco",
+      "Higo",
+      "Menta"
+    ],
+    "fondo": [
+      "Haba tonka",
+      "Almizcle",
+      "Sándalo"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/hawas-tropical.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 25000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 43000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "activo": true
+}
