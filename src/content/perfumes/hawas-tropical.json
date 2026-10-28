@@ -39,6 +39,11 @@
       "tamano": "10ml",
       "precio": 43000,
       "estado": "disponible"
+    },
+    {
+      "tamano": "frasco",
+      "precio": 249000,
+      "estado": "disponible"
     }
   ],
   "etiquetas": [
