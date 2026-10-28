@@ -16,6 +16,15 @@ export const pedible = (v: Variante) => v.estado !== 'agotado';
 
 export const agotado = (p: Perfume) => p.data.variantes.every((v) => !pedible(v));
 
+export const DIAS_NUEVO = 14;
+
+/** "Nuevo" = lleva la etiqueta y, si tiene fecha `agregado`, no han pasado más de 14 días (se evalúa al compilar). */
+export const esNuevo = (p: Perfume) => {
+  if (!p.data.etiquetas.includes('nuevo')) return false;
+  if (!p.data.agregado) return true;
+  return (Date.now() - Date.parse(p.data.agregado)) / 864e5 <= DIAS_NUEVO;
+};
+
 /** Menor precio entre las variantes que se pueden pedir (o entre todas si está agotado). */
 export const precioDesde = (p: Perfume) => {
   const vs = p.data.variantes.filter(pedible);
@@ -30,7 +39,7 @@ export async function perfumesActivos() {
   return todos.sort(
     (a, b) =>
       Number(agotado(a)) - Number(agotado(b)) ||
-      Number(b.data.etiquetas.includes('nuevo')) - Number(a.data.etiquetas.includes('nuevo')) ||
+      Number(esNuevo(b)) - Number(esNuevo(a)) ||
       a.data.nombre.localeCompare(b.data.nombre, 'es'),
   );
 }

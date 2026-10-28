@@ -1,5 +1,5 @@
 // Páginas de catálogo. Se derivan de los datos: no hay listas que mantener a mano.
-import type { Perfume } from './catalogo';
+import { esNuevo, type Perfume } from './catalogo';
 
 export interface Categoria {
   slug: string;
@@ -31,7 +31,7 @@ export const CATEGORIAS: Categoria[] = [
     filtro: (p) => p.data.tipo === 'nicho' },
   { slug: 'nuevos', corto: 'Nuevos', titulo: 'Lo nuevo', grupo: 'especial',
     descripcion: 'Los perfumes que acaban de llegar a OneSelf, en decants de 3, 5 y 10 ml.',
-    filtro: (p) => p.data.etiquetas.includes('nuevo') },
+    filtro: esNuevo },
 ];
 
 /** Una categoría aparece en el menú solo si tiene suficientes perfumes. */

@@ -1,12 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import { url } from '../lib/url';
-import { type Perfume, agotado, precioDesde, formatoPrecio, ordenarVariantes, pedible, ETIQUETA_TAMANO } from '../lib/catalogo';
+import { type Perfume, esNuevo, agotado, precioDesde, formatoPrecio, ordenarVariantes, pedible, ETIQUETA_TAMANO } from '../lib/catalogo';
 
 interface Props { p: Perfume; marca: string; orden?: number; prioridad?: boolean }
 const { p, marca, orden = 0, prioridad = false } = Astro.props;
 const sinStock = agotado(p);
-const nuevo = p.data.etiquetas.includes('nuevo');
+const nuevo = esNuevo(p);
 const tamanos = ordenarVariantes(p.data.variantes).filter(pedible).map((v) => ETIQUETA_TAMANO[v.tamano]);
 const desde = precioDesde(p);
 ---

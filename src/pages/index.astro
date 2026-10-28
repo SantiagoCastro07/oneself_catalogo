@@ -6,7 +6,7 @@ import Icono from '../components/Icono.astro';
 import { Image } from 'astro:assets';
 import imagenHero from '../assets/hero.jpg';
 import { url } from '../lib/url';
-import { datosNavegacion, agotado, pedible, formatoPrecio, type Perfume } from '../lib/catalogo';
+import { datosNavegacion, esNuevo, agotado, pedible, formatoPrecio, type Perfume } from '../lib/catalogo';
 import { combosActivos } from '../lib/combos';
 import { CATEGORIAS } from '../lib/categorias';
 import { TAMANO_TEXTO } from '../lib/whatsapp';
@@ -15,7 +15,7 @@ import tienda from '../data/tienda.json';
 const { perfumes, marcas, marcasTop } = await datosNavegacion();
 const disponibles = perfumes.filter((p) => !agotado(p));
 const combos = (await combosActivos()).filter((c) => !c.agotado);
-const nuevos = disponibles.filter((p) => p.data.etiquetas.includes('nuevo'));
+const nuevos = disponibles.filter((p) => esNuevo(p));
 const destacados = disponibles.filter((p) => p.data.etiquetas.includes('destacado'));
 // Sin destacados marcados todavía: mostrar una selección variada (uno por marca, en orden recomendado)
 const vistaMarca = new Set<string>();

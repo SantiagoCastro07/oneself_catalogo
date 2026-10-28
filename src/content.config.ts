@@ -53,6 +53,7 @@ const perfumes = defineCollection({
         .min(1)
         .refine((v) => new Set(v.map((x) => x.tamano)).size === v.length, 'Hay un tamaño repetido'),
       etiquetas: z.array(z.enum(ETIQUETAS)).default([]),
+      agregado: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Fecha AAAA-MM-DD').optional(), // con la etiqueta "nuevo": se quita sola a los 14 días
       activo: z.boolean().default(true),
       legado: z.object({ id: z.string(), img: z.string() }).optional(),
     }),
