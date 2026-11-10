@@ -25,17 +25,17 @@
   "variantes": [
     {
       "tamano": "3ml",
-      "precio": 26000,
+      "precio": 29000,
       "estado": "disponible"
     },
     {
       "tamano": "5ml",
-      "precio": 40000,
+      "precio": 45000,
       "estado": "disponible"
     },
     {
       "tamano": "10ml",
-      "precio": 75000,
+      "precio": 79000,
       "estado": "disponible"
     },
     {
