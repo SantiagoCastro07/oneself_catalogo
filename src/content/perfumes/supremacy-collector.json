@@ -28,13 +28,13 @@
   "variantes": [
     {
       "tamano": "5ml",
-      "precio": 25000,
-      "estado": "agotado"
+      "precio": 26000,
+      "estado": "disponible"
     },
     {
       "tamano": "10ml",
-      "precio": 45000,
-      "estado": "agotado"
+      "precio": 46000,
+      "estado": "disponible"
     },
     {
       "tamano": "frasco",

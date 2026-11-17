@@ -1,0 +1,49 @@
+{
+  "nombre": "Rayhaan Elixir",
+  "marca": "rayhaan",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "aromatico",
+    "ambarado",
+    "amaderado"
+  ],
+  "concentracion": "EDP",
+  "descripcion": "Aromático, ambarado y amaderado. Cítricos y menta frescos que se abren a lavanda y benjuí, con un fondo cálido de vainilla, haba tonka, miel y tabaco.",
+  "notas": {
+    "salida": [
+      "Bergamota",
+      "Menta"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Benjuí"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba tonka",
+      "Miel",
+      "Tabaco"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/rayhaan-elixir.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 24000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 42000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "agregado": "2026-11-17",
+  "activo": true
+}
