@@ -1,0 +1,55 @@
+{
+  "nombre": "Rome Melancholia Pour Homme",
+  "marca": "bharara",
+  "genero": "hombre",
+  "tipo": "arabe",
+  "familias": [
+    "aromatico",
+    "frutal",
+    "amaderado"
+  ],
+  "concentracion": "EDP",
+  "descripcion": "Aromático, cremoso y elegante. Lavanda especiada y bergamota que se abren a piña y violeta, con un fondo suave de coco, vainilla y cedro.",
+  "notas": {
+    "salida": [
+      "Lavanda",
+      "Ajenjo",
+      "Cardamomo",
+      "Nuez moscada",
+      "Bergamota"
+    ],
+    "corazon": [
+      "Piña",
+      "Manzanilla",
+      "Violeta",
+      "Hoja de violeta"
+    ],
+    "fondo": [
+      "Ciprés",
+      "Cedro",
+      "Coco",
+      "Vainilla",
+      "Ámbar gris"
+    ]
+  },
+  "imagenes": [
+    "../../assets/perfumes/rome-melancholia.png"
+  ],
+  "variantes": [
+    {
+      "tamano": "5ml",
+      "precio": 23000,
+      "estado": "disponible"
+    },
+    {
+      "tamano": "10ml",
+      "precio": 39000,
+      "estado": "disponible"
+    }
+  ],
+  "etiquetas": [
+    "nuevo"
+  ],
+  "agregado": "2026-11-18",
+  "activo": true
+}

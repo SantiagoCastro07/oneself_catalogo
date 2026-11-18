@@ -42,10 +42,13 @@
       "estado": "agotado"
     }
   ],
-  "etiquetas": [],
+  "etiquetas": [
+    "nuevo"
+  ],
   "activo": true,
   "legado": {
     "id": "supremacy-collector",
     "img": "assets/SupremacyCollector.png"
-  }
+  },
+  "agregado": "2026-11-18"
 }
