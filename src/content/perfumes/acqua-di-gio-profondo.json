@@ -9,9 +9,21 @@
   ],
   "descripcion": "Fresco, marino y profundo. Una fragancia acuática elegante para el día a día.",
   "notas": {
-    "salida": [],
-    "corazon": [],
-    "fondo": []
+    "salida": [
+      "Mandarina verde",
+      "Notas marinas"
+    ],
+    "corazon": [
+      "Lavanda",
+      "Romero",
+      "Ciprés",
+      "Almáciga"
+    ],
+    "fondo": [
+      "Pachulí",
+      "Almizcle",
+      "Ámbar mineral"
+    ]
   },
   "imagenes": [
     "../../assets/perfumes/acqua-di-gio.png"

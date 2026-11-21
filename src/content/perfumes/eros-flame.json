@@ -9,9 +9,26 @@
   ],
   "descripcion": "Intenso y apasionado. Una fragancia masculina de Versace con carácter.",
   "notas": {
-    "salida": [],
-    "corazon": [],
-    "fondo": []
+    "salida": [
+      "Mandarina",
+      "Pimienta negra",
+      "Limón",
+      "Chinotto",
+      "Romero"
+    ],
+    "corazon": [
+      "Geranio",
+      "Rosa",
+      "Pepperwood"
+    ],
+    "fondo": [
+      "Vainilla",
+      "Haba tonka",
+      "Sándalo",
+      "Cedro",
+      "Pachulí",
+      "Musgo de roble"
+    ]
   },
   "imagenes": [
     "../../assets/perfumes/eros-flame.png"

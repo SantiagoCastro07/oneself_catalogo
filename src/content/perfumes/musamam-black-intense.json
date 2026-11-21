@@ -9,9 +9,24 @@
   ],
   "descripcion": "Oriental intenso y envolvente, de carácter oscuro y estela duradera.",
   "notas": {
-    "salida": [],
-    "corazon": [],
-    "fondo": []
+    "salida": [
+      "Lavanda",
+      "Nuez moscada",
+      "Bergamota",
+      "Salvia"
+    ],
+    "corazon": [
+      "Geranio",
+      "Rosa",
+      "Cedro"
+    ],
+    "fondo": [
+      "Madera de arce",
+      "Pachulí",
+      "Haba tonka",
+      "Cacao",
+      "Ámbar"
+    ]
   },
   "imagenes": [
     "../../assets/perfumes/musamam-black-intense.png"

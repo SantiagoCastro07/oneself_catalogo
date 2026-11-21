@@ -46,7 +46,6 @@ export async function perfumesActivos() {
 
 /** Nombre visible de cada marca, por slug. */
 export async function mapaMarcas() {
-  const { getCollection } = await import('astro:content');
   const marcas = await getCollection('marcas');
   return Object.fromEntries(marcas.map((m) => [m.id, m.data.nombre])) as Record<string, string>;
 }

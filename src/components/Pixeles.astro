@@ -1,0 +1,41 @@
+---
+// Pixeles de anuncios (Meta; TikTok cuando haya ID). Los IDs viven en tienda.json → pixeles.
+// Solo se cargan en el dominio público, para que la vista previa y el desarrollo no ensucien las métricas.
+// Eventos: PageView en cada página, ViewContent en la ficha de un perfume o combo,
+// AddToCart con el evento 'bolsa:agregar' y Lead cuando se envía el pedido por WhatsApp ('pedido:enviado').
+import tienda from '../data/tienda.json';
+
+interface Props {
+  producto?: { id: string; nombre: string; precio: number; tipo: 'perfume' | 'combo' };
+}
+const { producto } = Astro.props;
+const meta = tienda.pixeles.meta;
+const dominio = new URL(Astro.site!).hostname;
+---
+{meta && (
+  <script is:inline define:vars={{ meta, dominio, producto }}>
+    if (location.hostname === dominio || location.hostname === 'www.' + dominio) {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', meta);
+      fbq('track', 'PageView');
+      if (producto) {
+        fbq('track', 'ViewContent', { content_ids: [producto.id], content_name: producto.nombre, content_type: 'product', value: producto.precio, currency: 'COP' });
+      }
+      document.addEventListener('bolsa:agregar', function (e) {
+        var i = e.detail || {};
+        fbq('track', 'AddToCart', { content_ids: [i.slug], content_name: i.nombre + ' ' + i.tamano, content_type: 'product', value: (i.precio || 0) * (i.cantidad || 1), currency: 'COP' });
+      });
+      document.addEventListener('pedido:enviado', function (e) {
+        var p = e.detail || {};
+        fbq('track', 'Lead', { content_ids: p.ids, num_items: p.unidades, value: p.valor, currency: 'COP' });
+      });
+    }
+  </script>
+)}

@@ -63,7 +63,7 @@ const datosCliente = {
   estados: ESTADO_TEXTO,
 };
 ---
-<Base titulo={`${d.nombre} · Combo de decants`} descripcion={descripcionMeta} imagenOg={og.src}>
+<Base titulo={`${d.nombre} · Combo de decants`} descripcion={descripcionMeta} imagenOg={og.src} producto={{ id: c.id, nombre: d.nombre, precio: Math.min(...c.opciones.map((o) => o.precio)), tipo: 'combo' }}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(migasLd)} />
 

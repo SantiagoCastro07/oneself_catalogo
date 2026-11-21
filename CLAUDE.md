@@ -18,8 +18,10 @@ Catálogo de perfumes en decants. Astro estático, desplegado en Vercel (oneself
 ## Datos
 
 - Precios en pesos colombianos, enteros sin separadores (`245000`).
-- Cada perfume tiene variantes `5ml`, `10ml` y `frasco` (frasco completo). Estados: `disponible`, `ultimas`, `agotado`, `bajo_pedido`.
+- Tamaños posibles: `3ml`, `5ml`, `10ml` y `frasco` (frasco completo); cada perfume trae solo los que vende. Estados: `disponible`, `ultimas`, `agotado`, `bajo_pedido`.
 - Un cambio de precio o estado es solo editar el JSON en `src/content/perfumes/`.
+- La etiqueta `nuevo` con fecha `agregado` (AAAA-MM-DD) se quita sola a los 14 días, pero solo al recompilar el sitio.
+- Las tarifas de envío viven en `envios` de `src/data/tienda.json`; el texto de Cómo funciona se arma solo. La pregunta frecuente de envíos (`preguntas.json`) y el anuncio de envío gratis (`anuncios`) se editan a mano.
 
 ## Flujo de trabajo
 

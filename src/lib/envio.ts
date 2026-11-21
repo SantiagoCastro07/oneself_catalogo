@@ -67,3 +67,16 @@ export function opcionesEnvio(r: ReglasEnvio, departamento: string, ciudad: stri
   const sugerido: OpcionEnvio['id'] = local ? 'local' : 'nacional';
   return { opciones: [opLocal, opNacional], sugerido, local };
 }
+
+const pesos = (n: number) => '$' + n.toLocaleString('es-CO');
+const lista = (xs: string[]) => (xs.length > 1 ? xs.slice(0, -1).join(', ') + ' y ' + xs.at(-1) : xs[0] ?? '');
+
+/** Resumen de envíos para textos de la página, armado con las mismas reglas que cobra el pedido. */
+export function textoEnvio(r: ReglasEnvio) {
+  const partes = [
+    `Envío nacional ${pesos(r.nacional.precio)}, gratis en pedidos de decants desde ${pesos(r.nacional.gratisDesde)}.`,
+    `Entrega local en ${lista(Object.keys(r.local.ciudades))}, gratis desde ${pesos(r.local.gratisDesde)}.`,
+  ];
+  if (r.frascoIncluyeEnvio) partes.push('Los frascos completos incluyen el envío.');
+  return partes.join(' ');
+}

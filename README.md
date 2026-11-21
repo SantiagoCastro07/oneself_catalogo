@@ -11,9 +11,10 @@ Los pedidos se cierran por WhatsApp: no hay cuentas, pagos en línea ni base de 
 | Fotos de perfumes | `src/assets/perfumes/<slug>.png` |
 | Un combo de decants | `src/content/combos/<slug>.json` (foto en `src/assets/combos/`) |
 | Marcas | `src/data/marcas.json` |
-| WhatsApp, redes, textos generales, rendimiento, medios de pago | `src/data/tienda.json` |
+| WhatsApp, redes, textos generales, rendimiento, medios de pago, tarifas de envío | `src/data/tienda.json` |
 | Preguntas frecuentes | `src/data/preguntas.json` |
 | Reglas de validación del catálogo | `src/content.config.ts` |
+| Pixeles de anuncios (Meta, TikTok) | IDs en `tienda.json` → `pixeles`; código en `src/components/Pixeles.astro` |
 
 ## Tareas comunes
 
@@ -23,7 +24,8 @@ Los pedidos se cierran por WhatsApp: no hay cuentas, pagos en línea ni base de 
   Aparece solo en catálogo, filtros, marca, búsqueda y sitemap.
 - **Retirar un perfume:** `"activo": false`.
 - **Crear un combo:** copia `src/content/combos/jpg.json`, cambia los perfumes (sus ids) y los precios por tamaño. La disponibilidad sale sola de los perfumes que incluye. La foto se arma con `node scripts/componer-combo.mjs src/assets/combos/<slug>.png <perfume> <perfume> <perfume>`.
-- **Destacar en la home:** agrega `"destacado"` a `etiquetas`. `"nuevo"` lo muestra en Lo nuevo.
+- **Destacar en la home:** agrega `"destacado"` a `etiquetas`. `"nuevo"` lo muestra en Lo nuevo; con `"agregado": "AAAA-MM-DD"` deja de ser nuevo a los 14 días (al recompilar).
+- **Cambiar tarifas de envío:** edita `envios` en `tienda.json` (el pedido y Cómo funciona se actualizan solos) y ajusta a mano la pregunta de envíos en `preguntas.json` y el anuncio de envío gratis.
 
 Si un dato está mal escrito, la compilación falla y dice qué perfume y qué campo revisar.
 

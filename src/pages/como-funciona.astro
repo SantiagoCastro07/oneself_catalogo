@@ -5,6 +5,7 @@ import { url, whatsappUrl } from '../lib/url';
 import { datosNavegacion, pedible, formatoPrecio, agotado } from '../lib/catalogo';
 import { TAMANO_TEXTO } from '../lib/whatsapp';
 import tienda from '../data/tienda.json';
+import { textoEnvio, type ReglasEnvio } from '../lib/envio';
 import preguntas from '../data/preguntas.json';
 
 const { perfumes } = await datosNavegacion();
@@ -30,7 +31,7 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
         {filas.map((f) => (
           <tr>
             <td>{f.t === 'frasco' ? 'Frasco completo' : TAMANO_TEXTO[f.t]}{f.t === '3ml' && <span class="muted"> · diseñador y nicho</span>}</td>
-            <td>{typeof rend[f.t] === 'number' ? `${rend[f.t]} atomizaciones` : '—'}</td>
+            <td>{rend[f.t] != null ? `${rend[f.t]} atomizaciones` : '—'}</td>
             <td>{formatoPrecio(f.desde)}</td>
           </tr>
         ))}
@@ -47,7 +48,7 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
     </ol>
 
     <h2>Envíos</h2>
-    <p>Enviamos a toda Colombia. {tienda.envioTexto}</p>
+    <p>Enviamos a toda Colombia. {textoEnvio(tienda.envios as ReglasEnvio)}</p>
 
     <h2>Pagos</h2>
     <p>No cobramos en la página. Al recibir tu pedido te enviamos por WhatsApp el total y los medios de pago disponibles.</p>

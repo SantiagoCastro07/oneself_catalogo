@@ -462,6 +462,12 @@ const pagos: string[] = tienda.metodosPago || [];
     const lineas: LineaPedido[] = lineasValidas().map((i) => ({ nombre: i.nombre, marca: i.marca, tamano: i.tamano, precio: i.precio, cantidad: i.cantidad, bajoPedido: i.estado === 'bajo_pedido', tamanoTexto: i.tt }));
     const href = enlaceWhatsapp(numero, mensajeCompleto(lineas, datos));
     reabrir.href = href;
+    const validas = lineasValidas();
+    document.dispatchEvent(new CustomEvent('pedido:enviado', { detail: {
+      ids: [...new Set(validas.map((i) => i.slug))],
+      unidades: validas.reduce((s, i) => s + i.cantidad, 0),
+      valor: validas.reduce((s, i) => s + i.precio * i.cantidad, 0),
+    } }));
     window.open(href, '_blank', 'noopener');
     form.hidden = true;
     const listo = raiz.querySelector<HTMLElement>('[data-listo]')!;

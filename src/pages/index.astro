@@ -104,7 +104,7 @@ const DESC_TAMANO: Record<string, string> = {
           <div class="tam-c">
             <p class="tam-c__ml display">{x.t === 'frasco' ? 'Frasco' : TAMANO_TEXTO[x.t]}</p>
             <p class="tam-c__desc">{DESC_TAMANO[x.t]}</p>
-            {typeof rend[x.t] === 'number' && <p class="tam-c__rinde muted">≈ {rend[x.t]} atomizaciones</p>}
+            {rend[x.t] != null && <p class="tam-c__rinde muted">≈ {rend[x.t]} atomizaciones</p>}
             <p class="tam-c__desde">Desde {formatoPrecio(x.desde)}</p>
           </div>
         ))}

@@ -1,0 +1,18 @@
+# Recompila el sitio en Vercel todos los días para que la etiqueta "Nuevo"
+# se quite sola a los 14 días aunque no haya cambios.
+# Requiere el secreto VERCEL_DEPLOY_HOOK (URL de un Deploy Hook de Vercel sobre la rama main).
+name: Recompilar diario
+on:
+  schedule:
+    - cron: '0 10 * * *' # 5:00 a. m. hora Colombia
+  workflow_dispatch:
+jobs:
+  recompilar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar al Deploy Hook de Vercel
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "::warning::Falta el secreto VERCEL_DEPLOY_HOOK; no se recompila"; exit 0; fi
+          curl -fsS -X POST "$HOOK"
