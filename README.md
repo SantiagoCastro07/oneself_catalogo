@@ -7,10 +7,7 @@ Los pedidos se cierran por WhatsApp: no hay cuentas, pagos en línea ni base de 
 
 | Qué | Archivo |
 | --- | --- |
-| Un perfume | `src/content/perfumes/<slug>.json` |
-| Fotos de perfumes | `src/assets/perfumes/<slug>.png` |
-| Un combo de decants | `src/content/combos/<slug>.json` (foto en `src/assets/combos/`) |
-| Marcas | `src/data/marcas.json` |
+| Perfumes, precios, estados, fotos, marcas y combos | **OneSelf Manager → Productos** (se descargan al compilar; ver abajo) |
 | WhatsApp, redes, textos generales, rendimiento, medios de pago, tarifas de envío | `src/data/tienda.json` |
 | Preguntas frecuentes | `src/data/preguntas.json` |
 | Reglas de validación del catálogo | `src/content.config.ts` |
@@ -18,16 +15,15 @@ Los pedidos se cierran por WhatsApp: no hay cuentas, pagos en línea ni base de 
 
 ## Tareas comunes
 
-- **Agotar un tamaño:** en el JSON del perfume, cambia `"estado": "disponible"` por `"agotado"` en esa variante.
-  Otros estados: `"ultimas"` (muestra "Últimas unidades") y `"bajo_pedido"`.
-- **Agregar un perfume:** copia un JSON existente, cambia los datos y agrega la foto con el mismo nombre.
-  Aparece solo en catálogo, filtros, marca, búsqueda y sitemap.
-- **Retirar un perfume:** `"activo": false`.
-- **Crear un combo:** copia `src/content/combos/jpg.json`, cambia los perfumes (sus ids) y los precios por tamaño. La disponibilidad sale sola de los perfumes que incluye. La foto se arma con `node scripts/componer-combo.mjs src/assets/combos/<slug>.png <perfume> <perfume> <perfume>`.
-- **Destacar en la home:** agrega `"destacado"` a `etiquetas`. `"nuevo"` lo muestra en Lo nuevo; con `"agregado": "AAAA-MM-DD"` deja de ser nuevo a los 14 días (al recompilar).
+- **Perfumes, precios, estados, fotos, marcas y combos:** se editan en **OneSelf Manager → Productos**. Al guardar, el Manager le pide a Vercel recompilar la web (Deploy Hook) y el cambio aparece en un par de minutos.
+- **Fotos de combo:** `node scripts/componer-combo.mjs <salida.png> <perfume> <perfume> <perfume>` arma la imagen; después se sube en el combo desde el Manager.
 - **Cambiar tarifas de envío:** edita `envios` en `tienda.json` (el pedido y Cómo funciona se actualizan solos) y ajusta a mano la pregunta de envíos en `preguntas.json` y el anuncio de envío gratis.
 
-Si un dato está mal escrito, la compilación falla y dice qué perfume y qué campo revisar.
+### Catálogo desde el Manager
+
+`npm run build` (y `dev` y `vista`) corre primero `scripts/descargar-catalogo.mjs`. Ese script descarga de `https://manager.oneselfparfums.com/api/public/catalogo` (o de `MANAGER_URL`) y genera `src/data/marcas.json`, `src/content/perfumes/`, `src/content/combos/` y las fotos en `src/assets/perfumes|combos/`. Son archivos generados: están en `.gitignore` y no se editan a mano. Si el Manager no responde, la compilación falla y Vercel deja en línea la versión anterior.
+
+Si un dato está mal escrito, la compilación falla y dice qué perfume y qué campo revisar. El Manager valida lo mismo al guardar.
 
 ## Páginas
 
