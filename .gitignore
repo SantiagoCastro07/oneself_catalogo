@@ -12,3 +12,10 @@ sunny-bella-cute-font.zip
 # sistema
 .DS_Store
 Thumbs.db
+
+# catálogo generado: lo descarga scripts/descargar-catalogo.mjs desde OneSelf Manager al compilar
+src/data/marcas.json
+src/content/perfumes/
+src/content/combos/
+src/assets/perfumes/
+src/assets/combos/
