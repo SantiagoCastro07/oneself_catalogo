@@ -35,11 +35,12 @@ export const formatoPrecio = (n: number) => '$' + n.toLocaleString('es-CO');
 
 export async function perfumesActivos() {
   const todos = await getCollection('perfumes', (p) => p.data.activo);
-  // Disponibles primero, luego nuevos, luego por nombre
+  // Disponibles primero, luego nuevos (el agregado más reciente primero), luego por nombre
   return todos.sort(
     (a, b) =>
       Number(agotado(a)) - Number(agotado(b)) ||
       Number(esNuevo(b)) - Number(esNuevo(a)) ||
+      (esNuevo(a) && esNuevo(b) ? (b.data.agregado ?? '').localeCompare(a.data.agregado ?? '') : 0) ||
       a.data.nombre.localeCompare(b.data.nombre, 'es'),
   );
 }
