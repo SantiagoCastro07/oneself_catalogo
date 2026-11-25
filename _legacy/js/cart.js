@@ -2,7 +2,7 @@
 //  CARRITO — persistido en localStorage
 //  Un pedido con varios perfumes genera UN solo mensaje de WhatsApp.
 // ══════════════════════════════════════
-const WHATSAPP_PHONE = "573227747150";
+const WHATSAPP_PHONE = "573112447954";
 const CART_KEY = "oneself_cart_v1";
 
 const Cart = {

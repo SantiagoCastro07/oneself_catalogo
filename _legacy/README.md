@@ -55,7 +55,7 @@ Campos de cada perfume:
 El número de contacto para pedidos está centralizado en `js/cart.js`:
 
 ```js
-const WHATSAPP_PHONE = "573227747150";
+const WHATSAPP_PHONE = "573112447954";
 ```
 
 Cámbialo ahí para actualizar tanto el botón "Comprar ya" del modal como el checkout del carrito.

@@ -1,0 +1,68 @@
+---
+// Aviso de cambio de número de WhatsApp (el anterior se perdió por un hackeo).
+// Barra fija arriba en todas las páginas + ventana que sale una vez por visitante.
+// Se apaga solo después de tienda.avisoWhatsapp.hasta (al recompilar).
+import Icono from './Icono.astro';
+import { whatsappUrl, telefonoLegible } from '../lib/url';
+import tienda from '../data/tienda.json';
+
+const aviso = tienda.avisoWhatsapp;
+const hoy = new Date().toISOString().slice(0, 10);
+const activo = Boolean(aviso?.hasta) && hoy <= aviso.hasta;
+const nuevo = telefonoLegible(tienda.whatsapp);
+const viejo = telefonoLegible(aviso?.anterior ?? '');
+const enlace = whatsappUrl(tienda.whatsapp, 'Hola OneSelf, vi en la página su nuevo número');
+---
+{activo && (<>
+  <div class="avisowa" role="alert">
+    <div class="wrap avisowa__in">
+      <span class="avisowa__ico" aria-hidden="true">⚠️</span>
+      <p><strong>Cambiamos de WhatsApp:</strong> ahora es <a href={enlace} target="_blank" rel="noopener">{nuevo}</a>. <span class="avisowa__extra">El número anterior ({viejo}) fue hackeado: no respondas ni pagues a mensajes que lleguen desde él.</span> <button type="button" class="avisowa__mas" data-avisowa-abrir>Ver más</button></p>
+    </div>
+  </div>
+
+  <dialog class="avisowa-modal" data-avisowa aria-labelledby="avisowa-tit">
+    <p class="eyebrow">Aviso importante</p>
+    <h2 id="avisowa-tit" class="display">Tenemos nuevo número de WhatsApp</h2>
+    <p class="avisowa-modal__num">{nuevo}</p>
+    <p>Perdimos el número anterior <strong>({viejo})</strong> por un hackeo. Si te escriben desde ese número pidiendo pagos, datos o códigos, <strong>no respondas</strong>: no somos nosotros.</p>
+    <p class="muted">Guarda el número nuevo. Los pedidos de esta página ya llegan a él.</p>
+    <div class="avisowa-modal__acc">
+      <a class="btn btn--block" href={enlace} target="_blank" rel="noopener"><Icono nombre="whatsapp" /> Escribir al nuevo número</a>
+      <button type="button" class="btn btn--sec btn--block" data-avisowa-cerrar>Entendido</button>
+    </div>
+  </dialog>
+</>)}
+
+<style>
+  .avisowa { background: #FFD24A; color: var(--ink); border-bottom: 2px solid #E08A00; font-size: 14px; line-height: 1.4; }
+  .avisowa__in { display: flex; gap: var(--s2); align-items: flex-start; justify-content: center; padding-top: 10px; padding-bottom: 10px; }
+  .avisowa p { margin: 0; }
+  .avisowa a { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+  .avisowa__mas { border: 0; background: none; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+  @media (max-width: 640px) { .avisowa__extra { display: none; } }
+  @media (min-width: 641px) { .avisowa__mas { display: none; } }
+
+  .avisowa-modal { width: min(92vw, 420px); border: 0; border-top: 6px solid #FFD24A; border-radius: 8px; padding: var(--s5); color: var(--ink); background: var(--bg); }
+  .avisowa-modal::backdrop { background: rgba(11,18,32,.55); }
+  .avisowa-modal h2 { margin: var(--s2) 0 var(--s3); font-size: 26px; line-height: 1.15; }
+  .avisowa-modal p { margin: 0 0 var(--s3); }
+  .avisowa-modal__num { font-size: 26px; font-weight: 700; letter-spacing: .02em; }
+  .avisowa-modal__acc { display: grid; gap: var(--s2); margin-top: var(--s4); }
+</style>
+
+<script>
+  // Sale una vez por visitante; "Ver más" (móvil) la vuelve a abrir.
+  const modal = document.querySelector<HTMLDialogElement>('[data-avisowa]');
+  if (modal) {
+    const CLAVE = 'oneself-aviso-wa-visto';
+    const cerrar = () => { modal.close(); try { localStorage.setItem(CLAVE, '1'); } catch {} };
+    modal.querySelector('[data-avisowa-cerrar]')?.addEventListener('click', cerrar);
+    modal.addEventListener('cancel', () => { try { localStorage.setItem(CLAVE, '1'); } catch {} });
+    modal.addEventListener('click', (e) => { if (e.target === modal) cerrar(); });
+    document.querySelector('[data-avisowa-abrir]')?.addEventListener('click', () => modal.showModal());
+    let visto = false;
+    try { visto = localStorage.getItem(CLAVE) === '1'; } catch {}
+    if (!visto && typeof modal.showModal === 'function') setTimeout(() => modal.showModal(), 600);
+  }
+</script>

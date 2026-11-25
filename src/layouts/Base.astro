@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Encabezado from '../components/Encabezado.astro';
+import AvisoWhatsapp from '../components/AvisoWhatsapp.astro';
 import Pie from '../components/Pie.astro';
 import tienda from '../data/tienda.json';
 import { url } from '../lib/url';
@@ -43,6 +44,7 @@ const og = imagenOg ? new URL(imagenOg, Astro.site).href : undefined;
   </head>
   <body>
     <a class="saltar sr-only" href="#contenido">Ir al contenido</a>
+    <AvisoWhatsapp />
     <Encabezado simple={simple} />
     <main id="contenido">
       <slot />
