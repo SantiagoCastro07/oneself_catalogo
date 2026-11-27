@@ -15,10 +15,10 @@
   "promo": {
     "_nota": "Banner con cuenta regresiva en el inicio. Fechas con hora de Colombia (-05:00). Antes de 'desde' dice 'Empieza en'; después de 'hasta' desaparece. Para quitarlo ya: \"hasta\": \"\" (y quitar el anuncio de Black Friday de 'anuncios').",
     "titulo": "BLACK FRIDAY",
-    "texto": "9% de descuento en todo el catálogo y kits de 3 decants con hasta 15%. Solo este fin de semana.",
+    "texto": "10% de descuento en todo el catálogo y kits de 3 decants con hasta 16%. Solo este fin de semana.",
     "boton": "Ver kits",
     "codigo": "BLACKFRIDAY",
-    "descuentoCatalogo": 0.09,
+    "descuentoCatalogo": 0.10,
     "enlace": "combos",
     "desde": "2026-11-26T22:00:00-05:00",
     "hasta": "2026-11-29T23:59:59-05:00"
@@ -30,7 +30,7 @@
     "promoDesde": 125000
   },
   "anuncios": [
-    "BLACK FRIDAY: 9% en todo y kits con hasta 15% de descuento",
+    "BLACK FRIDAY: 10% en todo y kits con hasta 16% de descuento",
     "Envíos a toda Colombia",
     "Pedidos por WhatsApp",
     "Decants de 3, 5 y 10 ml",
