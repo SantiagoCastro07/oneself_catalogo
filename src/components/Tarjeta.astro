@@ -9,6 +9,7 @@ const sinStock = agotado(p);
 const nuevo = esNuevo(p);
 const tamanos = ordenarVariantes(p.data.variantes).filter(pedible).map((v) => ETIQUETA_TAMANO[v.tamano]);
 const desde = precioDesde(p);
+const antes = p.data.variantes.find((v) => v.precio === desde)?.antes ?? 0;
 ---
 <a
   class:list={['tarjeta', { 'is-agotado': sinStock }]}
@@ -39,7 +40,7 @@ const desde = precioDesde(p);
   </div>
   <p class="tarjeta__marca">{marca}</p>
   <h3 class="tarjeta__nombre">{p.data.nombre}</h3>
-  <p class="tarjeta__precio">{sinStock ? formatoPrecio(desde) : <>Desde {formatoPrecio(desde)}</>}</p>
+  <p class="tarjeta__precio">{sinStock ? formatoPrecio(desde) : <>Desde {formatoPrecio(desde)}{antes > desde && <s class="tarjeta__antes">{formatoPrecio(antes)}</s>}</>}</p>
   {!sinStock && <p class="tarjeta__tam">{tamanos.join(' · ')}</p>}
 </a>
 <style>
@@ -53,6 +54,7 @@ const desde = precioDesde(p);
   .tarjeta__marca { margin-top: var(--s3); font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
   .tarjeta__nombre { margin-top: 2px; font-size: 15px; font-weight: 500; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .tarjeta__precio { margin-top: var(--s1); font-size: 15px; }
+  .tarjeta__antes { margin-left: 6px; color: var(--ink-3); font-size: 13.5px; }
   .is-agotado .tarjeta__precio { color: var(--ink-3); text-decoration: line-through; }
   .tarjeta__tam { margin-top: 2px; font-size: 12.5px; color: var(--ink-2); }
 </style>

@@ -10,6 +10,9 @@ interface Props { c: ComboResuelto; prioridad?: boolean }
 const { c, prioridad = false } = Astro.props;
 const desde = precioDesdeCombo(c);
 const ahorro = ahorroMaximo(c);
+// Precio tachado: lo que costaría por separado la opción más barata
+const opDesde = c.opciones.find((o) => o.precio === desde && o.estado !== 'agotado');
+const antes = opDesde && opDesde.individual > opDesde.precio ? opDesde.individual : 0;
 const n = c.perfumes.length;
 const tamanos = c.opciones.filter((o) => o.estado !== 'agotado').map((o) => `${n} × ${ETIQUETA_TAMANO[o.tamano]}`);
 ---
@@ -28,7 +31,7 @@ const tamanos = c.opciones.filter((o) => o.estado !== 'agotado').map((o) => `${n
   </div>
   <p class="tcombo__marca">{c.marca || 'Combo'}</p>
   <h3 class="tcombo__nombre">{c.combo.data.nombre}</h3>
-  <p class="tcombo__precio">{c.agotado ? formatoPrecio(desde) : <>Desde {formatoPrecio(desde)}</>}</p>
+  <p class="tcombo__precio">{c.agotado ? formatoPrecio(desde) : <>Desde {formatoPrecio(desde)}{antes > 0 && <s class="tcombo__antes">{formatoPrecio(antes)}</s>}</>}</p>
   {!c.agotado && <p class="tcombo__tam">{tamanos.join(' · ')}</p>}
 </a>
 <style>
@@ -43,5 +46,6 @@ const tamanos = c.opciones.filter((o) => o.estado !== 'agotado').map((o) => `${n
   .tcombo__nombre { margin-top: 2px; font-size: 15px; font-weight: 500; line-height: 1.3; }
   .tcombo__precio { margin-top: var(--s1); font-size: 15px; }
   .is-agotado .tcombo__precio { color: var(--ink-3); text-decoration: line-through; }
+  .tcombo__antes { margin-left: 6px; color: var(--ink-3); font-size: 13.5px; }
   .tcombo__tam { margin-top: 2px; font-size: 12.5px; color: var(--ink-2); }
 </style>

@@ -99,6 +99,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .envgratis.is-logrado .envgratis__txt { font-weight: 500; animation: envgratis-pop 450ms ease-out; }
 .envgratis.is-logrado .envgratis__barra { background: #CFE3D8; }
 .envgratis.is-logrado .envgratis__barra::after { animation: none; }
+/* Variante del regalo: misma barra, con un regalo en lugar del camión y tonos rojos */
+.envgratis--regalo { --c1: #F0626E; --c2: #D31F2F; background: #FFF1F2; border-color: #F6C6CB; }
+.envgratis--regalo .envgratis__ctx { color: #A3172A; }
+.envgratis--regalo .envgratis__barra { background: #F9D9DC; }
+.envgratis--regalo.is-cerca { --c1: #F0626E; --c2: #D31F2F; background: #FFE4E7; border-color: #EE9AA3; }
+.envgratis--regalo .envgratis__barra::after { width: 16px; height: 16px; margin-left: -8px; -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5h14v3H1zM2 9h5v7H2zM9 9h5v7H9zM7 5h2v11H7zM8 5C6 1 3 1 3.5 3S7 5 8 5c1 0 4.5 0 4.5-2S10 1 8 5z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5h14v3H1zM2 9h5v7H2zM9 9h5v7H9zM7 5h2v11H7zM8 5C6 1 3 1 3.5 3S7 5 8 5c1 0 4.5 0 4.5-2S10 1 8 5z'/%3E%3C/svg%3E"); }
 @keyframes envgratis-brillo { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
 @keyframes envgratis-camion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
 @keyframes envgratis-latido { 0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, .35); } 50% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0); } }

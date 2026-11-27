@@ -35,7 +35,7 @@ const PEOR = ['disponible', 'ultimas', 'bajo_pedido', 'agotado'] as const;
 function opcion(c: Combo, perfumes: Perfume[], o: Combo['data']['opciones'][number]): OpcionCombo {
   const vs = perfumes.map((p) => (p.data.activo ? p.data.variantes.find((v) => v.tamano === o.tamano) : undefined));
   const estado: Estado = vs.some((v) => !v) ? 'agotado' : PEOR[Math.max(...vs.map((v) => PEOR.indexOf(v!.estado)))];
-  const individual = vs.reduce((s, v) => s + (v?.precio ?? 0), 0);
+  const individual = vs.reduce((s, v) => s + (v?.antes ?? v?.precio ?? 0), 0); // precio normal, sin el descuento general de la promo
   const nombres = perfumes.map((p) => p.data.nombre).join(', ');
   return {
     tamano: o.tamano, precio: o.precio, estado, individual,

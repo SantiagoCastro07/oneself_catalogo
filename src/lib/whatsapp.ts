@@ -39,6 +39,8 @@ export interface DatosEnvio {
   departamento: string; ciudad: string; direccion: string; detalle?: string; barrio?: string;
   pago?: string; notas?: string;
   envio?: { nombre: string; precio: number; motivo?: string };
+  codigo?: string;   // código de la promo vigente (ej. BLACKFRIDAY)
+  regalo?: string;   // regalo ganado (ej. "un decant de 3 ml sorpresa")
 }
 
 /** Pedido completo con datos de envío, listo para despachar sin volver a preguntar. */
@@ -48,6 +50,7 @@ export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
   const fila = (k: string, v?: string) => (v && v.trim() ? [`${k}: ${v.trim()}`] : []);
   return [
     'Hola OneSelf, quiero hacer este pedido:',
+    ...(d.codigo ? [`Código: *${d.codigo}*`] : []),
     '',
     '*PEDIDO*',
     ...lineas.map((l) => `• ${l.nombre} (${l.marca}) · ${textoTamano(l)} × ${l.cantidad} · ${pesos(l.precio * l.cantidad)}${l.bajoPedido ? ' (bajo pedido)' : ''}`),
@@ -56,6 +59,7 @@ export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
       ? [`${d.envio.nombre}: ${d.envio.precio ? pesos(d.envio.precio) : `gratis${d.envio.motivo ? ` (${d.envio.motivo.charAt(0).toLowerCase() + d.envio.motivo.slice(1)})` : ''}`}`,
          `*Total: ${pesos(total + d.envio.precio)}*`]
       : ['Envío: por confirmar']),
+    ...(d.regalo ? [`🎁 Regalo: ${d.regalo}`] : []),
     '',
     '*DATOS DE ENVÍO*',
     `Nombre: ${d.nombre.trim()} ${d.apellidos.trim()}`,

@@ -9,6 +9,7 @@ import { perfumesActivos, mapaMarcas, ordenarVariantes, agotado, precioDesde, ty
 import { FAMILIA_ETIQUETA, TIPO_ETIQUETA, GENERO_ETIQUETA } from '../../lib/categorias';
 import { TAMANO_TEXTO, pesos, mensajeAviso, enlaceWhatsapp } from '../../lib/whatsapp';
 import tienda from '../../data/tienda.json';
+import { combosActivos, precioDesdeCombo, ahorroMaximo } from '../../lib/combos';
 
 export async function getStaticPaths() {
   const todos = await getCollection('perfumes', (p) => p.data.activo);
@@ -18,6 +19,8 @@ const { p } = Astro.props as { p: Perfume };
 const d = p.data;
 const marcas = await mapaMarcas();
 const marca = marcas[d.marca.id];
+// Combos que incluyen este perfume: se sugieren en la ficha
+const enCombos = (await combosActivos()).filter((c) => !c.agotado && c.perfumes.some((x) => x.id === p.id));
 const variantes = ordenarVariantes(d.variantes);
 const sinStock = agotado(p);
 const pedibles = variantes.filter((v) => v.estado !== 'agotado');
@@ -76,7 +79,7 @@ const migasLd = {
 };
 const datosCliente = {
   slug: p.id, nombre: d.nombre, marca, img: miniatura.src, numero: tienda.whatsapp, pedido: url('pedido'),
-  variantes: Object.fromEntries(variantes.map((v) => [v.tamano, { precio: v.precio, estado: v.estado }])),
+  variantes: Object.fromEntries(variantes.map((v) => [v.tamano, { precio: v.precio, estado: v.estado, antes: v.antes }])),
   rendimiento, estados: ESTADO_TEXTO,
 };
 ---
@@ -109,7 +112,7 @@ const datosCliente = {
         <h1 class="display info__nombre">{d.nombre}</h1>
         <p class="info__meta">{TIPO_ETIQUETA[d.tipo]} · {GENERO_ETIQUETA[d.genero]}{familias.length > 0 && <> · {familias.join(', ')}</>}</p>
 
-        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <span class="info__precio-tam muted" data-precio-tam>{TAMANO_TEXTO[inicial.tamano]}</span></p>
+        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <s class="info__antes" data-antes hidden={!inicial.antes}>{inicial.antes ? pesos(inicial.antes) : ''}</s> <span class="info__precio-tam muted" data-precio-tam>{TAMANO_TEXTO[inicial.tamano]}</span></p>
 
         <fieldset class="tamanos">
           <legend>Elige tu tamaño</legend>
@@ -118,7 +121,7 @@ const datosCliente = {
               <label class:list={['tamano', { 'is-agotado': v.estado === 'agotado' }]}>
                 <input type="radio" name="tamano" value={v.tamano} checked={v.tamano === inicial.tamano} disabled={v.estado === 'agotado'} />
                 <span class="tamano__ml">{v.tamano === 'frasco' ? (v.ml ? `Frasco ${v.ml} ml` : 'Frasco') : TAMANO_TEXTO[v.tamano]}</span>
-                <span class="tamano__precio">{pesos(v.precio)}</span>
+                <span class="tamano__precio">{pesos(v.precio)}{v.antes && <s class="tamano__antes"> {pesos(v.antes)}</s>}</span>
                 {v.estado === 'ultimas' && <span class="tamano__nota">Últimas</span>}
                 {v.estado === 'bajo_pedido' && <span class="tamano__nota">Bajo pedido</span>}
                 {v.estado === 'agotado' && <span class="tamano__nota">Agotado</span>}
@@ -127,6 +130,18 @@ const datosCliente = {
           </div>
           <p class="tamanos__ayuda muted" data-rinde></p>
         </fieldset>
+
+        {enCombos.length > 0 && (
+          <div class="encombo">
+            <p class="encombo__tit">Ahorra más llevándolo en combo</p>
+            {enCombos.map((c) => (
+              <a class="encombo__item" href={url(`combos/${c.combo.id}`)}>
+                <span><strong>{c.combo.data.nombre}</strong><span class="muted"> · {c.perfumes.map((x) => x.data.nombre).join(', ')}</span></span>
+                <span class="encombo__precio">Desde {pesos(precioDesdeCombo(c))}{ahorroMaximo(c) > 0 && <small> · ahorras hasta {pesos(ahorroMaximo(c))}</small>}</span>
+              </a>
+            ))}
+          </div>
+        )}
 
         <p class="estado" data-estado><span class="estado__punto"></span><span data-estado-texto>{ESTADO_TEXTO[inicial.estado]}</span></p>
 
@@ -222,6 +237,15 @@ const datosCliente = {
   .info__meta { margin-top: var(--s2); font-size: 14px; color: var(--ink-2); }
   .info__precio { margin-top: var(--s4); font-size: 26px; font-weight: 500; }
   .info__precio-tam { font-size: 15px; font-weight: 400; }
+  .info__antes { font-size: 18px; font-weight: 400; color: var(--ink-3); }
+  .info__antes[hidden] { display: none; }
+  .tamano__antes { font-size: 11.5px; opacity: .7; }
+  .encombo { margin-top: var(--s4); border: 1px solid #F6C6CB; background: #FFF1F2; border-radius: 8px; padding: var(--s3); display: grid; gap: var(--s2); }
+  .encombo__tit { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: #A3172A; font-weight: 500; }
+  .encombo__item { display: grid; gap: 2px; font-size: 14px; line-height: 1.35; }
+  .encombo__item:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+  .encombo__precio { font-weight: 500; }
+  .encombo__precio small { font-weight: 400; color: #3E7C59; font-size: 13px; }
 
   .tamanos { border: 0; margin: var(--s5) 0 0; padding: 0; }
   .tamanos legend { font-size: 14px; font-weight: 500; margin-bottom: var(--s3); padding: 0; }
@@ -292,6 +316,7 @@ const datosCliente = {
   const radios = [...ficha.querySelectorAll<HTMLInputElement>('input[name="tamano"]')];
   const precio = ficha.querySelector<HTMLElement>('[data-precio]')!;
   const precioTam = ficha.querySelector<HTMLElement>('[data-precio-tam]')!;
+  const antesEl = ficha.querySelector<HTMLElement>('[data-antes]')!;
   const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
   const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
   const rinde = ficha.querySelector<HTMLElement>('[data-rinde]')!;
@@ -311,6 +336,8 @@ const datosCliente = {
     const tam = actual();
     const v = datos.variantes[tam];
     precio.textContent = pesos(v.precio * cantidad);
+    antesEl.hidden = !v.antes;
+    antesEl.textContent = v.antes ? pesos(v.antes * cantidad) : '';
     precioTam.textContent = cantidad > 1 ? `${cantidad} × ${TAMANO_TEXTO[tam]}` : TAMANO_TEXTO[tam];
     estado.dataset.e = v.estado;
     estadoTxt.textContent = datos.estados[v.estado];

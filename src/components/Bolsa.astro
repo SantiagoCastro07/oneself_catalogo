@@ -28,6 +28,11 @@ import tienda from '../data/tienda.json';
       <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
       <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
     </div>
+    <div class="envgratis envgratis--regalo" data-bolsa-regalo hidden>
+      <p class="envgratis__ctx" data-envgratis-ctx hidden></p>
+      <p class="envgratis__txt" data-envgratis-txt></p>
+      <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el decant de regalo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+    </div>
     <p class="bolsa__nota muted">Envío gratis en decants desde {pesos(tienda.envios.nacional.gratisDesde)} (nacional) o {pesos(tienda.envios.local.gratisDesde)} (Cúcuta, Los Patios y Villa del Rosario). Los frascos incluyen envío.</p>
     <a class="btn btn--block" href={url('pedido')}>Continuar con el pedido</a>
   </div>
@@ -67,6 +72,7 @@ import tienda from '../data/tienda.json';
   import { pesos, TAMANO_TEXTO } from '../lib/whatsapp';
   import { opcionesEnvio, type ReglasEnvio } from '../lib/envio';
   import { progresoEnvio, pintarProgresoEnvio, decantMasBarato } from '../lib/envioProgreso';
+  import { progresoRegalo, contextoRegalo } from '../lib/promo';
 
   // tt: texto del tamaño de los combos ("3 decants de 3 ml: …")
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
@@ -142,8 +148,10 @@ import tienda from '../data/tienda.json';
       });
       lista.appendChild(li);
     }
-    totalEl.textContent = pesos(pedibles().reduce((s, l) => s + l.precio * l.cantidad, 0));
+    const subtotal = pedibles().reduce((s, l) => s + l.precio * l.cantidad, 0);
+    totalEl.textContent = pesos(subtotal);
     pintarEnvio();
+    pintarProgresoEnvio(panel.querySelector<HTMLElement>('[data-bolsa-regalo]')!, progresoRegalo(subtotal), { contexto: contextoRegalo() });
   }
 
   // Actualiza precios y estados con el catálogo publicado

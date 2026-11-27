@@ -153,6 +153,11 @@ const pagos: string[] = tienda.metodosPago || [];
               <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el envío gratis" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
               <a class="envgratis__cta" data-envgratis-cta href="#" hidden>Ver más decants →</a>
             </div>
+            <div class="envgratis envgratis--regalo resumen__faltante" data-regalo hidden>
+              <p class="envgratis__ctx" data-envgratis-ctx hidden></p>
+              <p class="envgratis__txt" data-envgratis-txt></p>
+              <div class="envgratis__barra" role="progressbar" aria-label="Progreso hacia el decant de regalo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+            </div>
             <div class="resumen__fila resumen__total"><span>Total</span><span><small class="muted">COP</small> <span data-total></span></span></div>
             <button type="button" class="resumen__editar" data-editar hidden>Editar carrito</button>
           </div>
@@ -260,6 +265,7 @@ const pagos: string[] = tienda.metodosPago || [];
   import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
   import { opcionesEnvio, ciudadLocal, precioPendiente, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
   import { progresoEnvio, pintarProgresoEnvio, decantMasBarato } from '../lib/envioProgreso';
+  import { progresoRegalo, contextoRegalo, codigoPromo, ganaRegalo, textoRegalo } from '../lib/promo';
   const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
@@ -309,6 +315,7 @@ const pagos: string[] = tienda.metodosPago || [];
     const n = val.reduce((s, i) => s + i.cantidad, 0);
     const envio = actualizarEnvio();
     resumen.querySelector('[data-subtotal]')!.textContent = pesos(total);
+    pintarProgresoEnvio(resumen.querySelector<HTMLElement>('[data-regalo]')!, progresoRegalo(total), { contexto: contextoRegalo() });
     const costoEnvio = envio && !precioPendiente(envio) ? envio.precio : 0;
     resumen.querySelector('[data-total]')!.textContent = pesos(total + costoEnvio);
     resumen.querySelector('[data-n-articulos]')!.textContent = `Subtotal · ${n} ${n === 1 ? 'artículo' : 'artículos'}`;
@@ -452,10 +459,12 @@ const pagos: string[] = tienda.metodosPago || [];
       correo: g('correo'), departamento: g('departamento'), ciudad: g('ciudad'), direccion: g('direccion'),
       detalle: g('detalle'), barrio: g('barrio'), pago: g('pago'), notas: g('notas'),
       envio: envioActual ? { nombre: envioActual.nombre, precio: envioActual.precio, motivo: envioActual.motivo } : undefined,
+      codigo: codigoPromo() || undefined,
+      regalo: ganaRegalo(lineasValidas().reduce((s, i) => s + i.precio * i.cantidad, 0)) ? textoRegalo() : undefined,
     };
     try {
       if (fd.has('recordar')) {
-        const { notas, pago, envio, ...resto } = datos;
+        const { notas, pago, envio, codigo, regalo, ...resto } = datos;
         localStorage.setItem(CLAVE_DATOS, JSON.stringify({ ...resto, telefono: g('telefono') }));
       } else localStorage.removeItem(CLAVE_DATOS);
     } catch {}

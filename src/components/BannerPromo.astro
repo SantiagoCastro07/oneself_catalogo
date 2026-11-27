@@ -1,0 +1,72 @@
+---
+// Banner de promoción con cuenta regresiva (Black Friday, etc.). Se configura en tienda.json → promo.
+// Antes de 'desde' muestra "Empieza en…"; entre 'desde' y 'hasta', "Termina en…"; después se oculta solo
+// en el navegador, y al recompilar ya no se genera. Para quitarlo antes: "hasta": "".
+import { url } from '../lib/url';
+import tienda from '../data/tienda.json';
+
+const promo = (tienda as { promo?: { titulo: string; texto: string; boton: string; enlace: string; desde: string; hasta: string } }).promo;
+const activo = Boolean(promo?.hasta) && Date.now() < Date.parse(promo!.hasta);
+---
+{activo && promo && (
+  <section class="promo" data-promo data-desde={promo.desde} data-hasta={promo.hasta} aria-label={promo.titulo}>
+    <div class="wrap promo__in">
+      <div class="promo__txt">
+        <p class="promo__tit display">{promo.titulo}</p>
+        <p class="promo__sub">{promo.texto}</p>
+      </div>
+      <div class="promo__reloj">
+        <p class="promo__estado" data-promo-estado>Termina en</p>
+        <div class="promo__cifras" role="timer" aria-live="off">
+          <span><b data-promo-d>--</b>días</span>
+          <span><b data-promo-h>--</b>horas</span>
+          <span><b data-promo-m>--</b>min</span>
+          <span><b data-promo-s>--</b>seg</span>
+        </div>
+      </div>
+      <a class="promo__btn" href={url(promo.enlace)}>{promo.boton}</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .promo { background: #0A0A0A; color: #fff; border-bottom: 3px solid #E11D2E; }
+  .promo__in { display: grid; gap: var(--s4); justify-items: center; text-align: center; padding-top: var(--s5); padding-bottom: var(--s5); }
+  .promo__tit { font-size: clamp(30px, 9vw, 46px); line-height: 1; letter-spacing: .02em; }
+  .promo__tit::first-letter { color: #E11D2E; }
+  .promo__sub { margin-top: var(--s2); font-size: 15.5px; color: rgba(255,255,255,.85); max-width: 42ch; }
+  .promo__estado { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: var(--s2); }
+  .promo__cifras { display: flex; gap: var(--s2); justify-content: center; }
+  .promo__cifras span { display: grid; justify-items: center; min-width: 58px; padding: var(--s2) var(--s1); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius); font-size: 11px; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .06em; }
+  .promo__cifras b { font-size: 26px; font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 0; line-height: 1.1; }
+  .promo__btn { display: inline-block; background: #E11D2E; color: #fff; font-weight: 600; padding: 12px 26px; border-radius: var(--radius); letter-spacing: .02em; transition: background var(--t); }
+  .promo__btn:hover { background: #B81424; }
+  @media (min-width: 900px) {
+    .promo__in { grid-template-columns: 1fr auto auto; text-align: left; justify-items: start; align-items: center; gap: var(--s6); }
+    .promo__estado { text-align: center; }
+  }
+</style>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-promo]');
+  if (el) {
+    const desde = Date.parse(el.dataset.desde || '') || 0;
+    const hasta = Date.parse(el.dataset.hasta || '');
+    const q = (s: string) => el.querySelector<HTMLElement>(`[data-promo-${s}]`)!;
+    const [d, h, m, s, estado] = [q('d'), q('h'), q('m'), q('s'), q('estado')];
+    const dos = (n: number) => String(n).padStart(2, '0');
+    const tic = () => {
+      const ahora = Date.now();
+      if (ahora >= hasta) { el.remove(); return; }
+      const antes = ahora < desde;
+      estado.textContent = antes ? 'Empieza en' : 'Termina en';
+      const t = Math.floor(((antes ? desde : hasta) - ahora) / 1000);
+      d.textContent = dos(Math.floor(t / 86400));
+      h.textContent = dos(Math.floor((t % 86400) / 3600));
+      m.textContent = dos(Math.floor((t % 3600) / 60));
+      s.textContent = dos(t % 60);
+      setTimeout(tic, 1000 - (ahora % 1000));
+    };
+    tic();
+  }
+</script>

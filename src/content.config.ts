@@ -48,6 +48,7 @@ const perfumes = defineCollection({
             estado: z.enum(ESTADOS),
             ml: z.number().positive().optional(), // ml del frasco completo
             provisional: z.boolean().optional(), // precio pendiente de confirmar
+            antes: z.number().int().positive().optional(), // precio normal (tachado) durante una promo; lo pone descargar-catalogo
           }),
         )
         .min(1)

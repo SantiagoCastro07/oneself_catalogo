@@ -87,7 +87,7 @@ const datosCliente = {
         <h1 class="display info__nombre">{d.nombre}</h1>
         <p class="info__meta">{n} decants · {nombres.join(', ')}</p>
 
-        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <span class="info__precio-tam muted" data-precio-tam>{n} × {ETIQUETA_TAMANO[inicial.tamano]}</span></p>
+        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <s class="info__antes" data-antes hidden></s> <span class="info__precio-tam muted" data-precio-tam>{n} × {ETIQUETA_TAMANO[inicial.tamano]}</span></p>
         <p class="ahorro" data-ahorro hidden></p>
 
         <fieldset class="tamanos">
@@ -183,6 +183,7 @@ const datosCliente = {
   .info__nombre { font-size: 32px; line-height: 1.08; margin-top: var(--s2); }
   .info__meta { margin-top: var(--s2); font-size: 14px; color: var(--ink-2); }
   .info__precio { margin-top: var(--s4); font-size: 26px; font-weight: 500; }
+  .info__antes { font-size: 18px; font-weight: 400; color: var(--ink-3); }
   .info__precio-tam { font-size: 15px; font-weight: 400; }
   .ahorro { margin-top: var(--s1); font-size: 14px; color: #3E7C59; }
 
@@ -249,6 +250,7 @@ const datosCliente = {
   const precio = ficha.querySelector<HTMLElement>('[data-precio]')!;
   const precioTam = ficha.querySelector<HTMLElement>('[data-precio-tam]')!;
   const ahorroEl = ficha.querySelector<HTMLElement>('[data-ahorro]')!;
+  const antesEl = ficha.querySelector<HTMLElement>('[data-antes]')!;
   const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
   const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
   const cantEl = ficha.querySelector<HTMLOutputElement>('[data-cantidad]');
@@ -265,6 +267,8 @@ const datosCliente = {
     const tam = actual();
     const o = datos.opciones[tam];
     precio.textContent = pesos(o.precio * cantidad);
+    antesEl.hidden = !(o.ahorro > 0);
+    antesEl.textContent = o.ahorro > 0 ? pesos(o.individual * cantidad) : '';
     precioTam.textContent = cantidad > 1 ? `${cantidad} combos · ${decants(tam)} c/u` : decants(tam);
     ahorroEl.hidden = !(o.ahorro > 0);
     ahorroEl.textContent = o.ahorro > 0 ? `Ahorras ${pesos(o.ahorro * cantidad)} frente a pedirlos por separado (${pesos(o.individual * cantidad)}).` : '';

@@ -41,7 +41,19 @@ const ruta = (nombre) => { fotos.add(nombre); return `../../assets/${nombre}`; }
 const escribir = (archivo, datos) => fs.writeFileSync(archivo, JSON.stringify(datos, null, 2) + '\n');
 
 escribir(src('data', 'marcas.json'), catalogo.marcas);
-for (const [slug, p] of Object.entries(catalogo.perfumes)) escribir(src('content', 'perfumes', `${slug}.json`), { ...p, imagenes: p.imagenes.map(ruta) });
+
+// Descuento general de la promo (tienda.json → promo.descuentoCatalogo, ej. 0.09). Se aplica solo en la web
+// al compilar, si la promo no ha terminado: el Manager conserva el precio normal y al recompilar después
+// de promo.hasta todo vuelve solo. El precio normal queda en `antes` para mostrarlo tachado.
+const tienda = JSON.parse(fs.readFileSync(src('data', 'tienda.json'), 'utf8'));
+const dto = Number(tienda.promo?.descuentoCatalogo) || 0;
+const promoVigente = dto > 0 && tienda.promo?.hasta && Date.now() < Date.parse(tienda.promo.hasta);
+const conDescuento = (p) => !promoVigente ? p : {
+  ...p,
+  variantes: p.variantes.map((v) => ({ ...v, antes: v.precio, precio: Math.floor((v.precio * (1 - dto)) / 100) * 100 })),
+};
+if (promoVigente) console.log(`Promo vigente: ${Math.round(dto * 100)}% de descuento en el catálogo hasta ${tienda.promo.hasta}.`);
+for (const [slug, p] of Object.entries(catalogo.perfumes)) escribir(src('content', 'perfumes', `${slug}.json`), { ...conDescuento(p), imagenes: p.imagenes.map(ruta) });
 for (const [slug, c] of Object.entries(catalogo.combos || {})) escribir(src('content', 'combos', `${slug}.json`), { ...c, imagen: ruta(c.imagen) });
 
 // Fotos: de a 8 a la vez

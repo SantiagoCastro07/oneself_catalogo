@@ -7,6 +7,7 @@ import ChipsCatalogo from './ChipsCatalogo.astro';
 import { type Perfume } from '../lib/catalogo';
 import { FAMILIA_ETIQUETA, TIPO_ETIQUETA } from '../lib/categorias';
 import { FAMILIAS, TIPOS } from '../content.config';
+import { url } from '../lib/url';
 
 interface Props {
   titulo: string;
@@ -35,6 +36,8 @@ const PRECIOS = [
   { v: '20001-30000', t: '$20.000 a $30.000' },
   { v: '30001-999999999', t: 'Más de $30.000' },
 ];
+import { promoActiva } from '../lib/promo';
+const promoHoy = promoActiva();
 ---
 <section class="wrap cat">
   {migas && (
@@ -48,6 +51,11 @@ const PRECIOS = [
   </header>
 
   {activo !== undefined && <ChipsCatalogo activo={activo} />}
+
+  <a class="cat__combos" href={url('combos')}>
+    <span><strong>{promoHoy ? 'Kits Black Friday' : 'Combos de decants'}</strong> · 3 perfumes juntos{promoHoy ? ' con hasta 15% de descuento' : ' a mejor precio'}</span>
+    <span class="cat__combos-ir">Ver combos →</span>
+  </a>
 
   <div class="cat__barra">
     <button type="button" class="btn btn--sec btn--sm cat__btn-filtro" data-abrir-filtros aria-controls="filtros" aria-expanded="false">
@@ -124,6 +132,10 @@ const PRECIOS = [
 </section>
 
 <style>
+  .cat__combos { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2); align-items: center; margin-top: var(--s4); padding: var(--s3) var(--s4); background: #0A0A0A; color: #fff; border-radius: 8px; border-left: 4px solid #E11D2E; font-size: 14px; }
+  .cat__combos strong { font-weight: 600; }
+  .cat__combos-ir { font-weight: 600; white-space: nowrap; }
+  .cat__combos:hover .cat__combos-ir { text-decoration: underline; text-underline-offset: 3px; }
   .cat { padding-top: var(--s5); }
   .migas { display: flex; flex-wrap: wrap; gap: var(--s2); font-size: 13px; color: var(--ink-2); margin-bottom: var(--s3); }
   .migas a:hover { color: var(--ink); text-decoration: underline; }
