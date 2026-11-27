@@ -40,5 +40,13 @@ export function progresoRegalo(subtotal: number): ProgresoEnvio | null {
   return { texto, pct, logrado: false, cerca: pct >= 80 };
 }
 
+interface BeneficiosFrasco { siempre?: boolean; regalo?: string; probaste?: string }
+const benef = (tienda as { beneficiosFrasco?: BeneficiosFrasco }).beneficiosFrasco;
+/** Beneficios del frasco completo vigentes ahora (vacío si no aplican). */
+export function beneficiosFrasco(): { regalo: string; probaste: string } {
+  if (!benef || !(benef.siempre || promoActiva())) return { regalo: '', probaste: '' };
+  return { regalo: benef.regalo || '', probaste: benef.probaste || '' };
+}
+
 /** Rótulo pequeño sobre la barra del regalo. */
 export const contextoRegalo = () => (promoActiva() && regalo?.promoDesde ? `Regalo · ${promo!.titulo}` : 'Regalo por compra');

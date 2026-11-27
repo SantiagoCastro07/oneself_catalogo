@@ -41,6 +41,7 @@ export interface DatosEnvio {
   envio?: { nombre: string; precio: number; motivo?: string };
   codigo?: string;   // código de la promo vigente (ej. BLACKFRIDAY)
   regalo?: string;   // regalo ganado (ej. "un decant de 3 ml sorpresa")
+  frasco?: string[]; // beneficios por llevar frasco completo (regalo, descuento por haber probado)
 }
 
 /** Pedido completo con datos de envío, listo para despachar sin volver a preguntar. */
@@ -60,6 +61,7 @@ export function mensajeCompleto(lineas: LineaPedido[], d: DatosEnvio): string {
          `*Total: ${pesos(total + d.envio.precio)}*`]
       : ['Envío: por confirmar']),
     ...(d.regalo ? [`🎁 Regalo: ${d.regalo}`] : []),
+    ...(d.frasco?.length ? ['', '*FRASCO*', ...d.frasco.map((t) => `• ${t}`)] : []),
     '',
     '*DATOS DE ENVÍO*',
     `Nombre: ${d.nombre.trim()} ${d.apellidos.trim()}`,

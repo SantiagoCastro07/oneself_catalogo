@@ -265,7 +265,7 @@ const pagos: string[] = tienda.metodosPago || [];
   import { mensajeCompleto, enlaceWhatsapp, pesos, TAMANO_TEXTO, type LineaPedido, type DatosEnvio } from '../lib/whatsapp';
   import { opcionesEnvio, ciudadLocal, precioPendiente, type ReglasEnvio, type OpcionEnvio } from '../lib/envio';
   import { progresoEnvio, pintarProgresoEnvio, decantMasBarato } from '../lib/envioProgreso';
-  import { progresoRegalo, contextoRegalo, codigoPromo, ganaRegalo, textoRegalo } from '../lib/promo';
+  import { progresoRegalo, contextoRegalo, codigoPromo, ganaRegalo, textoRegalo, beneficiosFrasco } from '../lib/promo';
   const reglas: ReglasEnvio = JSON.parse(document.getElementById('reglas-envio')!.textContent!);
 
   interface Item { slug: string; nombre: string; marca: string; tamano: string; precio: number; cantidad: number; img: string; estado?: string; tt?: string }
@@ -461,10 +461,16 @@ const pagos: string[] = tienda.metodosPago || [];
       envio: envioActual ? { nombre: envioActual.nombre, precio: envioActual.precio, motivo: envioActual.motivo } : undefined,
       codigo: codigoPromo() || undefined,
       regalo: ganaRegalo(lineasValidas().reduce((s, i) => s + i.precio * i.cantidad, 0)) ? textoRegalo() : undefined,
+      frasco: (() => {
+        const b = beneficiosFrasco();
+        if (!lineasValidas().some((i) => i.tamano === 'frasco')) return undefined;
+        const t = [b.regalo && `🎁 Regalo: ${b.regalo} (te pregunto cuál)`, b.probaste && `${b.probaste}: avísame si es mi caso`].filter(Boolean) as string[];
+        return t.length ? t : undefined;
+      })(),
     };
     try {
       if (fd.has('recordar')) {
-        const { notas, pago, envio, codigo, regalo, ...resto } = datos;
+        const { notas, pago, envio, codigo, regalo, frasco, ...resto } = datos;
         localStorage.setItem(CLAVE_DATOS, JSON.stringify({ ...resto, telefono: g('telefono') }));
       } else localStorage.removeItem(CLAVE_DATOS);
     } catch {}

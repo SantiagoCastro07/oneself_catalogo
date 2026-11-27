@@ -10,6 +10,7 @@ import { FAMILIA_ETIQUETA, TIPO_ETIQUETA, GENERO_ETIQUETA } from '../../lib/cate
 import { TAMANO_TEXTO, pesos, mensajeAviso, enlaceWhatsapp } from '../../lib/whatsapp';
 import tienda from '../../data/tienda.json';
 import { combosActivos, precioDesdeCombo, ahorroMaximo } from '../../lib/combos';
+import { beneficiosFrasco } from '../../lib/promo';
 
 export async function getStaticPaths() {
   const todos = await getCollection('perfumes', (p) => p.data.activo);
@@ -20,6 +21,8 @@ const d = p.data;
 const marcas = await mapaMarcas();
 const marca = marcas[d.marca.id];
 // Combos que incluyen este perfume: se sugieren en la ficha
+const benefFrasco = beneficiosFrasco(); // al compilar; la promo vigente
+const tieneFrasco = d.variantes.some((v) => v.tamano === 'frasco' && v.estado !== 'agotado');
 const enCombos = (await combosActivos()).filter((c) => !c.agotado && c.perfumes.some((x) => x.id === p.id));
 const variantes = ordenarVariantes(d.variantes);
 const sinStock = agotado(p);
@@ -130,6 +133,16 @@ const datosCliente = {
             ))}
           </div>
           <p class="tamanos__ayuda muted" data-rinde></p>
+          {tieneFrasco && (benefFrasco.regalo || benefFrasco.probaste) && (
+            <div class="benef-frasco" data-benef-frasco hidden={inicial.tamano !== 'frasco'}>
+              <p class="benef-frasco__tit">Black Friday · Frasco completo</p>
+              <ul>
+                {benefFrasco.regalo && <li>🎁 <strong>De regalo:</strong> {benefFrasco.regalo}.</li>}
+                {benefFrasco.probaste && <li>💸 <strong>¿Ya lo probaste?</strong> {benefFrasco.probaste}.</li>}
+                <li>🚚 <strong>Envío incluido</strong> a toda Colombia.</li>
+              </ul>
+            </div>
+          )}
         </fieldset>
 
         {enCombos.length > 0 && (
@@ -268,6 +281,10 @@ const datosCliente = {
   .tamano.is-agotado .tamano__ml { text-decoration: line-through; }
   .tamano.is-agotado:hover { border-color: var(--line); }
   .tamanos__ayuda { margin-top: var(--s2); font-size: 13px; min-height: 1.2em; }
+  .benef-frasco { margin-top: var(--s3); border: 1px solid #F6C6CB; background: #FFF1F2; border-radius: 8px; padding: var(--s3); font-size: 14px; line-height: 1.4; }
+  .benef-frasco[hidden] { display: none; }
+  .benef-frasco__tit { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: #A3172A; font-weight: 500; margin-bottom: var(--s2); }
+  .benef-frasco ul { list-style: none; display: grid; gap: 6px; padding: 0; margin: 0; }
 
   .estado { display: flex; align-items: center; gap: var(--s2); margin-top: var(--s4); font-size: 14px; }
   .estado__punto { width: 8px; height: 8px; border-radius: 50%; background: #3E7C59; flex: none; }
@@ -325,6 +342,7 @@ const datosCliente = {
   const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
   const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
   const rinde = ficha.querySelector<HTMLElement>('[data-rinde]')!;
+  const benefFrascoEl = ficha.querySelector<HTMLElement>('[data-benef-frasco]');
   const cantEl = ficha.querySelector<HTMLOutputElement>('[data-cantidad]');
   const menos = ficha.querySelector<HTMLButtonElement>('[data-menos]');
   const mas = ficha.querySelector<HTMLButtonElement>('[data-mas]');
@@ -349,6 +367,7 @@ const datosCliente = {
     estado.dataset.e = v.estado;
     estadoTxt.textContent = datos.estados[v.estado];
     const r = datos.rendimiento[tam];
+    if (benefFrascoEl) benefFrascoEl.hidden = tam !== 'frasco';
     rinde.textContent = r != null ? `${TAMANO_TEXTO[tam]} rinde aprox. ${r} atomizaciones.` : tam === 'frasco' ? 'Frasco completo. El envío va incluido.' : '';
     if (cantEl) cantEl.textContent = String(cantidad);
     if (menos) menos.disabled = cantidad <= 1;

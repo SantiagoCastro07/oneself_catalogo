@@ -29,8 +29,15 @@
     "desde": 160000,
     "promoDesde": 125000
   },
+  "beneficiosFrasco": {
+    "_nota": "Beneficios al comprar un frasco completo, solo mientras la promo está vigente (promo.desde → promo.hasta). Para dejarlos siempre: \"siempre\": true. Vacío = no se muestra.",
+    "siempre": false,
+    "regalo": "un decant de 5 ml del perfume que elijas",
+    "probaste": "Si ya compraste este perfume en decant, te descontamos lo que pagaste por él"
+  },
   "anuncios": [
     "BLACK FRIDAY: 10% en todo y kits con hasta 20% de descuento",
+    "Frascos completos: decant de 5 ml de regalo y envío incluido",
     "Envíos a toda Colombia",
     "Pedidos por WhatsApp",
     "Decants de 3, 5 y 10 ml",
