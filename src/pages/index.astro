@@ -21,7 +21,7 @@ const { perfumes, marcas, marcasTop } = await datosNavegacion();
 const disponibles = perfumes.filter((p) => !agotado(p));
 const combos = (await combosActivos()).filter((c) => !c.agotado);
 const promoHoy = promoActiva(); // al compilar
-const tituloCombos = promoHoy ? 'Kits Black Friday' : 'Combos';
+const tituloCombos = promoHoy ? 'Combos Black Friday' : 'Combos';
 const nuevos = disponibles.filter((p) => esNuevo(p));
 const destacados = disponibles.filter((p) => p.data.etiquetas.includes('destacado'));
 // Sin destacados marcados todavía: mostrar una selección variada (uno por marca, en orden recomendado)

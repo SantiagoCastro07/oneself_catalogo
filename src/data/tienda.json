@@ -15,8 +15,8 @@
   "promo": {
     "_nota": "Banner con cuenta regresiva en el inicio. Fechas con hora de Colombia (-05:00). Antes de 'desde' dice 'Empieza en'; después de 'hasta' desaparece. Para quitarlo ya: \"hasta\": \"\" (y quitar el anuncio de Black Friday de 'anuncios').",
     "titulo": "BLACK FRIDAY",
-    "texto": "10% de descuento en todo el catálogo y kits de 3 decants con hasta 20%. Solo este fin de semana.",
-    "boton": "Ver kits",
+    "texto": "10% de descuento en todo el catálogo y combos de 3 decants con hasta 20%. Solo este fin de semana.",
+    "boton": "Ver combos",
     "codigo": "BLACKFRIDAY",
     "descuentoCatalogo": 0.10,
     "enlace": "combos",
@@ -36,7 +36,7 @@
     "probaste": "Si ya compraste este perfume en decant, te descontamos lo que pagaste por él"
   },
   "anuncios": [
-    "BLACK FRIDAY: 10% en todo y kits con hasta 20% de descuento",
+    "BLACK FRIDAY: 10% en todo y combos con hasta 20% de descuento",
     "Frascos completos: decant de 5 ml de regalo y envío incluido",
     "Envíos a toda Colombia",
     "Pedidos por WhatsApp",
