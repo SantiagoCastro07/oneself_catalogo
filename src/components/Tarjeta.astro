@@ -10,6 +10,7 @@ const nuevo = esNuevo(p);
 const tamanos = ordenarVariantes(p.data.variantes).filter(pedible).map((v) => ETIQUETA_TAMANO[v.tamano]);
 const desde = precioDesde(p);
 const antes = p.data.variantes.find((v) => v.precio === desde)?.antes ?? 0;
+const pctDto = antes > desde ? Math.round((1 - desde / antes) * 100) : 0;
 ---
 <a
   class:list={['tarjeta', { 'is-agotado': sinStock }]}
@@ -37,6 +38,7 @@ const antes = p.data.variantes.find((v) => v.precio === desde)?.antes ?? 0;
       decoding="async"
     />
     {sinStock ? <span class="sello sello--agotado">Agotado</span> : nuevo && <span class="sello">Nuevo</span>}
+    {!sinStock && pctDto > 0 && <span class="sello-dto">-{pctDto}%</span>}
   </div>
   <p class="tarjeta__marca">{marca}</p>
   <h3 class="tarjeta__nombre">{p.data.nombre}</h3>
@@ -49,6 +51,7 @@ const antes = p.data.variantes.find((v) => v.precio === desde)?.antes ?? 0;
   .tarjeta__foto img { width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: transform 300ms ease; }
   @media (hover: hover) { .tarjeta:hover .tarjeta__foto img { transform: scale(1.03); } .tarjeta:hover .tarjeta__nombre { text-decoration: underline; text-underline-offset: 3px; } }
   .sello { position: absolute; top: 8px; left: 8px; background: var(--bg); color: var(--ink); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+  .sello-dto { position: absolute; top: 8px; right: 8px; background: #E11D2E; color: #fff; font-weight: 700; font-size: 13px; padding: 4px 8px; border-radius: 4px; letter-spacing: .02em; }
   .sello--agotado { background: var(--ink); color: var(--on-ink); }
   .is-agotado .tarjeta__foto img { opacity: .5; }
   .tarjeta__marca { margin-top: var(--s3); font-size: 11.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }

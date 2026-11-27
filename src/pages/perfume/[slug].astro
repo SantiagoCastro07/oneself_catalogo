@@ -105,6 +105,7 @@ const datosCliente = {
         </div>
         {d.imagenes.length > 1 && <div class="galeria__puntos" data-puntos>{d.imagenes.map((_, i) => <span class:list={{ 'is-on': i === 0 }} />)}</div>}
         {sinStock && <span class="sello-ficha">Agotado</span>}
+        {!sinStock && inicial.antes && <span class="sello-dto-ficha">-{Math.round((1 - inicial.precio / inicial.antes) * 100)}%</span>}
       </div>
 
       <div class="info">
@@ -112,7 +113,7 @@ const datosCliente = {
         <h1 class="display info__nombre">{d.nombre}</h1>
         <p class="info__meta">{TIPO_ETIQUETA[d.tipo]} · {GENERO_ETIQUETA[d.genero]}{familias.length > 0 && <> · {familias.join(', ')}</>}</p>
 
-        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <s class="info__antes" data-antes hidden={!inicial.antes}>{inicial.antes ? pesos(inicial.antes) : ''}</s> <span class="info__precio-tam muted" data-precio-tam>{TAMANO_TEXTO[inicial.tamano]}</span></p>
+        <p class="info__precio"><span data-precio>{pesos(inicial.precio)}</span> <s class="info__antes" data-antes hidden={!inicial.antes}>{inicial.antes ? pesos(inicial.antes) : ''}</s> <span class="info__dto" data-dto hidden={!inicial.antes}>{inicial.antes ? `-${Math.round((1 - inicial.precio / inicial.antes) * 100)}%` : ''}</span> <span class="info__precio-tam muted" data-precio-tam>{TAMANO_TEXTO[inicial.tamano]}</span></p>
 
         <fieldset class="tamanos">
           <legend>Elige tu tamaño</legend>
@@ -238,7 +239,10 @@ const datosCliente = {
   .info__precio { margin-top: var(--s4); font-size: 26px; font-weight: 500; }
   .info__precio-tam { font-size: 15px; font-weight: 400; }
   .info__antes { font-size: 18px; font-weight: 400; color: var(--ink-3); }
-  .info__antes[hidden] { display: none; }
+  .info__antes[hidden], .info__dto[hidden] { display: none; }
+  .info__dto { display: inline-block; vertical-align: middle; background: #E11D2E; color: #fff; font-size: 15px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  .sello-dto-ficha { position: absolute; top: 12px; right: calc(var(--gutter) + 4px); background: #E11D2E; color: #fff; font-weight: 700; font-size: 16px; padding: 6px 10px; border-radius: 4px; z-index: 1; }
+  @media (min-width: 1024px) { .sello-dto-ficha { right: 12px; } }
   .tamano__antes { font-size: 11.5px; opacity: .7; }
   .encombo { margin-top: var(--s4); border: 1px solid #F6C6CB; background: #FFF1F2; border-radius: 8px; padding: var(--s3); display: grid; gap: var(--s2); }
   .encombo__tit { font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: #A3172A; font-weight: 500; }
@@ -317,6 +321,7 @@ const datosCliente = {
   const precio = ficha.querySelector<HTMLElement>('[data-precio]')!;
   const precioTam = ficha.querySelector<HTMLElement>('[data-precio-tam]')!;
   const antesEl = ficha.querySelector<HTMLElement>('[data-antes]')!;
+  const dtoEl = ficha.querySelector<HTMLElement>('[data-dto]')!;
   const estado = ficha.querySelector<HTMLElement>('[data-estado]')!;
   const estadoTxt = ficha.querySelector<HTMLElement>('[data-estado-texto]')!;
   const rinde = ficha.querySelector<HTMLElement>('[data-rinde]')!;
@@ -338,6 +343,8 @@ const datosCliente = {
     precio.textContent = pesos(v.precio * cantidad);
     antesEl.hidden = !v.antes;
     antesEl.textContent = v.antes ? pesos(v.antes * cantidad) : '';
+    dtoEl.hidden = !v.antes;
+    dtoEl.textContent = v.antes ? `-${Math.round((1 - v.precio / v.antes) * 100)}%` : '';
     precioTam.textContent = cantidad > 1 ? `${cantidad} × ${TAMANO_TEXTO[tam]}` : TAMANO_TEXTO[tam];
     estado.dataset.e = v.estado;
     estadoTxt.textContent = datos.estados[v.estado];
